@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -40,6 +41,9 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <Head>
+        <title>BOUS - Persian Cuisine</title>
+      </Head>
       <header className="mx-auto flex w-full max-w-6xl items-start justify-between px-6 pt-10 sm:px-10">
         <div className="shrink-0">
           <div className="w-45">
@@ -71,31 +75,24 @@ export default function Home() {
 
         {/* Desktop menu */}
         <div className="hidden gap-10 text-xs font-light tracking-[0.35em] text-foreground lg:flex flex-row self-stretch items-center">
-          <span>Montréal, Québec</span>
           <a
-            className="hover:text-foreground"
+            href="https://maps.app.goo.gl/HcfvJZpGYaVaLSCw7"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Montréal, Québec
+          </a>
+          <a
             href="https://instagram.com/bousmontreal"
             target="_blank"
             rel="noreferrer"
           >
             @bousmontreal
           </a>
-          <a className="hover:text-foreground" href="mailto:contact@bous.ca">
-            contact@bous.ca
-          </a>
-          <a
-            className="hover:text-foreground"
-            href="https://instagram.com/bous"
-            target="_blank"
-            rel="noreferrer"
-          >
-            ©BOUS
-          </a>
-          <button
-            type="button"
-            className="hover:text-foreground"
-            onClick={toggleLang}
-          >
+          <a href="mailto:info@bous.ca">info@bous.ca</a>
+          <span>©BOUS</span>
+          <button type="button" onClick={toggleLang}>
             {lang}
           </button>
         </div>
@@ -195,7 +192,6 @@ export default function Home() {
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden
                   >
                     <path
                       d="M6 6L18 18"
@@ -214,9 +210,15 @@ export default function Home() {
               </div>
 
               <nav className="mt-10 flex flex-col gap-6 px-6 text-xs font-light tracking-[0.35em]">
-                <span>Montréal, Québec</span>
                 <a
-                  className="hover:text-foreground"
+                  href="https://maps.app.goo.gl/HcfvJZpGYaVaLSCw7"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Montréal, Québec
+                </a>
+                <a
                   href="https://instagram.com/bousmontreal"
                   target="_blank"
                   rel="noreferrer"
@@ -225,21 +227,12 @@ export default function Home() {
                   @bousmontreal
                 </a>
                 <a
-                  className="hover:text-foreground"
-                  href="mailto:contact@bous.ca"
+                  href="mailto:info@bous.ca"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  contact@bous.ca
+                  info@bous.ca
                 </a>
-                <a
-                  className="hover:text-foreground"
-                  href="https://instagram.com/bous"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  ©BOUS
-                </a>
+                <span onClick={() => setIsMobileMenuOpen(false)}>©BOUS</span>
                 <button
                   type="button"
                   className="text-left hover:text-foreground"
