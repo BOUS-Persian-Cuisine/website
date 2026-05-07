@@ -3,6 +3,8 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Titillium_Web } from "next/font/google";
 
+import { LanguageProvider } from "@/context/LanguageContext";
+
 const titilliumWeb = Titillium_Web({
   subsets: ["latin"],
   weight: ["300", "400"],
@@ -11,8 +13,10 @@ const titilliumWeb = Titillium_Web({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={`${titilliumWeb.variable} font-sans`}>
-      <Component {...pageProps} />
-    </div>
+    <LanguageProvider>
+      <div className={`${titilliumWeb.variable} font-sans`}>
+        <Component {...pageProps} />
+      </div>
+    </LanguageProvider>
   );
 }

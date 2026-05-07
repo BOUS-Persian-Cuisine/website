@@ -2,21 +2,36 @@
 
 @font-face {
   font-family: "Operetta12";
-  src: url("/Operetta12-Regular.otf") format("opentype");
+  src: url("/fonts/Operetta12-Light.otf") format("opentype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Operetta12";
+  src: url("/fonts/Operetta12-Regular.otf") format("opentype");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 
 :root {
-  /* Theme colors (no dark mode for now) */
-  --background: #dec8ad;
-  --foreground: #7a632e;
-  --muted: #8b7a57;
-  --accent: red;
+  --bous-red: #981e1a;
+  --bous-burgundy: #350514;
+  --bous-night: #0b223d;
+  --bous-gold: #ac9968;
+  --bous-cream: #dac9b0;
+  --bous-rose: #c8a796;
+  --bous-blush: #ebd6cf;
+  --bous-olive: #6a7355;
+  --bous-white: #ffffff;
 
-  /* Fonts */
-  /* Filled by next/font in _app.tsx */
+  --background: var(--bous-cream);
+  --foreground: #350514;
+  --muted: var(--bous-olive);
+  --accent: var(--bous-red);
+
   --font-titillium: ui-sans-serif;
   --font-operetta: "Operetta12";
 }
@@ -26,6 +41,15 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
+  --color-bous-red: var(--bous-red);
+  --color-bous-burgundy: var(--bous-burgundy);
+  --color-bous-night: var(--bous-night);
+  --color-bous-gold: var(--bous-gold);
+  --color-bous-cream: var(--bous-cream);
+  --color-bous-rose: var(--bous-rose);
+  --color-bous-blush: var(--bous-blush);
+  --color-bous-olive: var(--bous-olive);
+  --color-bous-white: var(--bous-white);
 
   --font-sans: var(--font-titillium);
 }
@@ -33,15 +57,102 @@
 html,
 body {
   height: 100%;
+  overscroll-behavior-y: none;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
-    Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family:
+    var(--font-sans),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    "Apple Color Emoji",
+    "Segoe UI Emoji";
+  text-rendering: geometricPrecision;
 }
 
 .font-operetta {
   font-family: var(--font-operetta), var(--font-sans), ui-sans-serif;
+}
+
+.brand-link {
+  text-underline-offset: 0.32em;
+}
+
+.footer-heart-divider {
+  --footer-heart-size: 1rem;
+}
+
+.footer-heart-divider__line {
+  left: 50%;
+  width: var(--footer-divider-line-width);
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  will-change: width;
+}
+
+.footer-heart-divider__heart {
+  top: 50%;
+  width: var(--footer-heart-size);
+  height: var(--footer-heart-size);
+  will-change: left;
+}
+
+.footer-heart-divider__heart--left {
+  left: calc(
+    50% - var(--footer-heart-size) -
+      var(--footer-divider-heart-offset)
+  );
+  transform: translateY(-50%);
+}
+
+.footer-heart-divider__heart--right {
+  left: calc(50% + var(--footer-divider-heart-offset));
+  transform: translateY(-50%) scaleX(-1);
+}
+
+.cover-background {
+  background-position: center var(--cover-bg-y);
+}
+
+.menu-overlay {
+  animation: menu-overlay-in 180ms ease-out both;
+}
+
+.menu-panel {
+  animation: menu-panel-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
+}
+
+@keyframes menu-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menu-panel-in {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-overlay,
+  .menu-panel {
+    animation: none;
+  }
 }

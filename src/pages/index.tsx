@@ -1,292 +1,66 @@
-import Head from "next/head";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
-const CONTENT = {
-  EN: {
-    tagline: "PERSIAN CUISINE",
-    main: ["A QUIET EXPRESSION", "OF PERSIAN CULTURE"],
-    soon: "Opening Soon",
-  },
-  FR: {
-    tagline: "CUISINE PERSE",
-    main: ["UNE EXPRESSION DISCRÈTE", "DE LA CULTURE PERSANE"],
-    soon: "Ouverture à Venir",
-  },
-};
+import { SiteLayout } from "@/components/SiteLayout";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
-  const [lang, setLang] = useState<"EN" | "FR">("FR");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsMobileMenuOpen(false);
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [isMobileMenuOpen]);
-
-  const toggleLang = () => setLang(lang === "EN" ? "FR" : "EN");
+  const { t } = useLanguage();
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <Head>
-        <title>BOUS - Persian Cuisine</title>
-      </Head>
-      <header className="mx-auto flex w-full max-w-6xl items-start justify-between px-6 pt-10 sm:px-10">
-        <div className="shrink-0">
-          <div className="w-45">
-            <Image
-              className="h-auto w-full"
-              src="/bous-logo.svg"
-              alt="BOUS Persian Cuisine"
-              width={180}
-              height={52}
-              priority
-            />
-          </div>
-
-          <div className="mt-1 w-45 text-xs px-1">
-            <span className="sr-only">{CONTENT[lang].tagline}</span>
-            <div aria-hidden className="flex justify-between">
-              {CONTENT[lang].tagline.split("").map((ch, idx) =>
-                ch === " " ? (
-                  <span key={idx} className="w-[0.9rem]" />
-                ) : (
-                  <span key={idx} className="leading-none">
-                    {ch}
-                  </span>
-                )
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Desktop menu */}
-        <div className="hidden gap-10 text-xs font-light tracking-[0.35em] text-foreground lg:flex flex-row self-stretch items-center">
-          <a
-            href="https://maps.app.goo.gl/HcfvJZpGYaVaLSCw7"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Montréal, Québec
-          </a>
-          <a
-            href="https://instagram.com/bousmontreal"
-            target="_blank"
-            rel="noreferrer"
-          >
-            @bousmontreal
-          </a>
-          <a href="mailto:info@bous.ca">info@bous.ca</a>
-          <span>©BOUS</span>
-          <button type="button" onClick={toggleLang}>
-            {lang}
-          </button>
-        </div>
-
-        {/* Mobile hamburger */}
-        <div className="lg:hidden flex items-center mt-3">
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded p-2 text-foreground hover:text-foreground"
-            aria-controls="mobile-menu"
-            aria-expanded={isMobileMenuOpen}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            onClick={() => setIsMobileMenuOpen((v) => !v)}
-          >
-            {isMobileMenuOpen ? (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden
-              >
-                <path
-                  d="M6 6L18 18"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M18 6L6 18"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            ) : (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden
-              >
-                <path
-                  d="M4 7H20"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M4 12H20"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M4 17H20"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        {/* Mobile slide-over */}
-        {isMobileMenuOpen ? (
+    <SiteLayout>
+      <main className="overflow-hidden bg-bous-cream">
+        <section className="relative isolate min-h-[calc(100svh-4.5rem)] overflow-hidden bg-bous-night text-bous-white lg:min-h-[calc(100vh-5rem)]">
           <div
-            className="fixed inset-0 z-50 lg:hidden"
-            id="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-          >
-            <button
-              type="button"
-              className="absolute inset-0 bg-black/20"
-              aria-label="Close menu"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-            <div className="absolute right-0 top-0 h-full w-[18rem] bg-background text-foreground shadow-xl">
-              <div className="flex items-center justify-between px-6 pt-10">
-                <span className="text-xs font-light tracking-[0.35em]">
-                  MENU
-                </span>
-                <button
-                  type="button"
-                  className="rounded p-2"
-                  aria-label="Close menu"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
+            className="absolute inset-0 bg-[url('/bous-bg-ed.jpg')] bg-cover bg-[center_center]"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,33,59,0.86)_0%,rgba(53,5,20,0.58)_46%,rgba(53,5,20,0.08)_100%)]"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bous-night via-bous-night/55 to-transparent"
+            aria-hidden
+          />
+
+          <div className="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-7xl items-end px-6 py-14 sm:px-8 md:py-20 lg:min-h-[calc(100vh-5rem)] lg:px-10">
+            <div className="max-w-3xl">
+              <p className="mb-5 flex flex-col items-start gap-2 text-[0.72rem] uppercase tracking-[0.32em] text-bous-cream/82">
+                <span>{t.home.cuisine}</span>
+                <span className="inline-flex items-center gap-1.5">
                   <svg
-                    width="24"
-                    height="24"
+                    className="h-3 w-3 shrink-0"
                     viewBox="0 0 24 24"
-                    fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden
                   >
                     <path
-                      d="M6 6L18 18"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M18 6L6 18"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
+                      d="M12 22s6-7.2 6-12a6 6 0 0 0-12 0c0 4.8 6 12 6 12Z"
+                      fill="currentColor"
                     />
                   </svg>
-                </button>
-              </div>
-
-              <nav className="mt-10 flex flex-col gap-6 px-6 text-xs font-light tracking-[0.35em]">
-                <a
-                  href="https://maps.app.goo.gl/HcfvJZpGYaVaLSCw7"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  <span>{t.footer.addressLines[1]}</span>
+                </span>
+              </p>
+              <h1 className="sr-only">{t.common.siteTitle}</h1>
+              <div className="flex flex-wrap gap-3">
+                <span
+                  className="inline-flex min-h-12 cursor-default items-center justify-center border border-bous-red/55 bg-bous-red/55 px-6 text-[0.72rem] uppercase tracking-[0.24em] text-bous-white/70"
+                  aria-disabled="true"
                 >
-                  Montréal, Québec
-                </a>
-                <a
-                  href="https://instagram.com/bousmontreal"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  {t.header.nav.reserve}
+                </span>
+                <Link
+                  href="/about"
+                  className="inline-flex min-h-12 items-center justify-center border border-bous-cream/70 bg-bous-cream/10 px-6 text-[0.72rem] uppercase tracking-[0.24em] text-bous-cream backdrop-blur-sm transition-colors hover:bg-bous-cream hover:text-bous-burgundy"
                 >
-                  @bousmontreal
-                </a>
-                <a
-                  href="mailto:info@bous.ca"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  info@bous.ca
-                </a>
-                <span onClick={() => setIsMobileMenuOpen(false)}>©BOUS</span>
-                <button
-                  type="button"
-                  className="text-left hover:text-foreground"
-                  onClick={() => {
-                    toggleLang();
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  {lang}
-                </button>
-              </nav>
-            </div>
-          </div>
-        ) : null}
-      </header>
-
-      <main className="flex flex-1 items-center justify-center px-6 pb-20 pt-10 sm:px-10">
-        <section className="w-full max-w-5xl font-operetta">
-          <div className="flex flex-col items-center">
-            <div className="flex flex-row self-stretch justify-between">
-              <div className="flex items-center">
-                <Image
-                  src="/heart-left.svg"
-                  alt=""
-                  width={25}
-                  height={25}
-                  aria-hidden
-                />
-              </div>
-              <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-                <h1 className="text-[26px] font-light tracking-[0.55em] text-foreground sm:text-3xl">
-                  {CONTENT[lang].main[0]}
-                  <br />
-                  {CONTENT[lang].main[1]}
-                </h1>
-              </div>
-              <div className="flex items-center">
-                <Image
-                  className="rotate-180"
-                  src="/heart-left.svg"
-                  alt=""
-                  width={25}
-                  height={25}
-                  aria-hidden
-                />
+                  {t.header.nav.about}
+                </Link>
               </div>
             </div>
-          </div>
-
-          <div className="mt-20 text-[14px] font-light tracking-[0.35em] sm:mt-24 sm:text-xl text-center font-sans">
-            {CONTENT[lang].soon}
           </div>
         </section>
       </main>
-    </div>
+    </SiteLayout>
   );
 }
