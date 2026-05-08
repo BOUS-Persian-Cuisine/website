@@ -59,7 +59,7 @@ export function SiteHeader() {
     "sticky top-0 z-40 border-b backdrop-blur-xl transition-[background-color,border-color,box-shadow,color] duration-300",
     hasScrolled
       ? "border-bous-gold/25 bg-bous-cream/88 text-foreground shadow-[0_1px_0_rgba(255,255,255,0.35)]"
-      : "border-bous-gold/35 bg-bous-night text-bous-cream shadow-[0_1px_0_rgba(176,152,97,0.22)]",
+      : "border-bous-gold/35 bg-bous-burgundy text-bous-cream shadow-[0_1px_0_rgba(176,152,97,0.22)]",
   ].join(" ");
 
   const navLinkClass = [
@@ -68,11 +68,6 @@ export function SiteHeader() {
       ? "text-foreground/78 hover:text-bous-red focus-visible:outline-bous-red"
       : "text-bous-cream/86 hover:text-bous-gold focus-visible:outline-bous-gold",
   ].join(" ");
-  const disabledNavLinkClass = [
-    "brand-link cursor-default text-[0.72rem] uppercase tracking-[0.26em]",
-    hasScrolled ? "text-foreground/42" : "text-bous-cream/48",
-  ].join(" ");
-
   const iconButtonClass = [
     "inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4",
     hasScrolled
@@ -90,9 +85,12 @@ export function SiteHeader() {
             aria-label={t.header.menuLabel}
             className="hidden items-center gap-8 md:flex"
           >
-            <span className={disabledNavLinkClass} aria-disabled="true">
+            <a
+              href="https://www.opentable.com/r/bous-montreal"
+              className={navLinkClass}
+            >
               {t.header.nav.reserve}
-            </span>
+            </a>
             <Link href="/about" className={navLinkClass}>
               {t.header.nav.about}
             </Link>
@@ -163,7 +161,7 @@ export function SiteHeader() {
                   key={option}
                   type="button"
                   className={[
-                    "h-9 min-w-10 border-b text-[0.72rem] uppercase tracking-[0.22em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red",
+                    "h-9 min-w-10 border-b text-[0.72rem] uppercase tracking-[0.22em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red",
                     hasScrolled
                       ? isSelected
                         ? "border-foreground text-foreground"
@@ -235,9 +233,13 @@ export function SiteHeader() {
             </div>
 
             <nav className="flex flex-col gap-7 px-6 py-10 text-xl font-light tracking-[0.22em]">
-              <span className="cursor-default text-foreground/42" aria-disabled="true">
+              <a
+                href="https://www.opentable.com/r/bous-montreal"
+                className="transition-colors hover:text-bous-red"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 {t.header.nav.reserve}
-              </span>
+              </a>
               <Link
                 href="/about"
                 className="transition-colors hover:text-bous-red"

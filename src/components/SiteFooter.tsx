@@ -126,9 +126,12 @@ export function SiteFooter() {
       id: "dine",
       title: t.footer.sections.dine,
       content: (
-        <span className="cursor-default text-bous-cream/58" aria-disabled="true">
+        <a
+          href="https://www.opentable.com/r/bous-montreal"
+          className="underline-offset-4 hover:underline"
+        >
           {t.footer.reserveTable}
-        </span>
+        </a>
       ),
     },
     {
