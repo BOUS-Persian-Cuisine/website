@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { SiteLayout } from "@/components/SiteLayout";
+import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
@@ -45,7 +46,7 @@ export default function Home() {
               <h1 className="sr-only">{t.common.siteTitle}</h1>
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://www.opentable.com/r/bous-montreal"
+                  href={OPENTABLE_RESERVATION_URL}
                   className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.24em] text-bous-white transition-colors hover:bg-bous-burgundy"
                 >
                   {t.header.nav.reserve}

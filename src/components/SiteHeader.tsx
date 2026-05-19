@@ -7,6 +7,7 @@ import {
   useLanguage,
   type Language,
 } from "@/context/LanguageContext";
+import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
 
 const languageOptions: Language[] = ["en", "fr"];
 
@@ -86,7 +87,7 @@ export function SiteHeader() {
             className="hidden items-center gap-8 md:flex"
           >
             <a
-              href="https://www.opentable.com/r/bous-montreal"
+              href={OPENTABLE_RESERVATION_URL}
               className={navLinkClass}
             >
               {t.header.nav.reserve}
@@ -234,7 +235,7 @@ export function SiteHeader() {
 
             <nav className="flex flex-col gap-7 px-6 py-10 text-xl font-light tracking-[0.22em]">
               <a
-                href="https://www.opentable.com/r/bous-montreal"
+                href={OPENTABLE_RESERVATION_URL}
                 className="transition-colors hover:text-bous-red"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

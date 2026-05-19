@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 type FooterSection = "info" | "dine" | "contact";
@@ -127,7 +128,7 @@ export function SiteFooter() {
       title: t.footer.sections.dine,
       content: (
         <a
-          href="https://www.opentable.com/r/bous-montreal"
+          href={OPENTABLE_RESERVATION_URL}
           className="underline-offset-4 hover:underline"
         >
           {t.footer.reserveTable}
