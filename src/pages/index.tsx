@@ -52,8 +52,14 @@ export default function Home() {
                   {t.header.nav.reserve}
                 </a>
                 <Link
-                  href="/about"
+                  href="/menu"
                   className="inline-flex min-h-12 items-center justify-center border border-bous-cream/70 bg-bous-cream/10 px-6 text-[0.72rem] uppercase tracking-[0.24em] text-bous-cream backdrop-blur-sm transition-colors hover:bg-bous-cream hover:text-bous-burgundy"
+                >
+                  {t.header.nav.menu}
+                </Link>
+                <Link
+                  href="/about"
+                  className="inline-flex min-h-12 items-center justify-center border border-bous-cream/45 bg-transparent px-6 text-[0.72rem] uppercase tracking-[0.24em] text-bous-cream/88 transition-colors hover:border-bous-cream hover:text-bous-cream"
                 >
                   {t.header.nav.about}
                 </Link>

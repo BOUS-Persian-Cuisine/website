@@ -92,6 +92,9 @@ export function SiteHeader() {
             >
               {t.header.nav.reserve}
             </a>
+            <Link href="/menu" className={navLinkClass}>
+              {t.header.nav.menu}
+            </Link>
             <Link href="/about" className={navLinkClass}>
               {t.header.nav.about}
             </Link>
@@ -241,6 +244,13 @@ export function SiteHeader() {
               >
                 {t.header.nav.reserve}
               </a>
+              <Link
+                href="/menu"
+                className="transition-colors hover:text-bous-red"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t.header.nav.menu}
+              </Link>
               <Link
                 href="/about"
                 className="transition-colors hover:text-bous-red"

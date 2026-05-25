@@ -22,6 +22,7 @@ type Translations = {
     menuLabel: string;
     nav: {
       reserve: string;
+      menu: string;
       about: string;
       contact: string;
     };
@@ -40,6 +41,7 @@ type Translations = {
     reserveTable: string;
     contactLinksLabel: string;
     links: {
+      menu: string;
       about: string;
       contact: string;
       email: string;
@@ -80,6 +82,7 @@ export const translations: Record<Language, Translations> = {
       menuLabel: "Menu",
       nav: {
         reserve: "Reserve",
+        menu: "Menu",
         about: "About",
         contact: "Contact",
       },
@@ -101,6 +104,7 @@ export const translations: Record<Language, Translations> = {
       reserveTable: "Reserve a table",
       contactLinksLabel: "Contact links",
       links: {
+        menu: "Menu",
         about: "About",
         contact: "Contact",
         email: "Email",
@@ -133,6 +137,7 @@ export const translations: Record<Language, Translations> = {
       menuLabel: "Menu",
       nav: {
         reserve: "Réserver",
+        menu: "Menu",
         about: "À propos",
         contact: "Contact",
       },
@@ -158,6 +163,7 @@ export const translations: Record<Language, Translations> = {
       reserveTable: "Réserver une table",
       contactLinksLabel: "Liens de contact",
       links: {
+        menu: "Menu",
         about: "À propos",
         contact: "Contact",
         email: "Courriel",

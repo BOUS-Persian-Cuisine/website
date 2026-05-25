@@ -127,12 +127,17 @@ export function SiteFooter() {
       id: "dine",
       title: t.footer.sections.dine,
       content: (
-        <a
-          href={OPENTABLE_RESERVATION_URL}
-          className="underline-offset-4 hover:underline"
-        >
-          {t.footer.reserveTable}
-        </a>
+        <nav className="flex flex-col gap-3">
+          <Link href="/menu" className="underline-offset-4 hover:underline">
+            {t.footer.links.menu}
+          </Link>
+          <a
+            href={OPENTABLE_RESERVATION_URL}
+            className="underline-offset-4 hover:underline"
+          >
+            {t.footer.reserveTable}
+          </a>
+        </nav>
       ),
     },
     {
