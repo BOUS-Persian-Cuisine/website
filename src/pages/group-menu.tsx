@@ -106,7 +106,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         minimum: "Minimum 8 Guests",
         courses: [
           {
-            title: "Sofreh Opening",
+            title: "Mehmani Opening",
             detail: "One of each item for every 4 guests",
             items: ["Sangak Bread", "Paneer Sabzi", "Maast-o-Khiar"],
           },
@@ -155,10 +155,10 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         courses: [
           {
             title: "Welcome",
-            items: ["Persian Sharbat"],
+            items: ["Persian Cocktail/Sharbat"],
           },
           {
-            title: "Sofreh Opening",
+            title: "Bazm Opening",
             detail: "One of each item for every 4 guests",
             items: ["Sangak Bread", "Paneer Sabzi", "Maast-o-Khiar"],
           },
@@ -284,7 +284,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         minimum: "Minimum 8 personnes",
         courses: [
           {
-            title: "Ouverture Sofreh",
+            title: "Ouverture Mehmani",
             detail: "Un de chaque item pour 4 personnes",
             items: ["Pain Sangak", "Paneer Sabzi", "Maast-o-Khiar"],
           },
@@ -336,7 +336,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
             items: ["Sharbat persan"],
           },
           {
-            title: "Ouverture Sofreh",
+            title: "Ouverture Bazm",
             detail: "Un de chaque item pour 4 personnes",
             items: ["Pain Sangak", "Paneer Sabzi", "Maast-o-Khiar"],
           },
