@@ -12,10 +12,10 @@ self.__BUILD_MANIFEST = {
     "static/chunks/f4ac63d5a878baaf.js"
   ],
   "/group-menu": [
-    "static/chunks/d4df0aa20daa71f0.js"
+    "static/chunks/df3ebd061ad27d6a.js"
   ],
   "/menu": [
-    "static/chunks/84e3076e62a55eef.js"
+    "static/chunks/5531e17413256806.js"
   ],
   "__rewrites": {
     "afterFiles": [],
