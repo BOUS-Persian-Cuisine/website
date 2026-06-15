@@ -410,13 +410,14 @@ function CourseBlock({ course }: { course: GroupMenuCourse }) {
           {course.detail}
         </p>
       ) : null}
-      <ul
-        className="mt-3 space-y-2 text-base leading-7 text-foreground/84"
-      >
+      <ul className="mt-3 space-y-2 text-base leading-7 text-foreground/84">
         {course.items.map((item) => (
-          <li key={`${course.title}-${item}`} className="flex gap-3">
+          <li
+            key={`${course.title}-${item}`}
+            className="flex items-center gap-3"
+          >
             <span
-              className="mt-[0.58em] h-1.5 w-1.5 shrink-0 bg-bous-gold"
+              className="h-1.5 w-1.5 shrink-0 bg-bous-gold"
               aria-hidden
             />
             <span>{item}</span>

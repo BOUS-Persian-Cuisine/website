@@ -311,7 +311,7 @@ export default function Menu() {
               </a>
             </div>
 
-            <div className="bg-bous-white/28 px-6 py-10 sm:px-8 sm:py-12">
+            <div className="bg-bous-white/28 px-6 py-10 shadow-[0_18px_50px_rgba(53,5,20,0.08)] sm:px-8 sm:py-12">
               {copy.groups.map((group, groupIndex) => (
                 <div key={`menu-group-${groupIndex}`}>
                   {groupIndex > 0 ? (
