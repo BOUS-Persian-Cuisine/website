@@ -131,6 +131,12 @@ export function SiteFooter() {
           <Link href="/menu" className="underline-offset-4 hover:underline">
             {t.footer.links.menu}
           </Link>
+          <Link
+            href="/group-menu"
+            className="underline-offset-4 hover:underline"
+          >
+            {t.footer.links.groupMenu}
+          </Link>
           <a
             href={OPENTABLE_RESERVATION_URL}
             className="underline-offset-4 hover:underline"

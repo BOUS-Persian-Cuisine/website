@@ -1,5 +1,9 @@
+import Link from "next/link";
+
 import type { Language } from "@/context/LanguageContext";
+import { MenuSwitcher } from "@/components/MenuSwitcher";
 import { SiteLayout } from "@/components/SiteLayout";
+import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 type MenuItem = {
@@ -15,6 +19,8 @@ type MenuCopy = {
   heading: string;
   pdfHref: string;
   pdfLabel: string;
+  reserveLabel: string;
+  otherMenuLabel: string;
   note: string;
   groups: MenuItem[][];
 };
@@ -27,6 +33,8 @@ const menuCopy: Record<Language, MenuCopy> = {
     heading: "Menu",
     pdfHref: "/menu-soft-opening-en.pdf",
     pdfLabel: "Open PDF menu",
+    reserveLabel: "Make a reservation",
+    otherMenuLabel: "View Group Menus",
     note: "* Vegetarian option available.",
     groups: [
       [
@@ -137,6 +145,8 @@ const menuCopy: Record<Language, MenuCopy> = {
     heading: "Menu",
     pdfHref: "/menu-soft-opening-fr.pdf",
     pdfLabel: "Ouvrir le menu PDF",
+    reserveLabel: "Faire une réservation",
+    otherMenuLabel: "Voir les menus de groupe",
     note: "* Option végétarienne disponible",
     groups: [
       [
@@ -280,45 +290,66 @@ export default function Menu() {
               <p className="text-[0.72rem] uppercase tracking-[0.32em] text-bous-gold">
                 {copy.eyebrow}
               </p>
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <h1 className="font-operetta text-6xl font-light leading-none sm:text-7xl md:text-8xl">
                   {copy.heading}
                 </h1>
-                <a
-                  href={copy.pdfHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex min-h-12 w-fit items-center justify-center border border-bous-gold/70 px-5 text-[0.72rem] uppercase tracking-[0.24em] text-bous-cream transition-colors hover:bg-bous-gold hover:text-bous-burgundy"
-                >
-                  {copy.pdfLabel}
-                </a>
               </div>
             </div>
           </div>
 
           <div className="mx-auto max-w-5xl px-6 py-14 text-center sm:px-8 sm:py-18 lg:px-10 lg:py-22">
-            {copy.groups.map((group, groupIndex) => (
-              <div key={`menu-group-${groupIndex}`}>
-                {groupIndex > 0 ? (
-                  <div
-                    className="mx-auto my-12 h-px w-24 bg-bous-gold/55 sm:my-16"
-                    aria-hidden
-                  />
-                ) : null}
-                <ol className="space-y-7 sm:space-y-8">
-                  {group.map((item) => (
-                    <MenuItemRow
-                      key={`${item.name}-${item.price ?? "none"}`}
-                      item={item}
-                    />
-                  ))}
-                </ol>
-              </div>
-            ))}
+            <div className="mb-14 flex flex-col items-center justify-center gap-2 sm:mb-16">
+              <MenuSwitcher active="dining" />
+              <a
+                href={copy.pdfHref}
+                target="_blank"
+                rel="noreferrer"
+                className="brand-link inline-flex min-h-9 w-fit items-center justify-center px-2 text-[0.68rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
+              >
+                {copy.pdfLabel}
+              </a>
+            </div>
 
-            <p className="mt-16 text-sm tracking-[0.04em] text-foreground/72 sm:mt-20 sm:text-base">
-              {copy.note}
-            </p>
+            <div className="bg-bous-white/28 px-6 py-10 sm:px-8 sm:py-12">
+              {copy.groups.map((group, groupIndex) => (
+                <div key={`menu-group-${groupIndex}`}>
+                  {groupIndex > 0 ? (
+                    <div
+                      className="mx-auto my-12 h-px w-24 bg-bous-gold/55 sm:my-16"
+                      aria-hidden
+                    />
+                  ) : null}
+                  <ol className="space-y-7 sm:space-y-8">
+                    {group.map((item) => (
+                      <MenuItemRow
+                        key={`${item.name}-${item.price ?? "none"}`}
+                        item={item}
+                      />
+                    ))}
+                  </ol>
+                </div>
+              ))}
+
+              <p className="mt-16 text-sm tracking-[0.04em] text-foreground/72 sm:mt-20 sm:text-base">
+                {copy.note}
+              </p>
+            </div>
+
+            <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
+              <a
+                href={OPENTABLE_RESERVATION_URL}
+                className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.22em] text-bous-white transition-colors hover:border-bous-burgundy hover:bg-bous-burgundy"
+              >
+                {copy.reserveLabel}
+              </a>
+              <Link
+                href="/group-menu"
+                className="brand-link px-2 text-[0.72rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
+              >
+                {copy.otherMenuLabel}
+              </Link>
+            </div>
           </div>
         </section>
       </main>
