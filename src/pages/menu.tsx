@@ -20,6 +20,8 @@ type MenuCopy = {
   reserveLabel: string;
   note: string;
   groups: MenuItem[][];
+  dessertTitle: string;
+  desserts: MenuItem[];
 };
 
 const menuCopy: Record<Language, MenuCopy> = {
@@ -133,6 +135,33 @@ const menuCopy: Record<Language, MenuCopy> = {
         },
       ],
     ],
+    dessertTitle: "Desserts",
+    desserts: [
+      {
+        name: "Faloodeh",
+        price: "12",
+        description:
+          "Frozen Rice Vermicelli, Lime & Rosewater Syrup, Poached Barberries, Lime",
+      },
+      {
+        name: "Persian Love Cake",
+        price: "14",
+        description:
+          "Cardamom Financier, Rosewater and Yogurt Mousse, Poached Rhubarb, Pistachios, Olive Oil, Rose Petals",
+      },
+      {
+        name: "Chocolate Date Cake",
+        price: "16",
+        description:
+          "Chocolate and Date Cake, Chocolate Date Sauce, Sesame Halva Icecream, Sesame Brittle",
+      },
+      {
+        name: "Bastani Sonnati",
+        price: "16",
+        description:
+          "Saffron, Rose and Pistachio Icecream, Clotted Cream, Ghorabieh, Freeze Dried Raspberry",
+      },
+    ],
   },
   fr: {
     pageTitle: "Menu du soir - BOUS Cuisine perse",
@@ -244,6 +273,33 @@ const menuCopy: Record<Language, MenuCopy> = {
         },
       ],
     ],
+    dessertTitle: "Desserts",
+    desserts: [
+      {
+        name: "Faloodeh",
+        price: "12",
+        description:
+          "Vermicelles de riz glacés, sirop à la lime et à l'eau de rose, épine-vinettes pochées, lime",
+      },
+      {
+        name: "Gâteau d'amour persan",
+        price: "14",
+        description:
+          "Financier à la cardamome, mousse au yogourt et à l'eau de rose, rhubarbe pochée, pistaches, huile d'olive, pétales de rose",
+      },
+      {
+        name: "Gâteau au chocolat et aux dattes",
+        price: "16",
+        description:
+          "Gâteau au chocolat et aux dattes, sauce chocolat-dattes, crème glacée au halva de sésame, croquant au sésame",
+      },
+      {
+        name: "Bastani Sonnati",
+        price: "16",
+        description:
+          "Crème glacée au safran, à la rose et à la pistache, crème caillée, ghorabieh, framboises lyophilisées",
+      },
+    ],
   },
 };
 
@@ -330,6 +386,24 @@ export default function Menu() {
               <p className="mt-16 text-sm tracking-[0.04em] text-foreground/72 sm:mt-20 sm:text-base">
                 {copy.note}
               </p>
+
+              <div
+                className="mx-auto my-12 h-px w-24 bg-bous-gold/55 sm:my-16"
+                aria-hidden
+              />
+              <section>
+                <h2 className="text-[0.76rem] uppercase tracking-[0.3em] text-bous-red">
+                  {copy.dessertTitle}
+                </h2>
+                <ol className="mt-8 space-y-7 sm:space-y-8">
+                  {copy.desserts.map((item) => (
+                    <MenuItemRow
+                      key={`${item.name}-${item.price ?? "none"}`}
+                      item={item}
+                    />
+                  ))}
+                </ol>
+              </section>
             </div>
 
             <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
