@@ -2,8 +2,10 @@ import Link from "next/link";
 
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
+type MenuKey = "lunch" | "dining" | "group";
+
 type MenuSwitcherProps = {
-  active: "dining" | "group";
+  active: MenuKey;
 };
 
 const menuSwitcherCopy: Record<
@@ -11,40 +13,66 @@ const menuSwitcherCopy: Record<
   {
     ariaLabel: string;
     dining: string;
+    lunch: string;
     group: string;
+    viewDining: string;
+    viewLunch: string;
+    viewGroup: string;
   }
 > = {
   en: {
     ariaLabel: "Menu sections",
     dining: "Dinner Menu",
+    lunch: "Lunch Menu",
     group: "Group Menus",
+    viewDining: "View Dinner Menu",
+    viewLunch: "View Lunch Menu",
+    viewGroup: "View Group Menus",
   },
   fr: {
     ariaLabel: "Sections du menu",
     dining: "Menu du soir",
+    lunch: "Menu midi",
     group: "Menus de groupe",
+    viewDining: "Voir le menu du soir",
+    viewLunch: "Voir le menu midi",
+    viewGroup: "Voir les menus de groupe",
   },
 };
 
-export function MenuSwitcher({ active }: MenuSwitcherProps) {
-  const { language } = useLanguage();
-  const copy = menuSwitcherCopy[language];
-
-  const links = [
+function getMenuLinks(
+  copy: (typeof menuSwitcherCopy)[Language],
+  useActionLabels = false,
+) {
+  return [
+    {
+      href: "/lunch-menu",
+      key: "lunch" as const,
+      label: useActionLabels ? copy.viewLunch : copy.lunch,
+    },
     {
       href: "/menu",
       key: "dining" as const,
-      label: copy.dining,
+      label: useActionLabels ? copy.viewDining : copy.dining,
     },
     {
       href: "/group-menu",
       key: "group" as const,
-      label: copy.group,
+      label: useActionLabels ? copy.viewGroup : copy.group,
     },
   ];
+}
+
+export function MenuSwitcher({ active }: MenuSwitcherProps) {
+  const { language } = useLanguage();
+  const copy = menuSwitcherCopy[language];
+  const links = getMenuLinks(copy);
 
   return (
-    <nav aria-label={copy.ariaLabel} className="flex flex-wrap gap-2">
+    <nav
+      aria-label={copy.ariaLabel}
+      className="flex flex-wrap justify-center gap-2"
+    >
       {links.map((link) => {
         const isActive = active === link.key;
 
@@ -64,6 +92,29 @@ export function MenuSwitcher({ active }: MenuSwitcherProps) {
           </Link>
         );
       })}
+    </nav>
+  );
+}
+
+export function RelatedMenuLinks({ active }: MenuSwitcherProps) {
+  const { language } = useLanguage();
+  const copy = menuSwitcherCopy[language];
+  const links = getMenuLinks(copy, true).filter((link) => link.key !== active);
+
+  return (
+    <nav
+      aria-label={copy.ariaLabel}
+      className="flex flex-wrap justify-center gap-3"
+    >
+      {links.map((link) => (
+        <Link
+          key={link.key}
+          href={link.href}
+          className="brand-link px-2 text-[0.72rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
+        >
+          {link.label}
+        </Link>
+      ))}
     </nav>
   );
 }

@@ -1,7 +1,5 @@
-import Link from "next/link";
-
 import type { Language } from "@/context/LanguageContext";
-import { MenuSwitcher } from "@/components/MenuSwitcher";
+import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
 import { SiteLayout } from "@/components/SiteLayout";
 import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
@@ -30,7 +28,6 @@ type GroupMenuCopy = {
   pdfLabel: string;
   packageLabel: string;
   reserveLabel: string;
-  otherMenuLabel: string;
   informationTitle: string;
   information: string[];
   packages: GroupMenuPackage[];
@@ -47,7 +44,6 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
     pdfLabel: "Open PDF menu",
     packageLabel: "Group Menu",
     reserveLabel: "Make a reservation",
-    otherMenuLabel: "View Dinner Menu",
     informationTitle: "Group Dining Information",
     information: [
       "Minimum 8 guests",
@@ -90,9 +86,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Dessert",
-            detail: "Choose One",
-            isChoice: true,
-            items: ["Faloodeh", "Persian Love Cake"],
+            items: ["Dessert of the day"],
           },
           {
             title: "Tea Service",
@@ -113,11 +107,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           {
             title: "Signature Course",
             detail: "One of each item for every 4 guests",
-            items: [
-              "Fresh Sangak Bread",
-              "Kashk-o-Bademjoon",
-              "Golden Square Mile Tahchin",
-            ],
+            items: ["Fresh Sangak Bread", "Kashk-o-Bademjoon", "Tahchin"],
           },
           {
             title: "Main Course",
@@ -138,9 +128,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Dessert",
-            detail: "Choose One",
-            isChoice: true,
-            items: ["Faloodeh", "Persian Love Cake"],
+            items: ["Dessert of the day"],
           },
           {
             title: "Tea Service",
@@ -169,7 +157,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
               "Fresh Sangak Bread",
               "Kashk-o-Bademjoon",
               "Spicy Saffron Chicken Wings",
-              "Golden Square Mile Tahchin",
+              "Tahchin",
             ],
           },
           {
@@ -203,9 +191,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Dessert",
-            detail: "Choose One",
-            isChoice: true,
-            items: ["Persian Love Cake", "Faloodeh", "Chocolate Date Cake"],
+            items: ["Dessert of the day"],
           },
           {
             title: "Tea Ceremony",
@@ -225,7 +211,6 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
     pdfLabel: "Ouvrir le menu PDF",
     packageLabel: "Menu de groupe",
     reserveLabel: "Faire une réservation",
-    otherMenuLabel: "Voir le menu du soir",
     informationTitle: "Information pour les groupes",
     information: [
       "Minimum 8 personnes",
@@ -268,9 +253,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Dessert",
-            detail: "Choisir un",
-            isChoice: true,
-            items: ["Faloodeh", "Gâteau d'amour persan"],
+            items: ["Dessert du jour"],
           },
           {
             title: "Service de thé",
@@ -291,11 +274,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           {
             title: "Service signature",
             detail: "Un de chaque item pour 4 personnes",
-            items: [
-              "Pain Sangak frais",
-              "Kashk-o-Bademjoon",
-              "Tahchin du Mille carré doré",
-            ],
+            items: ["Pain Sangak frais", "Kashk-o-Bademjoon", "Tahchin"],
           },
           {
             title: "Plat principal",
@@ -316,9 +295,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Dessert",
-            detail: "Choisir un",
-            isChoice: true,
-            items: ["Faloodeh", "Gâteau d'amour persan"],
+            items: ["Dessert du jour"],
           },
           {
             title: "Service de thé",
@@ -333,7 +310,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         courses: [
           {
             title: "Accueil",
-            items: ["Sharbat persan"],
+            items: ["Cocktail persan/Sharbat"],
           },
           {
             title: "Ouverture Bazm",
@@ -347,7 +324,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
               "Pain Sangak frais",
               "Kashk-o-Bademjoon",
               "Ailes de poulet épicées au safran",
-              "Tahchin du Mille carré doré",
+              "Tahchin",
             ],
           },
           {
@@ -381,13 +358,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Dessert",
-            detail: "Choisir un",
-            isChoice: true,
-            items: [
-              "Gâteau d'amour persan",
-              "Faloodeh",
-              "Gâteau aux dattes et chocolat",
-            ],
+            items: ["Dessert du jour"],
           },
           {
             title: "Cérémonie du thé",
@@ -542,12 +513,7 @@ export default function GroupMenu() {
                 >
                   {copy.reserveLabel}
                 </a>
-                <Link
-                  href="/menu"
-                  className="brand-link px-2 text-[0.72rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
-                >
-                  {copy.otherMenuLabel}
-                </Link>
+                <RelatedMenuLinks active="group" />
               </div>
             </div>
           </div>

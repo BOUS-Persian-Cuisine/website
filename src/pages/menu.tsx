@@ -1,7 +1,5 @@
-import Link from "next/link";
-
 import type { Language } from "@/context/LanguageContext";
-import { MenuSwitcher } from "@/components/MenuSwitcher";
+import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
 import { SiteLayout } from "@/components/SiteLayout";
 import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
@@ -20,21 +18,19 @@ type MenuCopy = {
   pdfHref: string;
   pdfLabel: string;
   reserveLabel: string;
-  otherMenuLabel: string;
   note: string;
   groups: MenuItem[][];
 };
 
 const menuCopy: Record<Language, MenuCopy> = {
   en: {
-    pageTitle: "Menu - BOUS Persian Cuisine",
-    sectionLabel: "Soft opening menu",
-    eyebrow: "Soft opening",
-    heading: "Menu",
-    pdfHref: "/menu-soft-opening-en.pdf",
+    pageTitle: "Dinner Menu - BOUS Persian Cuisine",
+    sectionLabel: "Dinner menu",
+    eyebrow: "Dinner",
+    heading: "Dinner Menu",
+    pdfHref: "/dinner-menu-en.pdf",
     pdfLabel: "Open PDF menu",
     reserveLabel: "Make a reservation",
-    otherMenuLabel: "View Group Menus",
     note: "* Vegetarian option available.",
     groups: [
       [
@@ -139,14 +135,13 @@ const menuCopy: Record<Language, MenuCopy> = {
     ],
   },
   fr: {
-    pageTitle: "Menu - BOUS Cuisine perse",
-    sectionLabel: "Menu d'ouverture progressive",
-    eyebrow: "Ouverture progressive",
-    heading: "Menu",
-    pdfHref: "/menu-soft-opening-fr.pdf",
+    pageTitle: "Menu du soir - BOUS Cuisine perse",
+    sectionLabel: "Menu du soir",
+    eyebrow: "Soir",
+    heading: "Menu du soir",
+    pdfHref: "/dinner-menu-fr.pdf",
     pdfLabel: "Ouvrir le menu PDF",
     reserveLabel: "Faire une réservation",
-    otherMenuLabel: "Voir les menus de groupe",
     note: "* Option végétarienne disponible",
     groups: [
       [
@@ -343,12 +338,7 @@ export default function Menu() {
               >
                 {copy.reserveLabel}
               </a>
-              <Link
-                href="/group-menu"
-                className="brand-link px-2 text-[0.72rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
-              >
-                {copy.otherMenuLabel}
-              </Link>
+              <RelatedMenuLinks active="dining" />
             </div>
           </div>
         </section>

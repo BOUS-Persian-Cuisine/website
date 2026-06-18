@@ -128,6 +128,12 @@ export function SiteFooter() {
       title: t.footer.sections.dine,
       content: (
         <nav className="flex flex-col gap-3">
+          <Link
+            href="/lunch-menu"
+            className="underline-offset-4 hover:underline"
+          >
+            {t.footer.links.lunchMenu}
+          </Link>
           <Link href="/menu" className="underline-offset-4 hover:underline">
             {t.footer.links.menu}
           </Link>
