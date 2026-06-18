@@ -1,7 +1,7 @@
 import type { Language } from "@/context/LanguageContext";
 import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
 import { SiteLayout } from "@/components/SiteLayout";
-import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
+import { getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 type GroupMenuCourse = {
@@ -433,6 +433,7 @@ function GroupMenuCard({
 export default function GroupMenu() {
   const { language } = useLanguage();
   const copy = groupMenuCopy[language];
+  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
     <SiteLayout title={copy.pageTitle}>
@@ -508,7 +509,7 @@ export default function GroupMenu() {
 
               <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
                 <a
-                  href={OPENTABLE_RESERVATION_URL}
+                  href={reservationUrl}
                   className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.22em] text-bous-white transition-colors hover:border-bous-burgundy hover:bg-bous-burgundy"
                 >
                   {copy.reserveLabel}

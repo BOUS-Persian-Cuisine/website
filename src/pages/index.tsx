@@ -1,11 +1,12 @@
 import Link from "next/link";
 
 import { SiteLayout } from "@/components/SiteLayout";
-import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
+import { getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
     <SiteLayout>
@@ -46,7 +47,7 @@ export default function Home() {
               <h1 className="sr-only">{t.common.siteTitle}</h1>
               <div className="flex flex-wrap gap-3">
                 <a
-                  href={OPENTABLE_RESERVATION_URL}
+                  href={reservationUrl}
                   className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.24em] text-bous-white transition-colors hover:bg-bous-burgundy"
                 >
                   {t.header.nav.reserve}

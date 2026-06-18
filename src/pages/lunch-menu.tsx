@@ -1,6 +1,6 @@
 import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
 import { SiteLayout } from "@/components/SiteLayout";
-import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
+import { getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
 type LunchMenuItem = {
@@ -295,6 +295,7 @@ function LunchSection({ section }: { section: LunchMenuSection }) {
 export default function LunchMenu() {
   const { language } = useLanguage();
   const copy = lunchMenuCopy[language];
+  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
     <SiteLayout title={copy.pageTitle}>
@@ -382,7 +383,7 @@ export default function LunchMenu() {
 
             <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
               <a
-                href={OPENTABLE_RESERVATION_URL}
+                href={reservationUrl}
                 className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.22em] text-bous-white transition-colors hover:border-bous-burgundy hover:bg-bous-burgundy"
               >
                 {copy.reserveLabel}

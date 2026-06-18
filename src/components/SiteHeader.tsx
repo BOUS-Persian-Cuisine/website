@@ -7,7 +7,7 @@ import {
   useLanguage,
   type Language,
 } from "@/context/LanguageContext";
-import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
+import { getOpenTableReservationUrl } from "@/constants/links";
 
 const languageOptions: Language[] = ["en", "fr"];
 
@@ -77,6 +77,7 @@ export function SiteHeader() {
   ].join(" ");
   const menuCloseButtonClass =
     "inline-flex h-11 w-11 items-center justify-center rounded-full border border-bous-gold/35 bg-bous-white/45 text-foreground shadow-[0_10px_30px_rgba(53,5,20,0.08)] transition-colors hover:border-bous-red/45 hover:bg-bous-blush/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red";
+  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
     <>
@@ -87,7 +88,7 @@ export function SiteHeader() {
             className="hidden items-center gap-8 md:flex"
           >
             <a
-              href={OPENTABLE_RESERVATION_URL}
+              href={reservationUrl}
               className={navLinkClass}
             >
               {t.header.nav.reserve}
@@ -238,7 +239,7 @@ export function SiteHeader() {
 
             <nav className="flex flex-col gap-7 px-6 py-10 text-xl font-light tracking-[0.22em]">
               <a
-                href={OPENTABLE_RESERVATION_URL}
+                href={reservationUrl}
                 className="transition-colors hover:text-bous-red"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

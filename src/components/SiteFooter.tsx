@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-import { OPENTABLE_RESERVATION_URL } from "@/constants/links";
+import { getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 type FooterSection = "info" | "dine" | "contact";
@@ -36,10 +36,11 @@ const footerDividerInitialStyle = {
 } as CSSProperties;
 
 export function SiteFooter() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const footerRef = useRef<HTMLElement | null>(null);
   const [openFooterSection, setOpenFooterSection] =
     useState<FooterSection | null>("info");
+  const reservationUrl = getOpenTableReservationUrl(language);
 
   const toggleFooterSection = (section: FooterSection) =>
     setOpenFooterSection((current) => (current === section ? null : section));
@@ -144,7 +145,7 @@ export function SiteFooter() {
             {t.footer.links.groupMenu}
           </Link>
           <a
-            href={OPENTABLE_RESERVATION_URL}
+            href={reservationUrl}
             className="underline-offset-4 hover:underline"
           >
             {t.footer.reserveTable}
