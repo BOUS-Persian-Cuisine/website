@@ -33,11 +33,12 @@ const menuCopy: Record<Language, MenuCopy> = {
     pdfHref: "/dinner-menu-en.pdf",
     pdfLabel: "Open PDF menu",
     reserveLabel: "Make a reservation",
-    note: "* Vegetarian option available.",
+    note: "* Vegetarian option available",
     groups: [
       [
         {
           name: "Sangak Bread",
+          price: "5.5",
           description: "Traditional Persian sourdough flatbread",
         },
         {
@@ -50,7 +51,7 @@ const menuCopy: Record<Language, MenuCopy> = {
           name: "Maast-o-Khiar",
           price: "18",
           description:
-            "House-Made Yogurt, Cucumber, Kashan Rose Petal, Walnut, Garlic, Herbs",
+            "House-Made Yogurt, Cucumber, Kashan Rose Petal, Walnut, Herbs",
         },
         {
           name: "Spicy Saffron Chicken Wings",
@@ -65,7 +66,7 @@ const menuCopy: Record<Language, MenuCopy> = {
         },
         {
           name: "Kashk-o-Bademjoon",
-          price: "24",
+          price: "28",
           description: "Smoked eggplant, Kashk, Crispy onion, Mint, Fried garlic",
         },
       ],
@@ -92,6 +93,12 @@ const menuCopy: Record<Language, MenuCopy> = {
           description:
             "Charcoal-grilled Kamouraska Lamb Chops, Grilled Vegetables",
         },
+        {
+          name: "Stuffed Branzino",
+          price: "72",
+          description:
+            "Charcoal-grilled whole branzino, herbs, pistachios & barberries, served on traditional Northern Iranian rice, smoke-cured with dried rice stalks",
+        },
       ],
       [
         {
@@ -105,6 +112,12 @@ const menuCopy: Record<Language, MenuCopy> = {
           price: "55",
           description:
             "Braised lamb shank, five-herb sauce, Red beans, Dried lime",
+        },
+        {
+          name: "Summer Special | Albaloo Polo with Lamb Neck",
+          price: "58",
+          description:
+            "Quebec lamb neck, Quebec sour cherries from Domaine Deslandes, Northern Iranian rice, pistachios, Saffron",
         },
       ],
       [
@@ -176,6 +189,7 @@ const menuCopy: Record<Language, MenuCopy> = {
       [
         {
           name: "Pain Sangak",
+          price: "5,5",
           description: "Pain plat persan traditionnel au levain",
         },
         {
@@ -187,7 +201,7 @@ const menuCopy: Record<Language, MenuCopy> = {
           name: "Maast-o-Khiar",
           price: "18",
           description:
-            "Yogourt maison, concombre, pétales de rose de Kashan, noix, ail, herbes",
+            "Yogourt maison, concombre, pétales de rose de Kashan, noix, herbes",
         },
         {
           name: "Ailes de poulet épicées au safran",
@@ -202,7 +216,7 @@ const menuCopy: Record<Language, MenuCopy> = {
         },
         {
           name: "Kashk-o-Bademjoon",
-          price: "24",
+          price: "28",
           description:
             "Aubergine fumée, kashk, oignons croustillants, menthe, ail frit",
         },
@@ -230,6 +244,12 @@ const menuCopy: Record<Language, MenuCopy> = {
           description:
             "Côtelettes d’agneau de Kamouraska grillées au charbon, légumes grillés",
         },
+        {
+          name: "Branzino farci",
+          price: "72",
+          description:
+            "Branzino entier grillé au charbon, herbes, pistaches et épines-vinettes, servi sur du riz traditionnel du nord de l’Iran, fumé avec des tiges de riz séchées",
+        },
       ],
       [
         {
@@ -243,6 +263,12 @@ const menuCopy: Record<Language, MenuCopy> = {
           price: "55",
           description:
             "Jarret d’agneau braisé, sauce aux cinq herbes, haricots rouges, lime séchée",
+        },
+        {
+          name: "Spécial d’été | Albaloo Polo au cou d’agneau",
+          price: "58",
+          description:
+            "Cou d’agneau du Québec, griottes du Québec du Domaine Deslandes, riz du nord de l’Iran, pistaches, safran",
         },
       ],
       [
