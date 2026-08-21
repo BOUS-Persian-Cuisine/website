@@ -60,6 +60,8 @@ type Translations = {
     sectionLabel: string;
     bodyPrefix: string;
     email: string;
+    bodyConnector: string;
+    phone: string;
     bodySuffix: string;
   };
 };
@@ -124,8 +126,10 @@ export const translations: Record<Language, Translations> = {
       pageTitle: "Contact BOUS - Persian Cuisine",
       sectionLabel: "Contact",
       bodyPrefix:
-        "Please email us. We’re happy to answer any questions you may have about our restaurant, menu, or reservations. You can reach us at",
+        "Please email or call us. We’re happy to answer any questions you may have about our restaurant, menu, or reservations. You can reach us at",
       email: "info@bous.ca",
+      bodyConnector: " or ",
+      phone: "+1 438 900 1310",
       bodySuffix: ".",
     },
   },
@@ -185,8 +189,10 @@ export const translations: Record<Language, Translations> = {
       pageTitle: "Contact BOUS - Cuisine perse",
       sectionLabel: "Contact",
       bodyPrefix:
-        "Écrivez-nous par courriel. Il nous fera plaisir de répondre à vos questions au sujet de notre restaurant, de notre menu ou des réservations. Vous pouvez nous joindre à",
+        "Écrivez-nous ou appelez-nous. Il nous fera plaisir de répondre à vos questions au sujet de notre restaurant, de notre menu ou des réservations. Vous pouvez nous joindre à",
       email: "info@bous.ca",
+      bodyConnector: " ou ",
+      phone: "+1 438 900 1310",
       bodySuffix: ".",
     },
   },

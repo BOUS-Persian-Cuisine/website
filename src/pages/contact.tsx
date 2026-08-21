@@ -63,6 +63,13 @@ export default function Contact() {
                 >
                   {t.contact.email}
                 </a>
+                {t.contact.bodyConnector}
+                <a
+                  href={`tel:${t.contact.phone.replace(/\s/g, "")}`}
+                  className="brand-link underline decoration-bous-red decoration-1 transition-colors hover:text-bous-rose"
+                >
+                  {t.contact.phone}
+                </a>
                 {t.contact.bodySuffix}
               </p>
             </div>

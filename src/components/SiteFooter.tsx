@@ -115,6 +115,13 @@ export function SiteFooter() {
       title: t.footer.sections.info,
       content: (
         <address className="not-italic">
+          <a
+            href={`tel:${t.contact.phone.replace(/\s/g, "")}`}
+            className="underline-offset-4 hover:underline"
+          >
+            {t.contact.phone}
+          </a>
+          <br />
           {t.footer.addressLines.map((line, index) => (
             <span key={line}>
               {line}
