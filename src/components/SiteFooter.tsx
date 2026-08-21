@@ -146,6 +146,12 @@ export function SiteFooter() {
             {t.footer.links.menu}
           </Link>
           <Link
+            href="/drinks-menu"
+            className="underline-offset-4 hover:underline"
+          >
+            {t.footer.links.drinksMenu}
+          </Link>
+          <Link
             href="/group-menu"
             className="underline-offset-4 hover:underline"
           >

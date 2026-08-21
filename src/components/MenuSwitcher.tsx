@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
-type MenuKey = "lunch" | "dining" | "group";
+type MenuKey = "lunch" | "dining" | "drinks" | "group";
 
 type MenuSwitcherProps = {
   active: MenuKey;
@@ -13,9 +13,11 @@ const menuSwitcherCopy: Record<
   {
     ariaLabel: string;
     dining: string;
+    drinks: string;
     lunch: string;
     group: string;
     viewDining: string;
+    viewDrinks: string;
     viewLunch: string;
     viewGroup: string;
   }
@@ -23,18 +25,22 @@ const menuSwitcherCopy: Record<
   en: {
     ariaLabel: "Menu sections",
     dining: "Dinner Menu",
+    drinks: "Drinks Menu",
     lunch: "Lunch Menu",
     group: "Group Menus",
     viewDining: "View Dinner Menu",
+    viewDrinks: "View Drinks Menu",
     viewLunch: "View Lunch Menu",
     viewGroup: "View Group Menus",
   },
   fr: {
     ariaLabel: "Sections du menu",
     dining: "Menu du soir",
+    drinks: "Carte des boissons",
     lunch: "Menu midi",
     group: "Menus de groupe",
     viewDining: "Voir le menu du soir",
+    viewDrinks: "Voir la carte des boissons",
     viewLunch: "Voir le menu midi",
     viewGroup: "Voir les menus de groupe",
   },
@@ -54,6 +60,11 @@ function getMenuLinks(
       href: "/menu",
       key: "dining" as const,
       label: useActionLabels ? copy.viewDining : copy.dining,
+    },
+    {
+      href: "/drinks-menu",
+      key: "drinks" as const,
+      label: useActionLabels ? copy.viewDrinks : copy.drinks,
     },
     {
       href: "/group-menu",

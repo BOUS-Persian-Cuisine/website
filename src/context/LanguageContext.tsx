@@ -42,6 +42,7 @@ type Translations = {
     contactLinksLabel: string;
     links: {
       menu: string;
+      drinksMenu: string;
       lunchMenu: string;
       groupMenu: string;
       about: string;
@@ -109,6 +110,7 @@ export const translations: Record<Language, Translations> = {
       contactLinksLabel: "Contact links",
       links: {
         menu: "Dinner Menu",
+        drinksMenu: "Drinks Menu",
         lunchMenu: "Lunch Menu",
         groupMenu: "Group Menus",
         about: "About",
@@ -172,6 +174,7 @@ export const translations: Record<Language, Translations> = {
       contactLinksLabel: "Liens de contact",
       links: {
         menu: "Menu du soir",
+        drinksMenu: "Carte des boissons",
         lunchMenu: "Menu midi",
         groupMenu: "Menus de groupe",
         about: "À propos",
