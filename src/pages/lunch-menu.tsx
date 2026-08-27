@@ -1,6 +1,4 @@
-import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
-import { SiteLayout } from "@/components/SiteLayout";
-import { getOpenTableReservationUrl } from "@/constants/links";
+import { MenuPageLayout } from "@/components/MenuPageLayout";
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
 type LunchMenuItem = {
@@ -16,10 +14,9 @@ type LunchMenuSection = {
 };
 
 type LunchMenuCopy = {
-  pageTitle: string;
-  sectionLabel: string;
-  eyebrow: string;
-  heading: string;
+    pageTitle: string;
+    sectionLabel: string;
+    heading: string;
   menuTitle: string;
   price: string;
   includes: string;
@@ -36,7 +33,6 @@ const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
   en: {
     pageTitle: "Lunch Menu - BOUS Persian Cuisine",
     sectionLabel: "Lunch menu",
-    eyebrow: "Lunch",
     heading: "Lunch Menu",
     menuTitle: "Table d'Hôte Menu",
     price: "$45 per person",
@@ -147,7 +143,6 @@ const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
   fr: {
     pageTitle: "Menu midi - BOUS Cuisine perse",
     sectionLabel: "Menu midi",
-    eyebrow: "Midi",
     heading: "Menu midi",
     menuTitle: "Menu Table d'Hôte",
     price: "45 $ par personne",
@@ -260,13 +255,15 @@ const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
 
 function LunchMenuItemRow({ item }: { item: LunchMenuItem }) {
   return (
-    <li>
-      <p className="font-operetta text-xl font-light leading-tight text-foreground sm:text-2xl">
+    <li className="text-center">
+      <p className="text-base leading-6 text-bous-burgundy">
         <span className="font-semibold">{item.name}</span>
-        {item.price ? <span className="font-light"> {item.price}</span> : null}
+        {item.price ? (
+          <span className="ml-1 font-normal tabular-nums">{item.price}</span>
+        ) : null}
       </p>
       {item.description ? (
-        <p className="mx-auto mt-2 max-w-3xl text-base leading-7 tracking-[0.01em] text-foreground/78 sm:text-lg sm:leading-8">
+        <p className="mx-auto mt-1 max-w-[65ch] text-base leading-6 text-bous-burgundy/88">
           {item.description}
         </p>
       ) : null}
@@ -276,14 +273,14 @@ function LunchMenuItemRow({ item }: { item: LunchMenuItem }) {
 
 function LunchSection({ section }: { section: LunchMenuSection }) {
   return (
-    <section>
-      <h2 className="text-[0.76rem] uppercase tracking-[0.3em] text-bous-red">
+    <section className="text-center">
+      <h2 className="font-operetta text-2xl font-normal leading-tight text-bous-burgundy">
         {section.title}
       </h2>
-      <p className="mt-3 text-base leading-7 tracking-[0.03em] text-foreground/70">
+      <p className="mt-1.5 text-base leading-6 text-bous-burgundy/72">
         {section.detail}
       </p>
-      <ol className="mt-8 space-y-6 sm:space-y-7">
+      <ol className="mt-6 space-y-4">
         {section.items.map((item) => (
           <LunchMenuItemRow key={item.name} item={item} />
         ))}
@@ -295,104 +292,50 @@ function LunchSection({ section }: { section: LunchMenuSection }) {
 export default function LunchMenu() {
   const { language } = useLanguage();
   const copy = lunchMenuCopy[language];
-  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
-    <SiteLayout title={copy.pageTitle}>
-      <main className="bg-bous-cream">
-        <section
-          aria-label={copy.sectionLabel}
-          className="relative overflow-hidden bg-bous-cream"
-        >
-          <div className="relative isolate border-b border-bous-gold/30 bg-bous-burgundy text-bous-cream">
-            <div
-              className="absolute inset-0 bg-[url('/bous-real-tiles.jpg')] bg-cover bg-center opacity-[0.16]"
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0 bg-bous-burgundy/82"
-              aria-hidden
-            />
-            <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 py-12 sm:px-8 sm:py-16 lg:px-10">
-              <p className="text-[0.72rem] uppercase tracking-[0.32em] text-bous-gold">
-                {copy.eyebrow}
-              </p>
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <h1 className="font-operetta text-6xl font-light leading-none sm:text-7xl md:text-8xl">
-                  {copy.heading}
-                </h1>
-              </div>
-            </div>
-          </div>
+    <MenuPageLayout
+      active="lunch"
+      heading={copy.heading}
+      pdfHref={copy.pdfHref}
+      pdfLabel={copy.pdfLabel}
+      reserveLabel={copy.reserveLabel}
+      sectionLabel={copy.sectionLabel}
+      title={copy.pageTitle}
+    >
+      <div>
+        <div className="text-center">
+          <h2 className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-bous-red">
+            {copy.menuTitle}
+          </h2>
+          <p className="font-operetta mt-3 text-3xl font-light leading-tight text-bous-burgundy">
+            {copy.price}
+          </p>
+          <p className="mt-2 text-base leading-6 text-bous-burgundy/72">
+            {copy.includes}
+          </p>
+        </div>
 
-          <div className="mx-auto max-w-5xl px-6 py-14 text-center sm:px-8 sm:py-18 lg:px-10 lg:py-22">
-            <div className="mb-14 flex flex-col items-center justify-center gap-2 sm:mb-16">
-              <MenuSwitcher active="lunch" />
-              <a
-                href={copy.pdfHref}
-                target="_blank"
-                rel="noreferrer"
-                className="brand-link inline-flex min-h-9 w-fit items-center justify-center px-2 text-[0.68rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
-              >
-                {copy.pdfLabel}
-              </a>
-            </div>
+        <div className="mt-14 space-y-14 sm:mt-16 sm:space-y-16">
+          {copy.sections.map((section) => (
+            <LunchSection key={section.title} section={section} />
+          ))}
+        </div>
 
-            <div className="bg-bous-white/28 px-6 py-10 shadow-[0_18px_50px_rgba(53,5,20,0.08)] sm:px-8 sm:py-12">
-              <div className="mx-auto max-w-3xl border-b border-bous-gold/35 pb-10">
-                <h2 className="text-[0.76rem] uppercase tracking-[0.3em] text-bous-red">
-                  {copy.menuTitle}
-                </h2>
-                <p className="mt-4 font-operetta text-3xl font-light leading-tight text-foreground sm:text-4xl">
-                  {copy.price}
-                </p>
-                <p className="mt-3 text-base leading-7 tracking-[0.03em] text-foreground/70 sm:text-lg">
-                  {copy.includes}
-                </p>
-              </div>
-
-              <div className="mx-auto mt-10 max-w-3xl space-y-12 sm:mt-12 sm:space-y-14">
-                {copy.sections.map((section) => (
-                  <LunchSection key={section.title} section={section} />
-                ))}
-              </div>
-
-              <div className="mx-auto my-12 h-px w-24 bg-bous-gold/55 sm:my-16" />
-
-              <section>
-                <h2 className="text-[0.76rem] uppercase tracking-[0.3em] text-bous-red">
-                  {copy.addOnsTitle}
-                </h2>
-                <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-12">
-                  {copy.addOnColumns.map((column, index) => (
-                    <ol
-                      key={`lunch-add-ons-${index}`}
-                      className="space-y-6 sm:space-y-7"
-                    >
-                      {column.map((item) => (
-                        <LunchMenuItemRow key={item.name} item={item} />
-                      ))}
-                    </ol>
-                  ))}
-                </div>
-                <ol className="mt-10">
-                  <LunchMenuItemRow item={copy.dessert} />
-                </ol>
-              </section>
-            </div>
-
-            <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
-              <a
-                href={reservationUrl}
-                className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.22em] text-bous-white transition-colors hover:border-bous-burgundy hover:bg-bous-burgundy"
-              >
-                {copy.reserveLabel}
-              </a>
-              <RelatedMenuLinks active="lunch" />
-            </div>
-          </div>
+        <section className="mt-14 text-center sm:mt-16">
+          <h2 className="font-operetta text-2xl font-normal leading-tight text-bous-burgundy">
+            {copy.addOnsTitle}
+          </h2>
+          <ol className="mt-6 space-y-4">
+            {copy.addOnColumns.flat().map((item) => (
+              <LunchMenuItemRow key={item.name} item={item} />
+            ))}
+          </ol>
+          <ol className="mt-4">
+            <LunchMenuItemRow item={copy.dessert} />
+          </ol>
         </section>
-      </main>
-    </SiteLayout>
+      </div>
+    </MenuPageLayout>
   );
 }

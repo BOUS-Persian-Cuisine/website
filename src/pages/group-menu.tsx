@@ -1,7 +1,5 @@
 import type { Language } from "@/context/LanguageContext";
-import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
-import { SiteLayout } from "@/components/SiteLayout";
-import { getOpenTableReservationUrl } from "@/constants/links";
+import { MenuPageLayout } from "@/components/MenuPageLayout";
 import { useLanguage } from "@/context/LanguageContext";
 
 type GroupMenuCourse = {
@@ -21,12 +19,10 @@ type GroupMenuPackage = {
 type GroupMenuCopy = {
   pageTitle: string;
   sectionLabel: string;
-  eyebrow: string;
   heading: string;
   intro: string;
   pdfHref: string;
   pdfLabel: string;
-  packageLabel: string;
   reserveLabel: string;
   informationTitle: string;
   information: string[];
@@ -37,12 +33,10 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
   en: {
     pageTitle: "Group Menu - BOUS Persian Cuisine",
     sectionLabel: "Group menu",
-    eyebrow: "Group dining",
     heading: "Group Menu",
     intro: "Shared set menus for parties of 8 guests or more.",
     pdfHref: "/group-menu-sofreh-mehmani-bazm.pdf",
     pdfLabel: "Open PDF menu",
-    packageLabel: "Group Menu",
     reserveLabel: "Make a reservation",
     informationTitle: "Group Dining Information",
     information: [
@@ -204,12 +198,10 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
   fr: {
     pageTitle: "Menu de groupe - BOUS Cuisine perse",
     sectionLabel: "Menu de groupe",
-    eyebrow: "Repas de groupe",
     heading: "Menu de groupe",
     intro: "Menus partagés pour les groupes de 8 personnes ou plus.",
     pdfHref: "/group-menu-sofreh-mehmani-bazm.pdf",
     pdfLabel: "Ouvrir le menu PDF",
-    packageLabel: "Menu de groupe",
     reserveLabel: "Faire une réservation",
     informationTitle: "Information pour les groupes",
     information: [
@@ -372,56 +364,41 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
 
 function CourseBlock({ course }: { course: GroupMenuCourse }) {
   return (
-    <div className="border-t border-bous-gold/25 pt-6">
-      <h3 className="text-[0.74rem] uppercase tracking-[0.26em] text-bous-red">
+    <div className="text-center">
+      <h3 className="text-base font-semibold leading-6 text-bous-burgundy">
         {course.title}
       </h3>
       {course.detail ? (
-        <p className="mt-3 text-sm leading-6 tracking-[0.03em] text-foreground/70">
+        <p className="mt-1 text-base leading-6 text-bous-burgundy/72">
           {course.detail}
         </p>
       ) : null}
-      <ul className="mt-3 space-y-2 text-base leading-7 text-foreground/84">
+      <ul className="mt-2 space-y-1 text-base leading-6 text-bous-burgundy/88">
         {course.items.map((item) => (
-          <li
-            key={`${course.title}-${item}`}
-            className="flex items-center gap-3"
-          >
-            <span
-              className="h-1.5 w-1.5 shrink-0 bg-bous-gold"
-              aria-hidden
-            />
-            <span>{item}</span>
-          </li>
+          <li key={`${course.title}-${item}`}>{item}</li>
         ))}
       </ul>
     </div>
   );
 }
 
-function GroupMenuCard({
-  menu,
-  packageLabel,
-}: {
-  menu: GroupMenuPackage;
-  packageLabel: string;
-}) {
+function GroupMenuCard({ menu }: { menu: GroupMenuPackage }) {
   return (
-    <article className="border border-bous-gold/35 bg-bous-white/28 px-6 py-8 shadow-[0_18px_50px_rgba(53,5,20,0.08)] sm:px-8 sm:py-10">
-      <div className="border-b border-bous-gold/30 pb-6">
-        <p className="text-[0.68rem] uppercase tracking-[0.28em] text-bous-red">
-          {packageLabel}
-        </p>
-        <h2 className="font-operetta mt-3 text-5xl font-light leading-none text-foreground sm:text-6xl">
+    <article className="text-center">
+      <div>
+        <h2 className="font-operetta text-4xl font-light leading-none tracking-[-0.02em] text-bous-burgundy">
           {menu.name}
         </h2>
-        <p className="mt-4 text-lg leading-7 text-foreground/78">
-          {menu.price} <span className="text-bous-gold">•</span>{" "}
+        <p className="mt-3 text-base leading-6 text-bous-burgundy/78">
+          <span className="tabular-nums">{menu.price}</span>
+          <span className="mx-2 text-bous-gold" aria-hidden>
+            /
+          </span>
           {menu.minimum}
         </p>
       </div>
 
-      <div className="mt-7 space-y-7">
+      <div className="mt-10 space-y-9">
         {menu.courses.map((course) => (
           <CourseBlock key={`${menu.name}-${course.title}`} course={course} />
         ))}
@@ -433,93 +410,34 @@ function GroupMenuCard({
 export default function GroupMenu() {
   const { language } = useLanguage();
   const copy = groupMenuCopy[language];
-  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
-    <SiteLayout title={copy.pageTitle}>
-      <main className="bg-bous-cream">
-        <section
-          aria-label={copy.sectionLabel}
-          className="relative overflow-hidden bg-bous-cream"
-        >
-          <div className="relative isolate border-b border-bous-gold/30 bg-bous-burgundy text-bous-cream">
-            <div
-              className="absolute inset-0 bg-[url('/bous-real-tiles.jpg')] bg-cover bg-center opacity-[0.16]"
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0 bg-bous-burgundy/82"
-              aria-hidden
-            />
-            <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 py-12 sm:px-8 sm:py-16 lg:px-10">
-              <p className="text-[0.72rem] uppercase tracking-[0.32em] text-bous-gold">
-                {copy.eyebrow}
-              </p>
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                  <h1 className="font-operetta text-6xl font-light leading-none sm:text-7xl md:text-8xl">
-                    {copy.heading}
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
+    <MenuPageLayout
+      active="group"
+      heading={copy.heading}
+      intro={copy.intro}
+      pdfHref={copy.pdfHref}
+      pdfLabel={copy.pdfLabel}
+      reserveLabel={copy.reserveLabel}
+      sectionLabel={copy.sectionLabel}
+      title={copy.pageTitle}
+    >
+      <div className="space-y-20">
+        {copy.packages.map((menu) => (
+          <GroupMenuCard key={menu.name} menu={menu} />
+        ))}
+      </div>
 
-          <div className="mx-auto max-w-5xl px-6 py-14 sm:px-8 sm:py-18 lg:px-10 lg:py-22">
-            <div className="mb-10 flex flex-col items-center justify-center gap-2 sm:mb-12">
-              <MenuSwitcher active="group" />
-              <a
-                href={copy.pdfHref}
-                target="_blank"
-                rel="noreferrer"
-                className="brand-link inline-flex min-h-9 w-fit items-center justify-center px-2 text-[0.68rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
-              >
-                {copy.pdfLabel}
-              </a>
-              <p className="mt-4 max-w-2xl text-center text-lg font-light leading-8 tracking-[0.01em] text-foreground/72 sm:text-xl">
-                {copy.intro}
-              </p>
-            </div>
-
-            <div className="grid gap-8">
-              {copy.packages.map((menu) => (
-                <GroupMenuCard
-                  key={menu.name}
-                  menu={menu}
-                  packageLabel={copy.packageLabel}
-                />
-              ))}
-            </div>
-
-            <div className="mx-auto mt-10 max-w-4xl border-t border-bous-gold/45 pt-10 text-center sm:mt-14 sm:pt-12">
-              <h2 className="text-[0.74rem] uppercase tracking-[0.3em] text-bous-red">
-                {copy.informationTitle}
-              </h2>
-              <ul className="mx-auto mt-6 max-w-3xl space-y-3 text-base leading-7 tracking-[0.02em] text-foreground/76 sm:text-left">
-                {copy.information.map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span
-                      className="mt-[0.62em] h-1.5 w-1.5 shrink-0 bg-bous-gold"
-                      aria-hidden
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
-                <a
-                  href={reservationUrl}
-                  className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.22em] text-bous-white transition-colors hover:border-bous-burgundy hover:bg-bous-burgundy"
-                >
-                  {copy.reserveLabel}
-                </a>
-                <RelatedMenuLinks active="group" />
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </SiteLayout>
+      <section className="mt-20 text-center">
+        <h2 className="font-operetta text-2xl font-normal leading-tight text-bous-burgundy">
+          {copy.informationTitle}
+        </h2>
+        <ul className="mt-6 space-y-2 text-base leading-7 text-bous-burgundy/78">
+          {copy.information.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+    </MenuPageLayout>
   );
 }

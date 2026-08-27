@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
-type MenuKey = "lunch" | "dining" | "drinks" | "group";
+export type MenuKey = "lunch" | "dining" | "drinks" | "group";
 
 type MenuSwitcherProps = {
   active: MenuKey;
@@ -82,7 +82,7 @@ export function MenuSwitcher({ active }: MenuSwitcherProps) {
   return (
     <nav
       aria-label={copy.ariaLabel}
-      className="flex flex-wrap justify-center gap-2"
+      className="flex flex-wrap justify-center gap-x-4 gap-y-1 sm:gap-x-7"
     >
       {links.map((link) => {
         const isActive = active === link.key;
@@ -93,10 +93,10 @@ export function MenuSwitcher({ active }: MenuSwitcherProps) {
             href={link.href}
             aria-current={isActive ? "page" : undefined}
             className={[
-              "inline-flex min-h-11 items-center justify-center border px-4 text-[0.68rem] uppercase tracking-[0.22em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-gold sm:px-5",
+              "inline-flex min-h-9 items-center justify-center border-b px-1 text-[0.67rem] uppercase tracking-[0.16em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red",
               isActive
-                ? "border-bous-burgundy bg-bous-burgundy text-bous-cream"
-                : "border-bous-gold/60 text-foreground hover:border-bous-red hover:bg-bous-blush/70 hover:text-bous-red",
+                ? "border-bous-burgundy text-bous-burgundy"
+                : "border-transparent text-foreground/58 hover:border-bous-red hover:text-bous-red",
             ].join(" ")}
           >
             {link.label}
@@ -115,13 +115,13 @@ export function RelatedMenuLinks({ active }: MenuSwitcherProps) {
   return (
     <nav
       aria-label={copy.ariaLabel}
-      className="flex flex-wrap justify-center gap-3"
+      className="flex flex-wrap justify-center gap-x-5 gap-y-2"
     >
       {links.map((link) => (
         <Link
           key={link.key}
           href={link.href}
-          className="brand-link px-2 text-[0.72rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
+          className="brand-link px-1 text-[0.67rem] uppercase tracking-[0.16em] text-foreground/58 transition-colors hover:text-bous-red hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red"
         >
           {link.label}
         </Link>

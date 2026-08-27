@@ -1,7 +1,5 @@
 import type { Language } from "@/context/LanguageContext";
-import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
-import { SiteLayout } from "@/components/SiteLayout";
-import { getOpenTableReservationUrl } from "@/constants/links";
+import { MenuPageLayout } from "@/components/MenuPageLayout";
 import { useLanguage } from "@/context/LanguageContext";
 
 type MenuItem = {
@@ -13,22 +11,18 @@ type MenuItem = {
 type MenuCopy = {
   pageTitle: string;
   sectionLabel: string;
-  eyebrow: string;
   heading: string;
   pdfHref: string;
   pdfLabel: string;
   reserveLabel: string;
   note: string;
   groups: MenuItem[][];
-  dessertTitle: string;
-  desserts: MenuItem[];
 };
 
 const menuCopy: Record<Language, MenuCopy> = {
   en: {
     pageTitle: "Dinner Menu - BOUS Persian Cuisine",
     sectionLabel: "Dinner menu",
-    eyebrow: "Dinner",
     heading: "Dinner Menu",
     pdfHref: "/dinner-menu-en.pdf",
     pdfLabel: "Open PDF menu",
@@ -38,14 +32,8 @@ const menuCopy: Record<Language, MenuCopy> = {
       [
         {
           name: "Sangak Bread",
-          price: "5.5",
+          price: "6",
           description: "Traditional Persian sourdough flatbread",
-        },
-        {
-          name: "Paneer Sabzi",
-          price: "9",
-          description:
-            "Feta cheese, Black Sesame, Fresh herbs, Walnuts, Radish",
         },
         {
           name: "Maast-o-Khiar",
@@ -54,8 +42,14 @@ const menuCopy: Record<Language, MenuCopy> = {
             "House-Made Yogurt, Cucumber, Kashan Rose Petal, Walnut, Herbs",
         },
         {
+          name: "Zeyton Parvardeh",
+          price: "20",
+          description:
+            "Green Olive, Walnut, Pomegranate, Olive oil, Garlic, Tarragon, Herbs",
+        },
+        {
           name: "Spicy Saffron Chicken Wings",
-          price: "17",
+          price: "18",
           description: "Chicken wingette, Saffron, Aleppo pepper",
         },
         {
@@ -94,10 +88,10 @@ const menuCopy: Record<Language, MenuCopy> = {
             "Charcoal-grilled Kamouraska Lamb Chops, Grilled Vegetables",
         },
         {
-          name: "Stuffed Branzino",
+          name: "Branzino",
           price: "72",
           description:
-            "Charcoal-grilled whole branzino, herbs, pistachios & barberries, served on traditional Northern Iranian rice, smoke-cured with dried rice stalks",
+            "Charcoal-grilled whole branzino, pistachios & barberries, served on traditional Northern Iranian rice, smoke-cured with dried rice stalks",
         },
       ],
       [
@@ -148,38 +142,10 @@ const menuCopy: Record<Language, MenuCopy> = {
         },
       ],
     ],
-    dessertTitle: "Desserts",
-    desserts: [
-      {
-        name: "Faloodeh",
-        price: "12",
-        description:
-          "Frozen Rice Vermicelli, Lime & Rosewater Syrup, Poached Barberries, Lime",
-      },
-      {
-        name: "Persian Love Cake",
-        price: "14",
-        description:
-          "Cardamom Financier, Rosewater and Yogurt Mousse, Poached Rhubarb, Pistachios, Olive Oil, Rose Petals",
-      },
-      {
-        name: "Chocolate Date Cake",
-        price: "16",
-        description:
-          "Chocolate and Date Cake, Chocolate Date Sauce, Sesame Halva Icecream, Sesame Brittle",
-      },
-      {
-        name: "Bastani Sonnati",
-        price: "16",
-        description:
-          "Saffron, Rose and Pistachio Icecream, Clotted Cream, Ghorabieh, Freeze Dried Raspberry",
-      },
-    ],
   },
   fr: {
     pageTitle: "Menu du soir - BOUS Cuisine perse",
     sectionLabel: "Menu du soir",
-    eyebrow: "Soir",
     heading: "Menu du soir",
     pdfHref: "/dinner-menu-fr.pdf",
     pdfLabel: "Ouvrir le menu PDF",
@@ -189,13 +155,8 @@ const menuCopy: Record<Language, MenuCopy> = {
       [
         {
           name: "Pain Sangak",
-          price: "5,5",
+          price: "6",
           description: "Pain plat persan traditionnel au levain",
-        },
-        {
-          name: "Paneer Sabzi",
-          price: "9",
-          description: "Feta, sésame noir, herbes fraîches, noix, radis",
         },
         {
           name: "Maast-o-Khiar",
@@ -204,8 +165,14 @@ const menuCopy: Record<Language, MenuCopy> = {
             "Yogourt maison, concombre, pétales de rose de Kashan, noix, herbes",
         },
         {
+          name: "Zeyton Parvardeh",
+          price: "20",
+          description:
+            "Olives vertes, noix, grenade, huile d’olive, ail, estragon, herbes",
+        },
+        {
           name: "Ailes de poulet épicées au safran",
-          price: "17",
+          price: "18",
           description: "Ailerons de poulet, safran, piment d’Alep",
         },
         {
@@ -245,10 +212,10 @@ const menuCopy: Record<Language, MenuCopy> = {
             "Côtelettes d’agneau de Kamouraska grillées au charbon, légumes grillés",
         },
         {
-          name: "Branzino farci",
+          name: "Branzino",
           price: "72",
           description:
-            "Branzino entier grillé au charbon, herbes, pistaches et épines-vinettes, servi sur du riz traditionnel du nord de l’Iran, fumé avec des tiges de riz séchées",
+            "Branzino entier grillé au charbon, pistaches et épine-vinette, servi sur un riz traditionnel du nord de l’Iran, fumé à la paille de riz séchée",
         },
       ],
       [
@@ -299,44 +266,19 @@ const menuCopy: Record<Language, MenuCopy> = {
         },
       ],
     ],
-    dessertTitle: "Desserts",
-    desserts: [
-      {
-        name: "Faloodeh",
-        price: "12",
-        description:
-          "Vermicelles de riz glacés, sirop à la lime et à l'eau de rose, épine-vinettes pochées, lime",
-      },
-      {
-        name: "Gâteau d'amour persan",
-        price: "14",
-        description:
-          "Financier à la cardamome, mousse au yogourt et à l'eau de rose, rhubarbe pochée, pistaches, huile d'olive, pétales de rose",
-      },
-      {
-        name: "Gâteau au chocolat et aux dattes",
-        price: "16",
-        description:
-          "Gâteau au chocolat et aux dattes, sauce chocolat-dattes, crème glacée au halva de sésame, croquant au sésame",
-      },
-      {
-        name: "Bastani Sonnati",
-        price: "16",
-        description:
-          "Crème glacée au safran, à la rose et à la pistache, crème caillée, ghorabieh, framboises lyophilisées",
-      },
-    ],
   },
 };
 
 function MenuItemRow({ item }: { item: MenuItem }) {
   return (
-    <li>
-      <p className="font-operetta text-xl font-light leading-tight text-foreground sm:text-2xl">
+    <li className="text-center">
+      <p className="text-base leading-6 text-bous-burgundy">
         <span className="font-semibold">{item.name}</span>
-        {item.price ? <span className="font-light"> {item.price}</span> : null}
+        {item.price ? (
+          <span className="ml-1 font-normal tabular-nums">{item.price}</span>
+        ) : null}
       </p>
-      <p className="mx-auto mt-2 max-w-3xl text-base leading-7 tracking-[0.01em] text-foreground/78 sm:text-lg sm:leading-8">
+      <p className="mx-auto mt-1 max-w-[65ch] text-base leading-6 text-bous-burgundy/88">
         {item.description}
       </p>
     </li>
@@ -346,104 +288,42 @@ function MenuItemRow({ item }: { item: MenuItem }) {
 export default function Menu() {
   const { language } = useLanguage();
   const copy = menuCopy[language];
-  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
-    <SiteLayout title={copy.pageTitle}>
-      <main className="bg-bous-cream">
-        <section
-          aria-label={copy.sectionLabel}
-          className="relative overflow-hidden bg-bous-cream"
-        >
-          <div className="relative isolate border-b border-bous-gold/30 bg-bous-burgundy text-bous-cream">
-            <div
-              className="absolute inset-0 bg-[url('/bous-real-tiles.jpg')] bg-cover bg-center opacity-[0.16]"
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0 bg-bous-burgundy/82"
-              aria-hidden
-            />
-            <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 py-12 sm:px-8 sm:py-16 lg:px-10">
-              <p className="text-[0.72rem] uppercase tracking-[0.32em] text-bous-gold">
-                {copy.eyebrow}
-              </p>
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <h1 className="font-operetta text-6xl font-light leading-none sm:text-7xl md:text-8xl">
-                  {copy.heading}
-                </h1>
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto max-w-5xl px-6 py-14 text-center sm:px-8 sm:py-18 lg:px-10 lg:py-22">
-            <div className="mb-14 flex flex-col items-center justify-center gap-2 sm:mb-16">
-              <MenuSwitcher active="dining" />
-              <a
-                href={copy.pdfHref}
-                target="_blank"
-                rel="noreferrer"
-                className="brand-link inline-flex min-h-9 w-fit items-center justify-center px-2 text-[0.68rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
-              >
-                {copy.pdfLabel}
-              </a>
-            </div>
-
-            <div className="bg-bous-white/28 px-6 py-10 shadow-[0_18px_50px_rgba(53,5,20,0.08)] sm:px-8 sm:py-12">
-              {copy.groups.map((group, groupIndex) => (
-                <div key={`menu-group-${groupIndex}`}>
-                  {groupIndex > 0 ? (
-                    <div
-                      className="mx-auto my-12 h-px w-24 bg-bous-gold/55 sm:my-16"
-                      aria-hidden
-                    />
-                  ) : null}
-                  <ol className="space-y-7 sm:space-y-8">
-                    {group.map((item) => (
-                      <MenuItemRow
-                        key={`${item.name}-${item.price ?? "none"}`}
-                        item={item}
-                      />
-                    ))}
-                  </ol>
-                </div>
+    <MenuPageLayout
+      active="dining"
+      heading={copy.heading}
+      pdfHref={copy.pdfHref}
+      pdfLabel={copy.pdfLabel}
+      reserveLabel={copy.reserveLabel}
+      sectionLabel={copy.sectionLabel}
+      title={copy.pageTitle}
+    >
+      <div>
+        {copy.groups.map((group, groupIndex) => (
+          <div
+            key={`menu-group-${groupIndex}`}
+            className={
+              groupIndex > 0
+                ? "mt-14 sm:mt-16"
+                : undefined
+            }
+          >
+            <ol className="space-y-4">
+              {group.map((item) => (
+                <MenuItemRow
+                  key={`${item.name}-${item.price ?? "none"}`}
+                  item={item}
+                />
               ))}
-
-              <p className="mt-16 text-sm tracking-[0.04em] text-foreground/72 sm:mt-20 sm:text-base">
-                {copy.note}
-              </p>
-
-              <div
-                className="mx-auto my-12 h-px w-24 bg-bous-gold/55 sm:my-16"
-                aria-hidden
-              />
-              <section>
-                <h2 className="text-[0.76rem] uppercase tracking-[0.3em] text-bous-red">
-                  {copy.dessertTitle}
-                </h2>
-                <ol className="mt-8 space-y-7 sm:space-y-8">
-                  {copy.desserts.map((item) => (
-                    <MenuItemRow
-                      key={`${item.name}-${item.price ?? "none"}`}
-                      item={item}
-                    />
-                  ))}
-                </ol>
-              </section>
-            </div>
-
-            <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
-              <a
-                href={reservationUrl}
-                className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.22em] text-bous-white transition-colors hover:border-bous-burgundy hover:bg-bous-burgundy"
-              >
-                {copy.reserveLabel}
-              </a>
-              <RelatedMenuLinks active="dining" />
-            </div>
+            </ol>
           </div>
-        </section>
-      </main>
-    </SiteLayout>
+        ))}
+
+        <p className="mt-14 text-center text-base text-bous-burgundy/82">
+          {copy.note}
+        </p>
+      </div>
+    </MenuPageLayout>
   );
 }

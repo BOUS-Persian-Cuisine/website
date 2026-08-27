@@ -1,6 +1,4 @@
-import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
-import { SiteLayout } from "@/components/SiteLayout";
-import { getOpenTableReservationUrl } from "@/constants/links";
+import { MenuPageLayout } from "@/components/MenuPageLayout";
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
 type LocalizedText = Record<Language, string>;
@@ -22,7 +20,6 @@ const pageCopy: Record<
   {
     pageTitle: string;
     sectionLabel: string;
-    eyebrow: string;
     heading: string;
     pdfLabel: string;
     reserveLabel: string;
@@ -31,7 +28,6 @@ const pageCopy: Record<
   en: {
     pageTitle: "Drinks Menu - BOUS Persian Cuisine",
     sectionLabel: "Drinks menu",
-    eyebrow: "Drinks",
     heading: "Drinks Menu",
     pdfLabel: "Open PDF menu",
     reserveLabel: "Make a reservation",
@@ -39,7 +35,6 @@ const pageCopy: Record<
   fr: {
     pageTitle: "Carte des boissons - BOUS Cuisine perse",
     sectionLabel: "Carte des boissons",
-    eyebrow: "Boissons",
     heading: "Carte des boissons",
     pdfLabel: "Ouvrir le menu PDF",
     reserveLabel: "Faire une réservation",
@@ -219,13 +214,15 @@ const drinkSections: DrinkSection[] = [
 
 function DrinkItemRow({ item, language }: { item: DrinkItem; language: Language }) {
   return (
-    <li>
-      <p className="font-operetta text-xl font-light leading-tight text-foreground sm:text-2xl">
+    <li className="text-center">
+      <p className="text-base leading-6 text-bous-burgundy">
         <span className="font-semibold">{item.name}</span>
-        {item.price ? <span className="font-light"> {item.price}</span> : null}
+        {item.price ? (
+          <span className="ml-1 font-normal tabular-nums">{item.price}</span>
+        ) : null}
       </p>
       {item.description ? (
-        <p className="mx-auto mt-2 max-w-3xl text-base leading-7 tracking-[0.01em] text-foreground/78 sm:text-lg sm:leading-8">
+        <p className="mx-auto mt-1 max-w-[65ch] text-base leading-6 text-bous-burgundy/88">
           {item.description[language]}
         </p>
       ) : null}
@@ -236,82 +233,47 @@ function DrinkItemRow({ item, language }: { item: DrinkItem; language: Language 
 export default function DrinksMenu() {
   const { language } = useLanguage();
   const copy = pageCopy[language];
-  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
-    <SiteLayout title={copy.pageTitle}>
-      <main className="bg-bous-cream">
-        <section
-          aria-label={copy.sectionLabel}
-          className="relative overflow-hidden bg-bous-cream"
-        >
-          <div className="relative isolate border-b border-bous-gold/30 bg-bous-burgundy text-bous-cream">
-            <div
-              className="absolute inset-0 bg-[url('/bous-real-tiles.jpg')] bg-cover bg-center opacity-[0.16]"
-              aria-hidden
-            />
-            <div className="absolute inset-0 bg-bous-burgundy/82" aria-hidden />
-            <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 py-12 sm:px-8 sm:py-16 lg:px-10">
-              <p className="text-[0.72rem] uppercase tracking-[0.32em] text-bous-gold">
-                {copy.eyebrow}
-              </p>
-              <h1 className="font-operetta text-6xl font-light leading-none sm:text-7xl md:text-8xl">
-                {copy.heading}
-              </h1>
-            </div>
-          </div>
-
-          <div className="mx-auto max-w-5xl px-6 py-14 text-center sm:px-8 sm:py-18 lg:px-10 lg:py-22">
-            <div className="mb-14 flex flex-col items-center justify-center gap-2 sm:mb-16">
-              <MenuSwitcher active="drinks" />
-              <a
-                href="/drinks-menu.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="brand-link inline-flex min-h-9 w-fit items-center justify-center px-2 text-[0.68rem] uppercase tracking-[0.22em] text-foreground/68 underline-offset-4 transition-colors hover:text-bous-red hover:underline"
-              >
-                {copy.pdfLabel}
-              </a>
-            </div>
-
-            <div className="bg-bous-white/28 px-6 py-10 shadow-[0_18px_50px_rgba(53,5,20,0.08)] sm:px-8 sm:py-12">
-              {drinkSections.map((section, sectionIndex) => (
-                <section key={section.title.en}>
-                  {sectionIndex > 0 ? (
-                    <div
-                      className="mx-auto my-12 h-px w-24 bg-bous-gold/55 sm:my-16"
-                      aria-hidden
-                    />
-                  ) : null}
-                  <h2 className="text-[0.76rem] uppercase tracking-[0.3em] text-bous-red">
-                    {section.title[language]}
-                    {section.price ? ` ${section.price}` : ""}
-                  </h2>
-                  <ol className="mt-8 space-y-7 sm:space-y-8">
-                    {section.items.map((item) => (
-                      <DrinkItemRow
-                        key={`${section.title.en}-${item.name}`}
-                        item={item}
-                        language={language}
-                      />
-                    ))}
-                  </ol>
-                </section>
+    <MenuPageLayout
+      active="drinks"
+      heading={copy.heading}
+      pdfHref="/drinks-menu.pdf"
+      pdfLabel={copy.pdfLabel}
+      reserveLabel={copy.reserveLabel}
+      sectionLabel={copy.sectionLabel}
+      title={copy.pageTitle}
+    >
+      <div>
+        {drinkSections.map((section, sectionIndex) => (
+          <section
+            key={section.title.en}
+            className={
+              sectionIndex > 0
+                ? "mt-14 sm:mt-16"
+                : undefined
+            }
+          >
+            <h2 className="font-operetta text-center text-2xl font-normal leading-tight text-bous-burgundy">
+              <span>{section.title[language]}</span>
+              {section.price ? (
+                <span className="ml-1 text-xl font-light tabular-nums">
+                  {section.price}
+                </span>
+              ) : null}
+            </h2>
+            <ol className="mt-6 space-y-4">
+              {section.items.map((item) => (
+                <DrinkItemRow
+                  key={`${section.title.en}-${item.name}`}
+                  item={item}
+                  language={language}
+                />
               ))}
-            </div>
-
-            <div className="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-center gap-3 border-t border-bous-gold/35 pt-10 sm:mt-12">
-              <a
-                href={reservationUrl}
-                className="inline-flex min-h-12 items-center justify-center border border-bous-red bg-bous-red px-6 text-[0.72rem] uppercase tracking-[0.22em] text-bous-white transition-colors hover:border-bous-burgundy hover:bg-bous-burgundy"
-              >
-                {copy.reserveLabel}
-              </a>
-              <RelatedMenuLinks active="drinks" />
-            </div>
-          </div>
-        </section>
-      </main>
-    </SiteLayout>
+            </ol>
+          </section>
+        ))}
+      </div>
+    </MenuPageLayout>
   );
 }
