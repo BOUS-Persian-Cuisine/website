@@ -12,16 +12,16 @@ self.__BUILD_MANIFEST = {
     "static/chunks/23b4169a0c58b0db.js"
   ],
   "/drinks-menu": [
-    "static/chunks/4e2ef466736e51d1.js"
+    "static/chunks/c4b1fa8224fdaf8d.js"
   ],
   "/group-menu": [
-    "static/chunks/0c2434c5336b708e.js"
+    "static/chunks/84e65d7c92c32e4f.js"
   ],
   "/lunch-menu": [
-    "static/chunks/86f55715fdc2ec6a.js"
+    "static/chunks/38e115bde7a7cbb2.js"
   ],
   "/menu": [
-    "static/chunks/28deb9a40dda6103.js"
+    "static/chunks/fcb6a5f8705334a6.js"
   ],
   "__rewrites": {
     "afterFiles": [],
