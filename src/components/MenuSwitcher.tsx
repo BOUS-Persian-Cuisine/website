@@ -82,7 +82,7 @@ export function MenuSwitcher({ active }: MenuSwitcherProps) {
   return (
     <nav
       aria-label={copy.ariaLabel}
-      className="flex flex-wrap justify-center gap-x-4 gap-y-1 sm:gap-x-7"
+      className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-3"
     >
       {links.map((link) => {
         const isActive = active === link.key;
@@ -93,10 +93,10 @@ export function MenuSwitcher({ active }: MenuSwitcherProps) {
             href={link.href}
             aria-current={isActive ? "page" : undefined}
             className={[
-              "inline-flex min-h-9 items-center justify-center border-b px-1 text-[0.67rem] uppercase tracking-[0.16em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red",
+              "inline-flex min-h-11 items-center justify-center border px-3 text-center text-[0.67rem] uppercase tracking-[0.16em] transition-[background-color,border-color,color,transform] active:translate-y-px focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bous-red sm:min-w-40 sm:px-5",
               isActive
-                ? "border-bous-burgundy text-bous-burgundy"
-                : "border-transparent text-foreground/58 hover:border-bous-red hover:text-bous-red",
+                ? "border-bous-burgundy bg-bous-burgundy text-bous-white"
+                : "border-bous-burgundy/25 bg-bous-white text-bous-burgundy/72 hover:border-bous-red hover:bg-bous-blush/45 hover:text-bous-red",
             ].join(" ")}
           >
             {link.label}
