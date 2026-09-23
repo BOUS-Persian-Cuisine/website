@@ -45,7 +45,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
       "Group menu selection is required for the entire table",
       "Final guest count required 48 hours prior to the event",
       "Dietary restrictions can be accommodated with advance notice",
-      "Applicable taxes and an 18% service charge are additional"
+      "Applicable taxes and a 20% service charge are additional"
     ],
     packages: [
       {
@@ -64,7 +64,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Main Course",
-            detail: "Choose One",
+            detail: "Choose One per Guest",
             isChoice: true,
             items: [
               "Koobideh Kabab (Ground Beef)",
@@ -110,13 +110,14 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Persian Feast",
+            detail: "To share",
             items: [
-              "Kamouraska Lamb Ghormeh Sabzi"
+              "Duck Fesenjoon"
             ]
           },
           {
             title: "Main Course",
-            detail: "Choose One",
+            detail: "Choose One per Guest",
             isChoice: true,
             items: [
               "Koobideh Kabab (Ground Beef)",
@@ -125,7 +126,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
               "Barg Kabab (Beef Tenderloin) +$10",
               "Shishlik (Kamouraska Lamb Chops) +$20",
               "Branzino and Pistachio +$25",
-              "Kamouraska Lamb Ghormeh Sabzi +$10"
+              "Kamouraska Lamb Shank Ghormeh Sabzi +$10"
             ],
             note: "Vegetarian options are available"
           },
@@ -170,13 +171,14 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Persian Feast",
+            detail: "To share",
             items: [
-              "Kamouraska Lamb Ghormeh Sabzi"
+              "Kamouraska Lamb Shank Ghormeh Sabzi"
             ]
           },
           {
             title: "Main Course",
-            detail: "Choose One",
+            detail: "Choose One per Guest",
             isChoice: true,
             items: [
               "Koobideh Kabab (Ground Beef)",
@@ -215,7 +217,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
     sectionLabel: "Menu de groupe",
     heading: "Menu de groupe",
     intro: "Menus partagés pour les groupes de 8 personnes ou plus.",
-    pdfHref: "/group-menu-sofreh-mehmani-bazm.pdf",
+    pdfHref: "/group-menu-fr.pdf",
     pdfLabel: "Ouvrir le menu PDF",
     reserveLabel: "Faire une réservation",
     informationTitle: "Information pour les groupes",
@@ -224,7 +226,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
       "La sélection du menu de groupe est requise pour toute la table",
       "Le nombre final d'invités est requis 48 heures avant l'événement",
       "Les restrictions alimentaires peuvent être accommodées avec un préavis",
-      "Les taxes applicables et des frais de service de 18 % sont en sus"
+      "Les taxes applicables et des frais de service de 20 % sont en sus"
     ],
     packages: [
       {
@@ -243,7 +245,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Plat principal",
-            detail: "Choisir un plat",
+            detail: "Un choix par personne",
             isChoice: true,
             items: [
               "Koobideh Kabab (bœuf haché)",
@@ -251,7 +253,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
               "Kabab de saumon (sumac et safran)",
               "Barg Kabab (filet de bœuf) +10 $",
               "Shishlik (côtelettes d’agneau de Kamouraska) +20 $",
-              "Branzino et pistache +25 $"
+              "Branzino aux pistaches +25 $"
             ],
             note: "Des options végétariennes sont disponibles"
           },
@@ -289,13 +291,14 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Festin persan",
+            detail: "À partager",
             items: [
-              "Ghormeh Sabzi d’agneau de Kamouraska"
+              "Fesenjoon de canard"
             ]
           },
           {
             title: "Plat principal",
-            detail: "Choisir un plat",
+            detail: "Un choix par personne",
             isChoice: true,
             items: [
               "Koobideh Kabab (bœuf haché)",
@@ -303,8 +306,8 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
               "Kabab de saumon (sumac et safran)",
               "Barg Kabab (filet de bœuf) +10 $",
               "Shishlik (côtelettes d’agneau de Kamouraska) +20 $",
-              "Branzino et pistache +25 $",
-              "Ghormeh Sabzi d’agneau de Kamouraska +10 $"
+              "Branzino aux pistaches +25 $",
+              "Ghormeh Sabzi au jarret d’agneau de Kamouraska +10 $"
             ],
             note: "Des options végétariennes sont disponibles"
           },
@@ -349,13 +352,14 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
           },
           {
             title: "Festin persan",
+            detail: "À partager",
             items: [
-              "Ghormeh Sabzi d’agneau de Kamouraska"
+              "Ghormeh Sabzi au jarret d’agneau de Kamouraska"
             ]
           },
           {
             title: "Plat principal",
-            detail: "Choisir un plat",
+            detail: "Un choix par personne",
             isChoice: true,
             items: [
               "Koobideh Kabab (bœuf haché)",
@@ -363,8 +367,8 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
               "Kabab de saumon (sumac et safran)",
               "Barg Kabab (filet de bœuf) +10 $",
               "Shishlik (côtelettes d’agneau de Kamouraska) +20 $",
-              "Branzino et pistache +25 $",
-              "Fesenjoon au canard +5 $"
+              "Branzino aux pistaches +25 $",
+              "Fesenjoon de canard +5 $"
             ],
             note: "Des options végétariennes sont disponibles"
           },
