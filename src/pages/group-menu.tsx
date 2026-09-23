@@ -7,6 +7,7 @@ type GroupMenuCourse = {
   detail?: string;
   items: string[];
   isChoice?: boolean;
+  note?: string;
 };
 
 type GroupMenuPackage = {
@@ -44,7 +45,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
       "Group menu selection is required for the entire table",
       "Final guest count required 48 hours prior to the event",
       "Dietary restrictions can be accommodated with advance notice",
-      "Applicable taxes and an 18% service charge are additional",
+      "Applicable taxes and an 18% service charge are additional"
     ],
     packages: [
       {
@@ -53,40 +54,44 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         minimum: "Minimum 8 Guests",
         courses: [
           {
-            title: "For the Table",
-            detail: "One of each item for every 4 guests",
+            title: "Opening",
+            detail: "For the table",
             items: [
               "Sangak Bread",
-              "Paneer Sabzi",
               "Maast-o-Khiar",
-              "Kashk-o-Bademjoon",
-            ],
+              "Kashk-o-Bademjoon"
+            ]
           },
           {
             title: "Main Course",
             detail: "Choose One",
             isChoice: true,
             items: [
-              "Koobideh Kabab",
-              "Joojeh Kabab",
-              "Duck Fesenjoon",
-              "Vegetarian Cauliflower Fesenjoon",
+              "Koobideh Kabab (Ground Beef)",
+              "Joojeh Kabab (Saffron Chicken)",
+              "Salmon Kabab (Sumac and Saffron)",
+              "Barg Kabab (Beef Tenderloin) +$10",
+              "Shishlik (Kamouraska Lamb Chops) +$20",
+              "Branzino and Pistachio +$25"
             ],
+            note: "Vegetarian options are available"
           },
           {
             title: "Accompaniments",
-            detail: "Shared for every 2 guests",
-            items: ["Saffron Rice", "Maast-o-Moosir"],
+            detail: "For the table",
+            items: [
+              "Salad Shirazi",
+              "Saffron Rice",
+              "Maast-o-Moosir"
+            ]
           },
           {
             title: "Dessert",
-            items: ["Dessert of the day"],
-          },
-          {
-            title: "Tea Service",
-            items: ["Persian Tea"],
-          },
-        ],
+            items: [
+              "Dessert of the day"
+            ]
+          }
+        ]
       },
       {
         name: "Mehmani",
@@ -94,41 +99,52 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         minimum: "Minimum 8 Guests",
         courses: [
           {
-            title: "Mehmani Opening",
-            detail: "One of each item for every 4 guests",
-            items: ["Sangak Bread", "Paneer Sabzi", "Maast-o-Khiar"],
+            title: "Opening",
+            detail: "For the table",
+            items: [
+              "Sangak Bread",
+              "Maast-o-Khiar",
+              "Kashk-o-Bademjoon",
+              "Golden Tahchin"
+            ]
           },
           {
-            title: "Signature Course",
-            detail: "One of each item for every 4 guests",
-            items: ["Fresh Sangak Bread", "Kashk-o-Bademjoon", "Tahchin"],
+            title: "Persian Feast",
+            items: [
+              "Kamouraska Lamb Ghormeh Sabzi"
+            ]
           },
           {
             title: "Main Course",
             detail: "Choose One",
             isChoice: true,
             items: [
-              "Joojeh Kabab",
-              "Barg Kabab (+$5)",
-              "Salmon Kabab",
-              "Kamouraska Lamb Ghormeh Sabzi (+$5)",
-              "Vegetarian Mushroom Ghormeh Sabzi",
+              "Koobideh Kabab (Ground Beef)",
+              "Joojeh Kabab (Saffron Chicken)",
+              "Salmon Kabab (Sumac and Saffron)",
+              "Barg Kabab (Beef Tenderloin) +$10",
+              "Shishlik (Kamouraska Lamb Chops) +$20",
+              "Branzino and Pistachio +$25",
+              "Kamouraska Lamb Ghormeh Sabzi +$10"
             ],
+            note: "Vegetarian options are available"
           },
           {
             title: "Accompaniments",
-            detail: "Shared for every 2 guests",
-            items: ["Salad Shirazi", "Saffron Rice", "Maast-o-Moosir"],
+            detail: "For the table",
+            items: [
+              "Salad Shirazi",
+              "Saffron Rice",
+              "Maast-o-Moosir"
+            ]
           },
           {
             title: "Dessert",
-            items: ["Dessert of the day"],
-          },
-          {
-            title: "Tea Service",
-            items: ["Persian Tea"],
-          },
-        ],
+            items: [
+              "Dessert of the day"
+            ]
+          }
+        ]
       },
       {
         name: "Bazm",
@@ -137,63 +153,62 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         courses: [
           {
             title: "Welcome",
-            items: ["Persian Cocktail/Sharbat"],
-          },
-          {
-            title: "Bazm Opening",
-            detail: "One of each item for every 4 guests",
-            items: ["Sangak Bread", "Paneer Sabzi", "Maast-o-Khiar"],
-          },
-          {
-            title: "Signature Course",
-            detail: "One of each item for every 4 guests",
             items: [
-              "Fresh Sangak Bread",
+              "Sharbat"
+            ]
+          },
+          {
+            title: "Opening",
+            detail: "For the table",
+            items: [
+              "Sangak Bread",
+              "Maast-o-Khiar",
               "Kashk-o-Bademjoon",
               "Spicy Saffron Chicken Wings",
-              "Tahchin",
-            ],
+              "Golden Tahchin"
+            ]
           },
           {
             title: "Persian Feast",
-            detail: "Shared for every 4 guests",
-            items: ["Kamouraska Lamb Chops Fesenjoon"],
+            items: [
+              "Kamouraska Lamb Ghormeh Sabzi"
+            ]
           },
           {
             title: "Main Course",
             detail: "Choose One",
             isChoice: true,
             items: [
-              "Barg Kabab (+$5)",
-              "Koobideh Kabab",
-              "Joojeh Kabab",
-              "Salmon Kabab",
-              "Kamouraska Lamb Ghormeh Sabzi (+$5)",
-              "Vegetarian Mushroom Ghormeh Sabzi",
+              "Koobideh Kabab (Ground Beef)",
+              "Joojeh Kabab (Saffron Chicken)",
+              "Salmon Kabab (Sumac and Saffron)",
+              "Barg Kabab (Beef Tenderloin) +$10",
+              "Shishlik (Kamouraska Lamb Chops) +$20",
+              "Branzino and Pistachio +$25",
+              "Duck Fesenjoon +$5"
             ],
+            note: "Vegetarian options are available"
           },
           {
             title: "Accompaniments",
-            detail: "Shared for every 4 guests",
+            detail: "For the table",
             items: [
               "Salad Shirazi",
               "Saffron Rice",
               "Borani Bademjoon",
               "Maast-o-Moosir",
-              "Sir Torshi",
-            ],
+              "Sir Torshi"
+            ]
           },
           {
             title: "Dessert",
-            items: ["Dessert of the day"],
-          },
-          {
-            title: "Tea Ceremony",
-            items: ["Persian Tea"],
-          },
-        ],
-      },
-    ],
+            items: [
+              "Dessert of the day"
+            ]
+          }
+        ]
+      }
+    ]
   },
   fr: {
     pageTitle: "Menu de groupe - BOUS Cuisine perse",
@@ -209,7 +224,7 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
       "La sélection du menu de groupe est requise pour toute la table",
       "Le nombre final d'invités est requis 48 heures avant l'événement",
       "Les restrictions alimentaires peuvent être accommodées avec un préavis",
-      "Les taxes applicables et des frais de service de 18 % sont en sus",
+      "Les taxes applicables et des frais de service de 18 % sont en sus"
     ],
     packages: [
       {
@@ -218,40 +233,44 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         minimum: "Minimum 8 personnes",
         courses: [
           {
-            title: "Pour la table",
-            detail: "Un de chaque item pour 4 personnes",
+            title: "Ouverture",
+            detail: "Pour la table",
             items: [
               "Pain Sangak",
-              "Paneer Sabzi",
               "Maast-o-Khiar",
-              "Kashk-o-Bademjoon",
-            ],
+              "Kashk-o-Bademjoon"
+            ]
           },
           {
             title: "Plat principal",
-            detail: "Choisir un",
+            detail: "Choisir un plat",
             isChoice: true,
             items: [
-              "Koobideh Kabab",
-              "Joojeh Kabab",
-              "Fesenjoon au canard",
-              "Fesenjoon végétarien au chou-fleur",
+              "Koobideh Kabab (bœuf haché)",
+              "Joojeh Kabab (poulet au safran)",
+              "Kabab de saumon (sumac et safran)",
+              "Barg Kabab (filet de bœuf) +10 $",
+              "Shishlik (côtelettes d’agneau de Kamouraska) +20 $",
+              "Branzino et pistache +25 $"
             ],
+            note: "Des options végétariennes sont disponibles"
           },
           {
             title: "Accompagnements",
-            detail: "Partagé pour 2 personnes",
-            items: ["Riz au safran", "Maast-o-Moosir"],
+            detail: "Pour la table",
+            items: [
+              "Salade Shirazi",
+              "Riz au safran",
+              "Maast-o-Moosir"
+            ]
           },
           {
             title: "Dessert",
-            items: ["Dessert du jour"],
-          },
-          {
-            title: "Service de thé",
-            items: ["Thé persan"],
-          },
-        ],
+            items: [
+              "Dessert du jour"
+            ]
+          }
+        ]
       },
       {
         name: "Mehmani",
@@ -259,41 +278,52 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         minimum: "Minimum 8 personnes",
         courses: [
           {
-            title: "Ouverture Mehmani",
-            detail: "Un de chaque item pour 4 personnes",
-            items: ["Pain Sangak", "Paneer Sabzi", "Maast-o-Khiar"],
+            title: "Ouverture",
+            detail: "Pour la table",
+            items: [
+              "Pain Sangak",
+              "Maast-o-Khiar",
+              "Kashk-o-Bademjoon",
+              "Tahchin doré"
+            ]
           },
           {
-            title: "Service signature",
-            detail: "Un de chaque item pour 4 personnes",
-            items: ["Pain Sangak frais", "Kashk-o-Bademjoon", "Tahchin"],
+            title: "Festin persan",
+            items: [
+              "Ghormeh Sabzi d’agneau de Kamouraska"
+            ]
           },
           {
             title: "Plat principal",
-            detail: "Choisir un",
+            detail: "Choisir un plat",
             isChoice: true,
             items: [
-              "Joojeh Kabab",
-              "Barg Kabab (+5 $)",
-              "Kabab de saumon",
-              "Ghormeh Sabzi d'agneau de Kamouraska (+5 $)",
-              "Ghormeh Sabzi végétarien aux champignons",
+              "Koobideh Kabab (bœuf haché)",
+              "Joojeh Kabab (poulet au safran)",
+              "Kabab de saumon (sumac et safran)",
+              "Barg Kabab (filet de bœuf) +10 $",
+              "Shishlik (côtelettes d’agneau de Kamouraska) +20 $",
+              "Branzino et pistache +25 $",
+              "Ghormeh Sabzi d’agneau de Kamouraska +10 $"
             ],
+            note: "Des options végétariennes sont disponibles"
           },
           {
             title: "Accompagnements",
-            detail: "Partagé pour 2 personnes",
-            items: ["Salade Shirazi", "Riz au safran", "Maast-o-Moosir"],
+            detail: "Pour la table",
+            items: [
+              "Salade Shirazi",
+              "Riz au safran",
+              "Maast-o-Moosir"
+            ]
           },
           {
             title: "Dessert",
-            items: ["Dessert du jour"],
-          },
-          {
-            title: "Service de thé",
-            items: ["Thé persan"],
-          },
-        ],
+            items: [
+              "Dessert du jour"
+            ]
+          }
+        ]
       },
       {
         name: "Bazm",
@@ -302,64 +332,63 @@ const groupMenuCopy: Record<Language, GroupMenuCopy> = {
         courses: [
           {
             title: "Accueil",
-            items: ["Cocktail persan/Sharbat"],
-          },
-          {
-            title: "Ouverture Bazm",
-            detail: "Un de chaque item pour 4 personnes",
-            items: ["Pain Sangak", "Paneer Sabzi", "Maast-o-Khiar"],
-          },
-          {
-            title: "Service signature",
-            detail: "Un de chaque item pour 4 personnes",
             items: [
-              "Pain Sangak frais",
+              "Sharbat"
+            ]
+          },
+          {
+            title: "Ouverture",
+            detail: "Pour la table",
+            items: [
+              "Pain Sangak",
+              "Maast-o-Khiar",
               "Kashk-o-Bademjoon",
               "Ailes de poulet épicées au safran",
-              "Tahchin",
-            ],
+              "Tahchin doré"
+            ]
           },
           {
             title: "Festin persan",
-            detail: "Partagé pour 4 personnes",
-            items: ["Côtelettes d'agneau de Kamouraska Fesenjoon"],
+            items: [
+              "Ghormeh Sabzi d’agneau de Kamouraska"
+            ]
           },
           {
             title: "Plat principal",
-            detail: "Choisir un",
+            detail: "Choisir un plat",
             isChoice: true,
             items: [
-              "Barg Kabab (+5 $)",
-              "Koobideh Kabab",
-              "Joojeh Kabab",
-              "Kabab de saumon",
-              "Ghormeh Sabzi d'agneau de Kamouraska (+5 $)",
-              "Ghormeh Sabzi végétarien aux champignons",
+              "Koobideh Kabab (bœuf haché)",
+              "Joojeh Kabab (poulet au safran)",
+              "Kabab de saumon (sumac et safran)",
+              "Barg Kabab (filet de bœuf) +10 $",
+              "Shishlik (côtelettes d’agneau de Kamouraska) +20 $",
+              "Branzino et pistache +25 $",
+              "Fesenjoon au canard +5 $"
             ],
+            note: "Des options végétariennes sont disponibles"
           },
           {
             title: "Accompagnements",
-            detail: "Partagé pour 4 personnes",
+            detail: "Pour la table",
             items: [
               "Salade Shirazi",
               "Riz au safran",
               "Borani Bademjoon",
               "Maast-o-Moosir",
-              "Sir Torshi",
-            ],
+              "Sir Torshi"
+            ]
           },
           {
             title: "Dessert",
-            items: ["Dessert du jour"],
-          },
-          {
-            title: "Cérémonie du thé",
-            items: ["Thé persan"],
-          },
-        ],
-      },
-    ],
-  },
+            items: [
+              "Dessert du jour"
+            ]
+          }
+        ]
+      }
+    ]
+  }
 };
 
 function CourseBlock({ course }: { course: GroupMenuCourse }) {
@@ -378,6 +407,11 @@ function CourseBlock({ course }: { course: GroupMenuCourse }) {
           <li key={`${course.title}-${item}`}>{item}</li>
         ))}
       </ul>
+      {course.note ? (
+        <p className="mt-2 text-base italic leading-6 text-bous-burgundy/72">
+          {course.note}
+        </p>
+      ) : null}
     </div>
   );
 }
