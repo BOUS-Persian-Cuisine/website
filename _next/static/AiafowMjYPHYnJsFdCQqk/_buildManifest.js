@@ -1,27 +1,27 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "static/chunks/bc47f14794363f7b.js"
+    "static/chunks/01a86ffa666da696.js"
   ],
   "/_error": [
     "static/chunks/7d816c0975674d45.js"
   ],
   "/about": [
-    "static/chunks/0fbee7f1eb36afa5.js"
+    "static/chunks/4369079d5549455e.js"
   ],
   "/contact": [
-    "static/chunks/23b4169a0c58b0db.js"
+    "static/chunks/fd0736a5cbcebc1b.js"
   ],
   "/drinks-menu": [
-    "static/chunks/7ce856b4292a5644.js"
+    "static/chunks/fc827791adc2639d.js"
   ],
   "/group-menu": [
-    "static/chunks/3dbab99045c6790b.js"
+    "static/chunks/d3e01b03d49633f8.js"
   ],
   "/lunch-menu": [
-    "static/chunks/c57affa3307aebae.js"
+    "static/chunks/09fd6b0847345ae3.js"
   ],
   "/menu": [
-    "static/chunks/147f0c095536ad45.js"
+    "static/chunks/f71ebe80a4ab55c3.js"
   ],
   "__rewrites": {
     "afterFiles": [],
