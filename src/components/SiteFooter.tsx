@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-import { getOpenTableReservationUrl } from "@/constants/links";
+import { GIFT_CARD_URL, getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 type FooterSection = "info" | "dine" | "contact";
@@ -162,6 +162,12 @@ export function SiteFooter() {
             className="underline-offset-4 hover:underline"
           >
             {t.footer.reserveTable}
+          </a>
+          <a
+            href={GIFT_CARD_URL}
+            className="underline-offset-4 hover:underline"
+          >
+            {t.common.giftCards}
           </a>
         </nav>
       ),

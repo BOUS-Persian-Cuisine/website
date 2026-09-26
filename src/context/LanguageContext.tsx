@@ -13,6 +13,7 @@ export type Language = "en" | "fr";
 type Translations = {
   common: {
     siteTitle: string;
+    giftCards: string;
   };
   header: {
     openMenu: string;
@@ -78,6 +79,7 @@ export const translations: Record<Language, Translations> = {
   en: {
     common: {
       siteTitle: "BOUS - Persian Cuisine",
+      giftCards: "Gift Cards",
     },
     header: {
       openMenu: "Open menu",
@@ -138,6 +140,7 @@ export const translations: Record<Language, Translations> = {
   fr: {
     common: {
       siteTitle: "BOUS - Cuisine perse",
+      giftCards: "Cartes-cadeaux",
     },
     header: {
       openMenu: "Ouvrir le menu",

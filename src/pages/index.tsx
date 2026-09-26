@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { SiteLayout } from "@/components/SiteLayout";
-import { getOpenTableReservationUrl } from "@/constants/links";
+import { GIFT_CARD_URL, getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
@@ -58,12 +58,12 @@ export default function Home() {
                 >
                   {t.header.nav.menu}
                 </Link>
-                <Link
-                  href="/about"
+                <a
+                  href={GIFT_CARD_URL}
                   className="inline-flex min-h-12 items-center justify-center border border-bous-cream/45 bg-transparent px-6 text-[0.72rem] uppercase tracking-[0.24em] text-bous-cream/88 transition-colors hover:border-bous-cream hover:text-bous-cream"
                 >
-                  {t.header.nav.about}
-                </Link>
+                  {t.common.giftCards}
+                </a>
               </div>
             </div>
           </div>
