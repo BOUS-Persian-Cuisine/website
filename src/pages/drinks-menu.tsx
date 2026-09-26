@@ -12,6 +12,8 @@ type DrinkItem = {
 type DrinkSection = {
   title: LocalizedText;
   price?: string;
+  intro?: LocalizedText;
+  note?: LocalizedText;
   items: DrinkItem[];
 };
 
@@ -44,7 +46,7 @@ const pageCopy: Record<
 const drinkSections: DrinkSection[] = [
   {
     title: { en: "BOUS Signatures", fr: "Signatures BOUS" },
-    price: "21",
+    price: "23",
     items: [
       {
         name: "A Persian Martini",
@@ -85,18 +87,19 @@ const drinkSections: DrinkSection[] = [
         name: "Yasi",
         description: {
           en: "Vodka - jasmine, strawberry, butter, micro arugula",
-          fr: "Vodka - jasmin, beurre à la fraise, micro-roquette",
+          fr: "Vodka - jasmin, fraise, beurre, micro-roquette",
         },
       },
       {
         name: "Shiraz Chai Daiquiri",
         description: {
-          en: "White rum - smoked tea, figs",
+          en: "Silver rum - smoked tea, figs",
           fr: "Rhum blanc - thé fumé, figues",
         },
       },
       {
         name: "Above Alborz",
+        price: "25",
         description: {
           en: "Exotic citrus gin - saffron cream, egg whites, fizz",
           fr: "Gin aux agrumes exotiques - crème au safran, blanc d'œuf, fizz",
@@ -105,11 +108,11 @@ const drinkSections: DrinkSection[] = [
     ],
   },
   {
-    title: { en: "House", fr: "Créations maison" },
+    title: { en: "Alcoholic Sharbats", fr: "Sharbats Alcoolisés" },
     items: [
       {
-        name: "Vodka Barberry Bloom",
-        price: "16",
+        name: "Vodka Zereshk",
+        price: "19",
         description: {
           en: "Vodka - barberry, Persian sour tea, poached barberries",
           fr: "Vodka - épine-vinette, thé aigre persan, épines-vinettes pochées",
@@ -117,7 +120,7 @@ const drinkSections: DrinkSection[] = [
       },
       {
         name: "Gin Sekanjebin",
-        price: "16",
+        price: "19",
         description: {
           en: "Gin - mint, rosewater, white wine vinegar, cucumber",
           fr: "Gin - menthe, eau de rose, vinaigre de vin blanc, concombre",
@@ -125,7 +128,7 @@ const drinkSections: DrinkSection[] = [
       },
       {
         name: "Saffron Martini",
-        price: "18",
+        price: "20",
         description: {
           en: "Saffron-infused gin - served with olives and ghooreh",
           fr: "Gin infusé au safran - servi avec olives et ghooreh",
@@ -135,10 +138,14 @@ const drinkSections: DrinkSection[] = [
   },
   {
     title: { en: "Sharbats", fr: "Sharbats" },
-    price: "10",
+    price: "14",
+    intro: {
+      en: "In Iran, welcoming a guest often begins with a glass of sharbat. Made with fruits, herbs or floral waters, it is a refreshing gesture of Persian hospitality.",
+      fr: "En Iran, l’accueil d’un invité commence souvent par un verre de sharbat. Préparé à base de fruits, d’herbes ou d’eaux florales, il est une expression rafraîchissante de l’hospitalité persane.",
+    },
     items: [
       {
-        name: "Barberry Bloom",
+        name: "Zereshk",
         description: {
           en: "Barberry, Persian sour tea, poached barberries",
           fr: "Épine-vinette, thé aigre persan, épines-vinettes pochées",
@@ -152,24 +159,24 @@ const drinkSections: DrinkSection[] = [
         },
       },
       {
-        name: "Indigo Breeze",
+        name: "Gol-Gav-Zabaan",
         description: {
           en: "Borage tea, dried lime, lemon",
           fr: "Tisane de bourrache, lime séchée, citron",
         },
       },
       {
-        name: "Golden Rose",
+        name: "Golab",
         description: {
           en: "Saffron, rosewater, basil seeds",
           fr: "Safran, eau de rose, graines de basilic",
         },
       },
       {
-        name: "Willow Sun",
+        name: "Bahar Narej",
         description: {
-          en: "Willow extract, orange blossom water, khakshir, simple syrup",
-          fr: "Extrait de saule, eau de fleur d’oranger, khakshir, sirop simple",
+          en: "Willow extract, orange blossom water, flixweed seeds, simple syrup",
+          fr: "Extrait de saule, eau de fleur d’oranger, graines de flixweed, sirop simple",
         },
       },
     ],
@@ -179,36 +186,29 @@ const drinkSections: DrinkSection[] = [
     price: "6",
     items: [
       {
-        name: "Dough",
+        name: "Abeali Doogh",
         description: {
           en: "Carbonated yogurt drink",
           fr: "Boisson gazeuse au yogourt",
         },
       },
       {
-        name: "Persian Coke",
-        description: { en: "Persian Coke", fr: "Coke perse" },
-      },
-      {
         name: "Persian Fanta",
-        description: { en: "Persian Fanta", fr: "Fanta perse" },
+        description: { en: "Persian Fanta", fr: "Fanta persane" },
       },
       {
         name: "Persian Lemonade",
-        description: { en: "Persian lemonade", fr: "Limonade perse" },
+        description: { en: "Persian lemonade", fr: "Limonade persane" },
       },
     ],
   },
   {
     title: { en: "Beers", fr: "Bières" },
-    items: [
-      { name: "Wills Bright Lager", price: "12" },
-      { name: "Wills Hugo Blanche", price: "12" },
-      { name: "Wills Brown Alem", price: "12" },
-      { name: "Wills Ghost Farm IPA", price: "12" },
-      { name: "Krombacher Pils Bouteilles", price: "12" },
-      { name: "Krombacher Pils 0.0% Bouteilles", price: "10" },
-    ],
+    note: {
+      en: "Please ask your server about our beer selection.",
+      fr: "Renseignez-vous auprès de votre serveur sur notre sélection de bières.",
+    },
+    items: [],
   },
 ];
 
@@ -262,15 +262,27 @@ export default function DrinksMenu() {
                 </span>
               ) : null}
             </h2>
-            <ol className="mt-6 space-y-4">
-              {section.items.map((item) => (
-                <DrinkItemRow
-                  key={`${section.title.en}-${item.name}`}
-                  item={item}
-                  language={language}
-                />
-              ))}
-            </ol>
+            {section.intro ? (
+              <p className="mx-auto mt-4 max-w-[65ch] text-center text-base leading-6 text-bous-burgundy/88">
+                {section.intro[language]}
+              </p>
+            ) : null}
+            {section.items.length > 0 ? (
+              <ol className="mt-6 space-y-4">
+                {section.items.map((item) => (
+                  <DrinkItemRow
+                    key={`${section.title.en}-${item.name}`}
+                    item={item}
+                    language={language}
+                  />
+                ))}
+              </ol>
+            ) : null}
+            {section.note ? (
+              <p className="mx-auto mt-4 max-w-[65ch] text-center text-base leading-6 text-bous-burgundy/88">
+                {section.note[language]}
+              </p>
+            ) : null}
           </section>
         ))}
       </div>
