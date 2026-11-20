@@ -24,7 +24,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/5aa7d43981e2f77e.js"
   ],
   "/wine": [
-    "static/chunks/80cd85b7cdf2be61.js"
+    "static/chunks/4c37cd0c463d779b.js"
   ],
   "__rewrites": {
     "afterFiles": [],
