@@ -6,6 +6,7 @@ type MenuItem = {
   name: string;
   price?: string;
   description: string;
+  addOn?: string;
 };
 
 type MenuCopy = {
@@ -59,17 +60,30 @@ const menuCopy: Record<Language, MenuCopy> = {
           price: "22",
           description:
             "Crispy saffron rice, Spring herbs, Barberries, Pistachio",
+          addOn: "Add Persian Ossetra Caviar + 60",
         },
         {
           name: "Kashk-o-Bademjoon",
           price: "28",
           description: "Smoked eggplant, Kashk, Crispy onion, Mint, Fried garlic",
         },
+        {
+          name: "Ghalieh Meygoo",
+          price: "32",
+          description:
+            "Argentinian King Shrimp, cooked herbs, Garlic, tamarine, hot chili",
+        },
+        {
+          name: "CAVIAR & Tahdig Bites",
+          price: "48",
+          description:
+            "Persian Baerii Caviar, three bites of rice and bread tahdig, house-made yogurt",
+        },
       ],
       [
         {
           name: "Koobideh Kabab",
-          price: "32",
+          price: "36",
           description: "Charcoal-grilled ground beef, Grilled vegetables",
         },
         {
@@ -101,7 +115,7 @@ const menuCopy: Record<Language, MenuCopy> = {
           name: "Duck Fesenjoon *",
           price: "48",
           description:
-            "Duck leg confit, Slow Cooked Walnut with Pomegranate Molasses",
+            "Duck leg confit, Slow-cooked walnuts with pomegranate molasses",
         },
         {
           name: "Kamouraska Lamb Ghormeh Sabzi *",
@@ -110,10 +124,10 @@ const menuCopy: Record<Language, MenuCopy> = {
             "Braised lamb shank, five-herb sauce, Red beans, Dried lime",
         },
         {
-          name: "Summer Special | Albaloo Polo with Lamb Neck",
+          name: "Fall Special | Jewel Rice with Lamb Neck",
           price: "58",
           description:
-            "Quebec lamb neck, Quebec sour cherries from Domaine Deslandes, Northern Iranian rice, pistachios, Saffron",
+            "Quebec lamb neck, Barberry, Orange Peel, Northern Iranian rice, pistachios, Saffron",
         },
       ],
       [
@@ -205,10 +219,11 @@ const menuCopy: Record<Language, MenuCopy> = {
           description: "Ailerons de poulet, safran, piment d’Alep",
         },
         {
-          name: "Mille carré doré Tahchin",
+          name: "Tahchin du Mille carré doré",
           price: "22",
           description:
             "Riz croustillant au safran, herbes printanières, épines-vinettes, pistaches",
+          addOn: "Ajout de caviar persan Ossetra + 60",
         },
         {
           name: "Kashk-o-Bademjoon",
@@ -216,11 +231,23 @@ const menuCopy: Record<Language, MenuCopy> = {
           description:
             "Aubergine fumée, kashk, oignons croustillants, menthe, ail frit",
         },
+        {
+          name: "Ghalieh Meygoo",
+          price: "32",
+          description:
+            "Grosses crevettes d’Argentine, herbes mijotées, ail, tamarin, piment fort",
+        },
+        {
+          name: "CAVIAR et bouchées de tahdig",
+          price: "48",
+          description:
+            "Caviar persan Baerii, trois bouchées de tahdig de riz et de pain, yogourt maison",
+        },
       ],
       [
         {
           name: "Koobideh Kabab",
-          price: "32",
+          price: "36",
           description: "Bœuf haché grillé au charbon, légumes grillés",
         },
         {
@@ -264,7 +291,7 @@ const menuCopy: Record<Language, MenuCopy> = {
           name: "Spécial d’été | Albaloo Polo au cou d’agneau",
           price: "58",
           description:
-            "Cou d’agneau du Québec, griottes du Québec du Domaine Deslandes, riz du nord de l’Iran, pistaches, safran",
+            "Cou d’agneau du Québec, griottes du Québec du Domaine Deslandes, riz du nord de l’Iran et pistaches, safran",
         },
       ],
       [
@@ -337,6 +364,11 @@ function MenuItemRow({ item }: { item: MenuItem }) {
       <p className="mx-auto mt-1 max-w-[65ch] text-base leading-6 text-bous-burgundy/88">
         {item.description}
       </p>
+      {item.addOn && (
+        <p className="mt-1 text-base leading-6 text-bous-burgundy">
+          {item.addOn}
+        </p>
+      )}
     </li>
   );
 }
