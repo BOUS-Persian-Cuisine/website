@@ -1,0 +1,36 @@
+.page { background: #fffdf9; color: var(--bous-burgundy); }
+.wrap { max-width: 75rem; margin: auto; padding: 1.8rem clamp(1rem, 4vw, 3.25rem) 3rem; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; margin-top: 1.75rem; background: var(--bous-burgundy); color: #fff8ed; }
+.heroCopy { padding: clamp(1.75rem, 4.6vw, 4.5rem); align-self: center; }
+.page h1, .page h2 { font-family: var(--font-operetta), Georgia, serif; font-weight: 300; line-height: 1.1; }
+.page h1 { font-size: clamp(3rem, 5.6vw, 5.2rem); }
+.heroCopy p { margin: 1rem 0 1.6rem; max-width: 38ch; font-size: 1.1rem; }
+.photo { min-height: 17rem; background: url('/img/group-table.jpg') center 52% / cover; }
+.links { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.5rem; }
+.links a { padding-block: .25rem; text-decoration: underline; text-underline-offset: .4em; text-decoration-color: var(--bous-gold); }
+.links a:hover { text-decoration-color: currentColor; }
+.tiers { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1rem, 2.8vw, 2.5rem); margin-top: 2.5rem; align-items: start; }
+.tiers article { border-top: 1px solid var(--bous-gold); padding-top: 1.25rem; }
+.tiers h2 { font-size: 2.55rem; }
+.price { margin: .3rem 0 .8rem; font-size: 1.4rem; }
+.price small, .extra small { font-size: .9rem; }
+.description { color: #78666a; }
+.page details { margin-top: .85rem; }
+.page summary { cursor: pointer; padding: .6rem 0; color: var(--bous-burgundy); font-weight: 600; }
+.page summary:hover { color: var(--bous-red); }
+.tiers details h3 { font-weight: 600; margin: 1rem 0 .3rem; }
+.terms { margin-top: 1.5rem; font-size: .95rem; }
+.extra, .booking { border-top: 1px solid #c6b89d; padding: 1.75rem 0; margin-top: 1rem; }
+.extra h2, .booking h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: .5rem; }
+.extra dl { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 2.5rem; }
+.extra dl div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid #e5dccc; padding: .75rem 0; }
+.extra dd { white-space: nowrap; }
+.extra small { display: block; color: #65514e; }
+.extra details + p, .booking .links { margin-top: 1.1rem; }
+.booking p { max-width: 65ch; }
+@media(max-width: 680px) {
+  .hero, .tiers, .extra dl { grid-template-columns: 1fr; }
+  .photo { min-height: 11.5rem; }
+  .tiers { gap: 1.25rem; margin-top: 1.5rem; }
+  .tiers article header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .4rem; }
+}

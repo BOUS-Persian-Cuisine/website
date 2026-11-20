@@ -45,6 +45,7 @@ type Translations = {
       menu: string;
       drinksMenu: string;
       lunchMenu: string;
+      wine: string;
       groupMenu: string;
       about: string;
       contact: string;
@@ -114,6 +115,7 @@ export const translations: Record<Language, Translations> = {
         menu: "Dinner Menu",
         drinksMenu: "Drinks Menu",
         lunchMenu: "Lunch Menu",
+        wine: "Wine",
         groupMenu: "Group Menus",
         about: "About",
         contact: "Contact",
@@ -179,6 +181,7 @@ export const translations: Record<Language, Translations> = {
         menu: "Menu du soir",
         drinksMenu: "Carte des boissons",
         lunchMenu: "Menu midi",
+        wine: "Vins",
         groupMenu: "Menus de groupe",
         about: "À propos",
         contact: "Contact",
