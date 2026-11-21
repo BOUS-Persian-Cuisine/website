@@ -3,7 +3,6 @@
   background: white;
   text-align: left;
 }
-.masthead { width: 100%; height: auto; margin-bottom: clamp(1.5rem, 4vw, 3rem); }
 .columns { display: grid; gap: 2rem clamp(2rem, 5vw, 3.5rem); }
 .column { display: flex; flex-direction: column; gap: 2rem; }
 .sheet h2 {

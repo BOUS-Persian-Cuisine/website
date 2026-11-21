@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "@/styles/dinner-menu.module.css";
 import type { Language } from "@/context/LanguageContext";
 import { MenuPageLayout } from "@/components/MenuPageLayout";
@@ -419,7 +418,6 @@ export default function Menu() {
       title={copy.pageTitle}
     >
       <div className={styles.sheet}>
-        <Image src="/img/dinner-menu-masthead.png" alt="BOUS Persian Cuisine · بوس: سفره ایرانی" width={2042} height={116} className={styles.masthead} />
         <div className={styles.columns}>
           <div className={styles.column}>
             <MenuSection group={starters} />
