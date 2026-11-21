@@ -5,9 +5,9 @@ import { useLanguage } from "@/context/LanguageContext";
 import styles from "@/styles/group-menu.module.css";
 
 const tiers = [
-  { name: "Sofreh", price: 80, en: "Grilled beef, saffron chicken and duck confit.", fr: "Bœuf grillé, poulet au safran et canard confit." },
+  { name: "Sofreh", price: 80, en: "Ground beef, saffron chicken and duck confit.", fr: "Bœuf haché, poulet au safran et canard confit." },
   { name: "Mehmani", price: 95, en: "Beef tenderloin, saffron chicken, duck confit and braised lamb.", fr: "Filet de bœuf, poulet au safran, canard confit et agneau braisé." },
-  { name: "Bazm", price: 125, en: "Beef, chicken, duck and lamb, with whole sea bass, king shrimp and a welcome sharbat.", fr: "Bœuf, poulet, canard et agneau, avec bar entier, crevettes géantes et sharbat de bienvenue." },
+  { name: "Bazm", price: 125, en: "Beef tenderloin, chicken, duck and lamb, with whole sea bass, king shrimp and a welcome sharbat.", fr: "Filet de bœuf, poulet, canard et agneau, avec bar entier, crevettes géantes et sharbat de bienvenue." },
 ];
 
 // The first tier that includes a dish. A null tier is available only à la carte.
