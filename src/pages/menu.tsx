@@ -1,3 +1,5 @@
+import Image from "next/image";
+import styles from "@/styles/dinner-menu.module.css";
 import type { Language } from "@/context/LanguageContext";
 import { MenuPageLayout } from "@/components/MenuPageLayout";
 import { useLanguage } from "@/context/LanguageContext";
@@ -371,27 +373,40 @@ const menuCopy: Record<Language, MenuCopy> = {
   },
 };
 
-function MenuItemRow({ item }: { item: MenuItem }) {
+function MenuItems({ items }: { items: MenuItem[] }) {
   return (
-    <li className="text-center">
-      <p className="text-base leading-6 text-bous-burgundy">
-        <span className="font-semibold">{item.name}</span>
-        {item.price ? (
-          <span className="ml-1 font-normal tabular-nums">{item.price}</span>
-        ) : null}
-      </p>
-      {item.description && (
-        <p className="mx-auto mt-1 max-w-[65ch] text-base leading-6 text-bous-burgundy/88">
-          {item.description}
-        </p>
-      )}
-    </li>
+    <ul className={styles.items}>
+      {items.map((item) => {
+        const [prefix, special] = item.name.split(" | ");
+        return (
+          <li key={item.name}>
+            <div className={styles.row}>
+              <strong>{special ? <><em>{prefix} | </em>{special}</> : item.name}</strong>
+              <span className={styles.price}>{item.price}</span>
+            </div>
+            {item.description && <p>{item.description}</p>}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function MenuSection({ group }: { group: MenuCopy["groups"][number] }) {
+  return (
+    <section>
+      <h2>{group.title}</h2>
+      <MenuItems items={group.items} />
+      {group.note && <p className={styles.note}>{group.note}</p>}
+    </section>
   );
 }
 
 export default function Menu() {
   const { language } = useLanguage();
   const copy = menuCopy[language];
+  const [starters, caviar, grill, slowCooked, sides] = copy.groups;
+  const halfway = Math.ceil(sides.items.length / 2);
 
   return (
     <MenuPageLayout
@@ -403,20 +418,25 @@ export default function Menu() {
       sectionLabel={copy.sectionLabel}
       title={copy.pageTitle}
     >
-      <div className="space-y-14 sm:space-y-16">
-        {copy.groups.map((group) => (
-          <section key={group.title} className="text-center">
-            <h2 className="font-operetta text-2xl font-normal leading-tight text-bous-burgundy">
-              {group.title}
-            </h2>
-            <ol className="mt-6 space-y-4">
-              {group.items.map((item) => (
-                <MenuItemRow key={item.name} item={item} />
-              ))}
-            </ol>
-            {group.note && <p className="mt-6 text-base text-bous-burgundy/82">{group.note}</p>}
-          </section>
-        ))}
+      <div className={styles.sheet}>
+        <Image src="/img/dinner-menu-masthead.png" alt="BOUS Persian Cuisine · بوس: سفره ایرانی" width={2042} height={116} className={styles.masthead} />
+        <div className={styles.columns}>
+          <div className={styles.column}>
+            <MenuSection group={starters} />
+            <MenuSection group={caviar} />
+          </div>
+          <div className={styles.column}>
+            <MenuSection group={grill} />
+            <MenuSection group={slowCooked} />
+          </div>
+        </div>
+        <section className={styles.sides}>
+          <h2>{sides.title}</h2>
+          <div className={styles.columns}>
+            <MenuItems items={sides.items.slice(0, halfway)} />
+            <MenuItems items={sides.items.slice(halfway)} />
+          </div>
+        </section>
       </div>
     </MenuPageLayout>
   );

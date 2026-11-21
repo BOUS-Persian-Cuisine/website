@@ -63,7 +63,7 @@ export function MenuPageLayout({
               ) : null}
             </div>
 
-            <div className="mx-auto max-w-3xl py-10 sm:py-14">{children}</div>
+            <div className={`mx-auto py-10 sm:py-14 ${active === "dining" ? "w-full" : "max-w-3xl"}`}>{children}</div>
 
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 pt-4 sm:pt-6">
               <a
