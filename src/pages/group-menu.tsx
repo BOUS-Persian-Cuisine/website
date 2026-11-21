@@ -83,7 +83,7 @@ export default function GroupMenu() {
                 <details open>
                   <summary>{t("Included dishes", "Plats inclus")}</summary>
                   {courses.map(course => <div key={course.en}><h3>{course[language]}</h3><ul>{course.dishes.filter(d => d.tier !== null && d.tier <= i).map(d => <li key={d.en}>{d[language] ?? d.en} <span className={styles.description}>({d.description[language]})</span></li>)}</ul></div>)}
-                  <h3>{t("Dessert", "Dessert")}</h3><p>{t("Dessert of the day", "Dessert du jour")} <span className={styles.description}>({t("To Share", "À partager")})</span></p>
+                  <h3>{t("Dessert", "Dessert")}</h3><p>{t("Chef's Choice", "Choix du chef")}</p>
                   {menu.name === "Bazm" && <><h3>{t("Welcome drink", "À l’accueil")}</h3><p>{t("Persian Sharbat", "Sharbat persan")} <span className={styles.description}>({t("Non-Alcoholic", "Sans alcool")})</span></p></>}
                 </details>
               </article>
