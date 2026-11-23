@@ -20,14 +20,13 @@ import {
   type Option,
   type Style,
 } from "@/constants/groupEvent";
+import { MenuInclusions } from "@/components/MenuInclusions";
 import css from "@/styles/group-event.module.css";
 
 const empty = {
   occasion: "",
   meal: "",
-  date: "",
   time: "",
-  alternateDate: "",
   endTime: "",
   guests: "",
   children: "0",
@@ -69,8 +68,13 @@ export function GroupInquiry({
   const t = (en: string, fr: string) => (language === "fr" ? fr : en);
   const [data, setData] = useState<Fields>({ ...empty });
 
+  const [dates, setDates] = useState([{ id: 0, value: "" }]);
+  const nextDateId = useRef(1);
+  const preferredDates = dates.map((entry) => entry.value).filter(Boolean);
+  const [detailMenu, setDetailMenu] = useState("");
+  const menuDialog = useRef<HTMLDialogElement>(null);
   const [items, setItems] = useState<Extra[]>([]);
-  const [category, setCategory] = useState("pairing");
+  const [category, setCategory] = useState("food");
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
@@ -80,9 +84,12 @@ export function GroupInquiry({
   const submission = useRef("");
   const busy = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
-  const available = menuChoices(style, data.meal, data.date);
+  const available = menuChoices(style, data.meal, preferredDates);
   const currentMenu = available.find((m) => m.name === data.menu);
   const choices = currentMenu?.name === "Table d’Hôte" ? lunchExtras : extras;
+  const validItems = items.filter((item) =>
+    choices.some((extra) => extra.en === item.name),
+  );
   const selected = (en: string, options: Option[]) =>
     options.find((o) => o.en === en)?.[language] || en;
   const today = montrealToday();
@@ -100,7 +107,7 @@ export function GroupInquiry({
       const next = { ...old, [k]: value };
       if (
         next.menu &&
-        !menuChoices(style, next.meal, next.date).some(
+        !menuChoices(style, next.meal, preferredDates).some(
           (menu) => menu.name === next.menu,
         )
       )
@@ -110,7 +117,7 @@ export function GroupInquiry({
   };
   const selectStyle = (value: Style) => {
     onStyleChange(value);
-    const menus = menuChoices(value, data.meal, data.date);
+    const menus = menuChoices(value, data.meal, preferredDates);
     if (!menus.some((menu) => menu.name === data.menu)) change("menu", "");
     setError("");
   };
@@ -203,15 +210,22 @@ export function GroupInquiry({
   };
   const shortGroup =
     style === "sharing" && data.guests !== "" && Number(data.guests) < 8;
-  const parsedDate = new Date(data.date + "T12:00:00Z");
-  const calendarDate = Number.isFinite(parsedDate.getTime())
-    ? new Intl.DateTimeFormat(language === "fr" ? "fr-CA" : "en-CA", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        timeZone: "UTC",
-      }).format(parsedDate)
-    : "";
+  const dateFormatter = new Intl.DateTimeFormat(
+    language === "fr" ? "fr-CA" : "en-CA",
+    {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "UTC",
+    },
+  );
+  const calendarDates = preferredDates
+    .map((value) => dateFormatter.format(new Date(value + "T12:00:00Z")))
+    .join(" · ");
+  const switchCategory = (value: string) => {
+    setCategory(value);
+    setSearch("");
+  };
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (shortGroup) {
@@ -238,16 +252,17 @@ export function GroupInquiry({
           requestId: id.current,
           language,
           occasion: data.occasion,
-          date: data.date,
+          date: preferredDates[0],
+          preferredDates,
           time: data.time,
-          alternateDate: data.alternateDate,
+          alternateDate: preferredDates[1] || "",
           meal: data.meal,
           guests: Number(data.guests),
           children: Number(data.children),
           space: data.space,
           service: style,
           menu: currentMenu?.name ?? "Undecided",
-          addons: items.map((x) => {
+          addons: validItems.map((x) => {
             const extra = choices.find((o) => o.en === x.name)!;
             return (
               x.quantity +
@@ -350,7 +365,8 @@ export function GroupInquiry({
     );
   const eventSummary = [
     [t("Occasion", "Occasion"), selected(data.occasion, occasions)],
-    [t("Date", "Date"), [calendarDate, data.time].filter(Boolean).join(" · ")],
+    [t("Preferred dates", "Dates souhaitées"), calendarDates],
+    [t("Start time", "Heure de début"), data.time],
     [t("Guests", "Convives"), data.guests],
     [t("Service", "Service"), selected(data.meal, meals)],
     [
@@ -392,14 +408,82 @@ export function GroupInquiry({
             meals,
             true,
           )}
-          <div className={css.three}>
-            {input(
-              "date",
-              t("Preferred date", "Date souhaitée"),
-              "date",
-              true,
-              { min: today },
+          <fieldset className={css.choiceGroup}>
+            <legend>{t("Preferred dates", "Dates souhaitées")} *</legend>
+            <div className={css.dateRows}>
+              {dates.map((entry, index) => {
+                const duplicate =
+                  entry.value &&
+                  dates.slice(0, index).some((d) => d.value === entry.value);
+                return (
+                  <div className={css.dateRow} key={entry.id}>
+                    <input
+                      type="date"
+                      name={index === 0 ? "date" : "preferredDate-" + entry.id}
+                      aria-label={
+                        t("Preferred date ", "Date souhaitée ") + (index + 1)
+                      }
+                      min={today}
+                      required={index === 0}
+                      value={entry.value}
+                      ref={(el) => {
+                        el?.setCustomValidity(
+                          duplicate
+                            ? t(
+                                "This date is already listed.",
+                                "Cette date figure déjà dans la liste.",
+                              )
+                            : "",
+                        );
+                      }}
+                      onChange={(e) => {
+                        setDates(
+                          dates.map((d) =>
+                            d.id === entry.id
+                              ? { ...d, value: e.target.value }
+                              : d,
+                          ),
+                        );
+                        setError("");
+                      }}
+                    />
+                    {dates.length > 1 && (
+                      <button
+                        className={css.textLink}
+                        type="button"
+                        aria-label={
+                          t("Remove date ", "Retirer la date ") + (index + 1)
+                        }
+                        onClick={() =>
+                          setDates(dates.filter((d) => d.id !== entry.id))
+                        }
+                      >
+                        {t("Remove", "Retirer")}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            {dates.length < 31 && (
+              <button
+                type="button"
+                className={css.addDate}
+                onClick={() => {
+                  const id = nextDateId.current++;
+                  setDates([...dates, { id, value: "" }]);
+                  requestAnimationFrame(() =>
+                    document
+                      .getElementsByName("preferredDate-" + id)[0]
+                      ?.focus(),
+                  );
+                }}
+              >
+                {t("+ Add another date", "+ Ajouter une date")}
+              </button>
             )}
+          </fieldset>
+          <div className={css.grid}>
             {input("time", t("Start time", "Heure de début"), "time", true)}
             {input(
               "guests",
@@ -425,33 +509,26 @@ export function GroupInquiry({
           <details className={css.fold}>
             <summary>
               {t(
-                "Seating, children & alternate dates",
-                "Espace, enfants et autres dates",
+                "Seating, children & end time",
+                "Espace, enfants et heure de fin",
               )}
             </summary>
             {options("space", t("Space preference", "Espace souhaité"), spaces)}
             {data.space === "Private room" && (
               <p className={css.fine}>
                 {t(
-                  "The private room seats up to 10 guests.",
-                  "Le salon privé accueille jusqu’à 10 convives.",
+                  "The private room seats up to 10 guests and has a $1,500 minimum spend for the room.",
+                  "Le salon privé accueille un maximum de 10 convives. Un minimum de consommation de 1 500 $ s’applique à la salle.",
                 )}
               </p>
             )}
-            <div className={css.three}>
+            <div className={css.grid}>
               {input(
                 "children",
                 t("Children in guest count", "Enfants compris dans le total"),
                 "number",
                 false,
                 { min: 0, max: Number(data.guests) || 1000 },
-              )}
-              {input(
-                "alternateDate",
-                t("Alternate date", "Autre date possible"),
-                "date",
-                false,
-                { min: today },
               )}
               {input(
                 "endTime",
@@ -474,11 +551,20 @@ export function GroupInquiry({
                     checked={style === s}
                     onChange={() => selectStyle(s)}
                   />
-                  <span>{styles[s][language]}</span>
+                  <span>
+                    {styles[s][language]}
+                    {s === "sharing" && t(" · Preferred", " · Recommandé")}
+                  </span>
                 </label>
               ))}
             </div>
           </fieldset>
+          <p className={css.hospitality}>
+            {t(
+              "We recommend family-style dining so your guests can experience Persian hospitality the way we do at home, passing dishes around the table and tasting a little of everything.",
+              "Nous recommandons le menu à partager pour vivre l’hospitalité persane comme à la maison : les plats circulent à table et chacun goûte un peu de tout.",
+            )}
+          </p>
           {style === "undecided" ? (
             <p className={css.fine}>
               {t(
@@ -497,23 +583,40 @@ export function GroupInquiry({
               </legend>
               <div className={css.menuCards}>
                 {available.map((menu) => (
-                  <label key={menu.name}>
-                    <input
-                      name="menu"
-                      type="radio"
-                      required
-                      checked={data.menu === menu.name}
-                      onChange={() => setMenu(menu.name)}
-                    />
-                    <span>
+                  <div className={css.menuCard} key={menu.name}>
+                    <button
+                      type="button"
+                      className={css.viewMenu}
+                      aria-label={
+                        t("View full menu for ", "Voir le menu complet de ") +
+                        menu.name
+                      }
+                      onClick={() => {
+                        setDetailMenu(menu.name);
+                        menuDialog.current?.showModal();
+                      }}
+                    >
                       <strong>{menu.name}</strong>
                       <b>
                         {money(menu.price, language)}{" "}
                         <small>{t("/ guest", "/ pers.")}</small>
                       </b>
                       <span>{menu.detail[language]}</span>
-                    </span>
-                  </label>
+                      <span className={css.textLink}>
+                        {t("View full menu", "Voir le menu complet")}
+                      </span>
+                    </button>
+                    <label className={css.selectMenu}>
+                      <input
+                        type="radio"
+                        name="menu"
+                        required
+                        checked={data.menu === menu.name}
+                        onChange={() => setMenu(menu.name)}
+                      />
+                      {t("Choose ", "Choisir ") + menu.name}
+                    </label>
+                  </div>
                 ))}
               </div>
               <p className={css.fine}>
@@ -524,131 +627,177 @@ export function GroupInquiry({
               </p>
             </fieldset>
           )}
-          <details className={css.fold}>
-            <summary>
-              {t(
-                "Add dishes or drink pairings",
-                "Ajouter des plats ou des accords",
-              )}
-              {items.length > 0 && <span> ({items.length})</span>}
-            </summary>
-            <div className={css.tools}>
-              <div
-                className={css.filters}
-                role="group"
-                aria-label={t("Browse extras", "Parcourir les suppléments")}
-              >
-                {["pairing", "food"].map((c) => (
-                  <button
-                    type="button"
-                    key={c}
-                    aria-pressed={category === c}
-                    onClick={() => {
-                      setCategory(c);
-                      setSearch("");
-                    }}
-                  >
-                    {c === "pairing"
-                      ? t("Pairings", "Accords")
-                      : t("Dishes", "Plats")}
-                  </button>
-                ))}
+          <dialog
+            className={css.menuDialog}
+            ref={menuDialog}
+            aria-labelledby="menu-detail-title"
+            onClose={() => setDetailMenu("")}
+          >
+            <div className={css.dialogHead}>
+              <h2 id="menu-detail-title">{detailMenu}</h2>
+              <button type="button" onClick={() => menuDialog.current?.close()}>
+                {t("Close", "Fermer")}
+              </button>
+            </div>
+            {detailMenu && (
+              <MenuInclusions
+                name={detailMenu}
+                style={style}
+                language={language}
+              />
+            )}
+            <button
+              className={css.primary}
+              type="button"
+              onClick={() => {
+                setMenu(detailMenu);
+                menuDialog.current?.close();
+              }}
+            >
+              {t("Choose ", "Choisir ") + detailMenu}
+            </button>
+          </dialog>
+          <div className={css.extraSection}>
+            <h3>{t("Optional extras", "Suppléments facultatifs")}</h3>
+            <div
+              className={css.extraTabs}
+              role="tablist"
+              aria-label={t("Optional extras", "Suppléments facultatifs")}
+            >
+              {["food", "pairing"].map((c) => (
+                <button
+                  type="button"
+                  id={"extras-tab-" + c}
+                  key={c}
+                  role="tab"
+                  aria-selected={category === c}
+                  tabIndex={category === c ? 0 : -1}
+                  aria-controls={"extras-panel-" + c}
+                  onKeyDown={(e) => {
+                    if (
+                      ["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)
+                    ) {
+                      e.preventDefault();
+                      const next =
+                        e.key === "Home"
+                          ? "food"
+                          : e.key === "End"
+                            ? "pairing"
+                            : c === "food"
+                              ? "pairing"
+                              : "food";
+                      switchCategory(next);
+                      document.getElementById("extras-tab-" + next)?.focus();
+                    }
+                  }}
+                  onClick={() => switchCategory(c)}
+                >
+                  {c === "food"
+                    ? t("Extra dishes", "Plats supplémentaires")
+                    : t("Drink pairings", "Accords boissons")}
+                </button>
+              ))}
+            </div>
+            <div
+              role="tabpanel"
+              id={"extras-panel-" + category}
+              aria-labelledby={"extras-tab-" + category}
+            >
+              <div className={css.tools}>
+                {label(
+                  t("Filter by name", "Filtrer par nom"),
+                  <input
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />,
+                )}
               </div>
-              {label(
-                t("Filter by name", "Filtrer par nom"),
-                <input
-                  type="search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />,
+              <ul className={css.extras}>
+                {shownExtras.map((x) => {
+                  const n = quantityOf(x.en);
+                  return (
+                    <li key={x.en}>
+                      <div>
+                        <strong>{x[language]}</strong>
+                        <small>
+                          {money(x.price, language)} / {x.unit[language]}
+                        </small>
+                      </div>
+                      {n > 0 ? (
+                        <div className={css.quantity}>
+                          <button
+                            type="button"
+                            aria-label={
+                              t("Remove one ", "Retirer une unité de ") +
+                              x[language]
+                            }
+                            onClick={() => updateExtra(x.en, n - 1)}
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            min="0"
+                            max="999"
+                            aria-label={
+                              t("Quantity for ", "Quantité pour ") + x[language]
+                            }
+                            value={n}
+                            onFocus={(e) => e.target.select()}
+                            onChange={(e) => {
+                              if (
+                                e.target.value !== "" &&
+                                Number.isInteger(e.target.valueAsNumber)
+                              )
+                                updateExtra(
+                                  x.en,
+                                  Math.min(
+                                    999,
+                                    Math.max(0, e.target.valueAsNumber),
+                                  ),
+                                );
+                            }}
+                          />
+                          <button
+                            type="button"
+                            disabled={n >= 999}
+                            aria-label={
+                              t("Add one ", "Ajouter une unité de ") +
+                              x[language]
+                            }
+                            onClick={() => updateExtra(x.en, n + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          className={css.add}
+                          aria-label={t("Add ", "Ajouter ") + x[language]}
+                          onClick={() => updateExtra(x.en, 1)}
+                        >
+                          {t("+ Add", "+ Ajouter")}
+                        </button>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+              {!shownExtras.length && (
+                <p>
+                  {t(
+                    "No matches. Try a different name.",
+                    "Aucun résultat. Essayez un autre nom.",
+                  )}
+                </p>
               )}
             </div>
-            <ul className={css.extras}>
-              {shownExtras.map((x) => {
-                const n = quantityOf(x.en);
-                return (
-                  <li key={x.en}>
-                    <div>
-                      <strong>{x[language]}</strong>
-                      <small>
-                        {money(x.price, language)} / {x.unit[language]}
-                      </small>
-                    </div>
-                    {n > 0 ? (
-                      <div className={css.quantity}>
-                        <button
-                          type="button"
-                          aria-label={
-                            t("Remove one ", "Retirer une unité de ") +
-                            x[language]
-                          }
-                          onClick={() => updateExtra(x.en, n - 1)}
-                        >
-                          −
-                        </button>
-                        <input
-                          type="number"
-                          min="0"
-                          max="999"
-                          aria-label={
-                            t("Quantity for ", "Quantité pour ") + x[language]
-                          }
-                          value={n}
-                          onFocus={(e) => e.target.select()}
-                          onChange={(e) => {
-                            if (
-                              e.target.value !== "" &&
-                              Number.isInteger(e.target.valueAsNumber)
-                            )
-                              updateExtra(
-                                x.en,
-                                Math.min(
-                                  999,
-                                  Math.max(0, e.target.valueAsNumber),
-                                ),
-                              );
-                          }}
-                        />
-                        <button
-                          type="button"
-                          disabled={n >= 999}
-                          aria-label={
-                            t("Add one ", "Ajouter une unité de ") + x[language]
-                          }
-                          onClick={() => updateExtra(x.en, n + 1)}
-                        >
-                          +
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        className={css.add}
-                        aria-label={t("Add ", "Ajouter ") + x[language]}
-                        onClick={() => updateExtra(x.en, 1)}
-                      >
-                        {t("+ Add", "+ Ajouter")}
-                      </button>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-            {!shownExtras.length && (
-              <p>
-                {t(
-                  "No matches. Try a different name.",
-                  "Aucun résultat. Essayez un autre nom.",
-                )}
-              </p>
-            )}
-          </details>
+          </div>
           <details className={css.fold}>
             <summary>
-              {t(
-                "Allergies, billing & special requests",
-                "Allergies, facturation et demandes particulières",
-              )}
+              {t("Allergies & billing", "Allergies et facturation")}
             </summary>
             {textarea(
               "dietary",
@@ -681,15 +830,20 @@ export function GroupInquiry({
               false,
               { maxLength: 120 },
             )}
+          </details>
+          <div className={css.notes}>
             {textarea(
               "notes",
-              t("Other requests", "Autres demandes"),
               t(
-                "Accessibility, a cake, speeches or audiovisual needs…",
-                "Accessibilité, gâteau, discours ou matériel audiovisuel…",
+                "Notes or other requests (optional)",
+                "Notes ou autres demandes (facultatif)",
+              ),
+              t(
+                "Anything else you’d like us to know about your event?",
+                "Y a-t-il autre chose à prévoir pour votre événement ?",
               ),
             )}
-          </details>
+          </div>
         </section>
         <section className={css.panel}>
           <h2>{t("Your contact details", "Vos coordonnées")}</h2>
@@ -735,9 +889,9 @@ export function GroupInquiry({
               </div>
             ))}
           </dl>
-          {items.length > 0 && (
+          {validItems.length > 0 && (
             <ul className={css.selectedExtras}>
-              {items.map((x) => (
+              {validItems.map((x) => (
                 <li key={x.name}>
                   {x.quantity} × {selected(x.name, choices)}
                 </li>

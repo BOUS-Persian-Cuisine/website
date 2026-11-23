@@ -57,21 +57,24 @@ export const individualDetails = [
     "Sharbat de bienvenue, cinq entrées à partager, jarret d’agneau pour la table, plats individuels, accompagnements et dessert.",
   ),
 ];
-export function menuChoices(style: Style, meal: string, date: string) {
+export function menuChoices(style: Style, meal: string, dates: string[]) {
   if (style === "undecided") return [];
   const choices = tiers.map((tier, i) => ({
     name: tier.name,
     price: tier.price,
     detail: style === "sharing" ? tier : individualDetails[i],
   }));
-  const day = new Date(date + "T12:00:00Z").getUTCDay();
-  if (style === "individual" && meal === "Lunch" && day >= 1 && day <= 5) {
+  const hasWeekday = dates.some((date) => {
+    const day = new Date(date + "T12:00:00Z").getUTCDay();
+    return day >= 1 && day <= 5;
+  });
+  if (style === "individual" && meal === "Lunch" && hasWeekday) {
     choices.unshift({
       name: "Table d’Hôte",
       price: 45,
       detail: option(
-        "One starter and one main chosen by each guest. Some dishes carry a supplement.",
-        "Chaque convive choisit une entrée et un plat principal. Certains plats comportent un supplément.",
+        "Weekday lunch only. One starter and one main chosen by each guest. Some dishes carry a supplement.",
+        "Au dîner en semaine seulement. Chaque convive choisit une entrée et un plat principal. Certains plats comportent un supplément.",
       ),
     });
   }
