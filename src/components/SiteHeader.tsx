@@ -64,7 +64,7 @@ export function SiteHeader() {
   ].join(" ");
 
   const navLinkClass = [
-    "brand-link text-[0.72rem] uppercase tracking-[0.26em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4",
+    "brand-link whitespace-nowrap text-[0.72rem] uppercase tracking-[0.15em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4",
     hasScrolled
       ? "text-foreground/78 hover:text-bous-red focus-visible:outline-bous-red"
       : "text-bous-cream/86 hover:text-bous-gold focus-visible:outline-bous-gold",
@@ -85,7 +85,7 @@ export function SiteHeader() {
         <div className="mx-auto grid h-18 w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:h-20 lg:px-10">
           <nav
             aria-label={t.header.menuLabel}
-            className="hidden items-center gap-4 lg:flex xl:gap-8"
+            className="hidden items-center gap-4 xl:flex 2xl:gap-6"
           >
             <a
               href={reservationUrl}
@@ -95,6 +95,9 @@ export function SiteHeader() {
             </a>
             <Link href="/menu" className={navLinkClass}>
               {t.header.nav.menu}
+            </Link>
+            <Link href="/group-event/" className={navLinkClass}>
+              {t.header.nav.groupEvent}
             </Link>
             <Link href="/about" className={navLinkClass}>
               {t.header.nav.about}
@@ -109,7 +112,7 @@ export function SiteHeader() {
 
           <button
             type="button"
-            className={`${iconButtonClass} justify-self-start lg:hidden`}
+            className={`${iconButtonClass} justify-self-start xl:hidden`}
             aria-controls="site-menu"
             aria-expanded={isMobileMenuOpen}
             aria-label={t.header.openMenu}
@@ -160,7 +163,7 @@ export function SiteHeader() {
             />
           </Link>
 
-          <div className="hidden items-center justify-end gap-2 lg:flex">
+          <div className="hidden items-center justify-end gap-2 xl:flex">
             {languageOptions.map((option) => {
               const isSelected = language === option;
 
@@ -188,7 +191,7 @@ export function SiteHeader() {
             })}
           </div>
 
-          <div className="h-11 w-11 justify-self-end lg:hidden" aria-hidden />
+          <div className="h-11 w-11 justify-self-end xl:hidden" aria-hidden />
         </div>
       </header>
 
@@ -205,7 +208,7 @@ export function SiteHeader() {
             aria-label={t.header.closeMenu}
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="menu-panel absolute left-0 top-0 flex h-full w-[min(23rem,88vw)] flex-col bg-bous-cream text-foreground shadow-[30px_0_80px_rgba(17,33,59,0.26)]">
+          <div className="menu-panel absolute left-0 top-0 flex h-full w-[min(23rem,88vw)] flex-col overflow-y-auto bg-bous-cream text-foreground shadow-[30px_0_80px_rgba(17,33,59,0.26)]">
             <div className="flex items-center justify-between border-b border-bous-gold/25 px-6 py-5">
               <span className="text-[0.72rem] uppercase tracking-[0.32em] text-foreground/72">
                 {t.header.menuLabel}
@@ -254,6 +257,9 @@ export function SiteHeader() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t.header.nav.menu}
+              </Link>
+              <Link href="/group-event/" className="transition-colors hover:text-bous-red" onClick={() => setIsMobileMenuOpen(false)}>
+                {t.header.nav.groupEvent}
               </Link>
               <Link
                 href="/about"

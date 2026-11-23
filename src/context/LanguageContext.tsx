@@ -27,6 +27,7 @@ type Translations = {
       about: string;
       contact: string;
       press: string;
+      groupEvent: string;
     };
     languageAriaLabels: Record<Language, string>;
   };
@@ -99,6 +100,7 @@ export const translations: Record<Language, Translations> = {
         about: "About",
         contact: "Contact",
         press: "Press",
+        groupEvent: "Group Event",
       },
       languageAriaLabels: {
         en: "Show site in English",
@@ -175,6 +177,7 @@ export const translations: Record<Language, Translations> = {
         about: "À propos",
         contact: "Contact",
         press: "Presse",
+        groupEvent: "Événement de groupe",
       },
       languageAriaLabels: {
         en: "Afficher le site en anglais",
