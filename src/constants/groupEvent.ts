@@ -24,14 +24,13 @@ export const spaces = [
 ];
 export const bills = [
   option("One bill", "Une seule facture"),
-  option("Separate bills", "Factures séparées"),
   option("Company invoice", "Facture d’entreprise"),
   option("Other", "Autre"),
 ];
 export const drinks = [
   option(
-    "Guests pay for their drinks",
-    "Consommations payées par les convives",
+    "Guests reimburse the organizer for drinks",
+    "Les convives remboursent leurs boissons à la personne responsable",
   ),
   option("Host covers drinks", "Consommations offertes par l’hôte"),
   option("Drink tickets", "Coupons de consommation"),

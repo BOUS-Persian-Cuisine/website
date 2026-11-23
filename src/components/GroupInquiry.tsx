@@ -843,6 +843,12 @@ export function GroupInquiry({
         </section>
         <section className={css.panel} aria-labelledby="event-billing">
           <h2 id="event-billing">{t("Billing", "Facturation")}</h2>
+          <p className={css.fine}>
+            {t(
+              "Your group will receive one bill. You may use up to three credit cards to pay it.",
+              "Votre groupe recevra une seule facture. Vous pouvez la régler avec un maximum de trois cartes de crédit.",
+            )}
+          </p>
           {options(
             "drinks",
             t("Beverage arrangements", "Service des boissons"),
@@ -919,6 +925,25 @@ export function GroupInquiry({
           </h2>
           <p>
             <strong>
+              {t(
+                "Reservations for 10 or more.",
+                "Réservations de 10 personnes ou plus.",
+              )}
+            </strong>{" "}
+            {t(
+              "A credit card and photo ID are required to confirm your reservation. Our team will tell you how to present your ID and provide the card number, expiry date and security code (CVV) for verification. Please leave these details out of this form and email.",
+              "Une carte de crédit et une pièce d’identité avec photo sont requises pour confirmer votre réservation. Notre équipe vous indiquera comment présenter votre pièce d’identité et fournir le numéro de carte, la date d’expiration et le code de sécurité (CVV) aux fins de vérification. Veuillez garder ces renseignements hors du formulaire et des courriels.",
+            )}
+          </p>
+          <p>
+            <strong>{t("Payment.", "Paiement.")}</strong>{" "}
+            {t(
+              "All food and drinks for the group are charged to a single bill. The group may use up to three credit cards to settle it.",
+              "Tous les plats et toutes les boissons du groupe figurent sur une seule facture. Le groupe peut la régler avec un maximum de trois cartes de crédit.",
+            )}
+          </p>
+          <p>
+            <strong>
               {t("Final guest count.", "Nombre final de convives.")}
             </strong>{" "}
             {t(
@@ -931,8 +956,8 @@ export function GroupInquiry({
               {t("Changes and cancellations.", "Modifications et annulations.")}
             </strong>{" "}
             {t(
-              "A fee of $25 per person applies to changes or cancellations made less than 48 hours before your event.",
-              "Des frais de 25 $ par personne s’appliquent à toute modification ou annulation faite moins de 48 heures avant votre événement.",
+              "If you need to cancel or your guest count changes, please contact BOUS as soon as possible.",
+              "Si vous devez annuler ou si le nombre de convives change, veuillez en informer BOUS dès que possible.",
             )}
           </p>
           <p>
