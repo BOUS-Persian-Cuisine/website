@@ -14,9 +14,9 @@ type LunchMenuSection = {
 };
 
 type LunchMenuCopy = {
-    pageTitle: string;
-    sectionLabel: string;
-    heading: string;
+  pageTitle: string;
+  sectionLabel: string;
+  heading: string;
   menuTitle: string;
   price: string;
   includes: string;
@@ -25,8 +25,8 @@ type LunchMenuCopy = {
   reserveLabel: string;
   addOnsTitle: string;
   sections: LunchMenuSection[];
-  addOnColumns: LunchMenuItem[][];
-  dessert: LunchMenuItem;
+  addOns: LunchMenuItem[];
+  note: string;
 };
 
 const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
@@ -34,153 +34,138 @@ const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
     pageTitle: "Lunch Menu - BOUS Persian Cuisine",
     sectionLabel: "Lunch menu",
     heading: "Lunch Menu",
-    menuTitle: "Table d'Hôte Menu",
+    menuTitle: "Table d’Hôte Menu",
     price: "$45 per person",
     includes: "Includes one starter and one main",
     pdfHref: "/lunch-menu.pdf",
-    pdfLabel: "Open PDF menu",
+    pdfLabel: "Open bilingual PDF menu",
     reserveLabel: "Make a reservation",
-    addOnsTitle: "À La Carte & Optional Add-ons",
+    addOnsTitle: "Optional Add-ons",
     sections: [
       {
-        title: "Starters",
+        title: "Appetiser",
         detail: "Choose one",
         items: [
           {
-            name: "Kashk-o-Bademjoon",
-            description:
-              "Charcoal-smoked eggplant, kashk, crispy onion, mint, and fried garlic",
+            name: "Soup of the day",
+            description: "Made with fresh, seasonal ingredients."
           },
           {
-            name: "Tahchin & Yogurt",
-            description:
-              "Crispy saffron rice served over our house-made yogurt, topped with barberries and pistachio",
+            name: "Kashk-e Bademjoon",
+            description: "Charcoal-smoked eggplant, kashk, crispy onion, fried mint, and garlic"
           },
           {
-            name: "Watermelon and Grilled Peach Salad",
-            description: "Watermelon, charcoaled peach, mint, feta, dressing",
+            name: "Cabbage and Beet Salad",
+            description: "Shaved red cabbage, roasted beets, blood orange, fresh mint, feta."
           },
           {
             name: "Garden Salad Shirazi",
-            description: "Cucumber, tomato, onion, mint, and verjus",
+            description: "Cucumber, tomato, onion, mint, and verjus"
           },
           {
             name: "Sour Mushrooms",
-            description:
-              "Charcoal-grilled mushrooms marinated with butter and Qara Qurut",
+            description: "Charcoal-grilled mushrooms marinated with butter and Qara Qurut"
           },
-        ],
+          {
+            name: "Dolmeh Felfel",
+            price: "+$5",
+            description: "Persian-style bell pepper stuffed with beef, rice and fragrant herbs."
+          }
+        ]
       },
       {
-        title: "Mains",
+        title: "Main",
         detail: "Choose one",
         items: [
           {
             name: "Koobideh Kabab Plate",
-            description:
-              "Charcoal-grilled ground beef, grilled vegetables, and Persian rice",
+            description: "Charcoal-grilled ground beef, grilled vegetables, and Persian rice"
           },
           {
             name: "Joojeh Kabab Plate",
-            description:
-              "Saffron-marinated Quebec chicken breast, grilled vegetables, and Persian rice",
+            description: "Saffron-marinated Quebec chicken breast, grilled vegetables, and Persian rice"
           },
           {
-            name: "Fish Kabab Plate",
-            description:
-              "Charcoal-grilled fish, Persian spices, grilled vegetables, and Persian rice",
+            name: "Salmon Kabab Plate",
+            description: "Charcoal-grilled Salmon, Persian spices, grilled vegetables, and Persian rice"
           },
           {
-            name: "Mixed Vegetarian Grill",
-            description:
-              "Seasonal grilled vegetables, herbs, and Persian rice",
+            name: "Beef Tenderloin Gheimeh Tahchin",
+            description: "Crisp saffron rice with a Persian stew of beef tenderloin, yellow split peas, tomatoes and dried lime."
           },
-        ],
+          {
+            name: "Barg Kabab",
+            price: "+$15",
+            description: "Charcoal-grilled beef tenderloin, and Persian rice"
+          },
+          {
+            name: "Shishlik",
+            price: "+$20",
+            description: "Charcoal-grilled Kamouraska Lamb Chops, grilled vegetables and Persian rice"
+          }
+        ]
+      }
+    ],
+    addOns: [
+      {
+        name: "Maast-o-Moosir",
+        price: "14",
+        description: "House-made yogurt with Persian shallots"
       },
+      {
+        name: "Borani Bademjoon",
+        price: "14",
+        description: "Eggplant, yogurt, garlic, and herbs"
+      },
+      {
+        name: "Dessert of the Day",
+        price: "11"
+      }
     ],
-    addOnColumns: [
-      [
-        {
-          name: "Barg Kabab",
-          price: "54",
-          description: "Charcoal-grilled beef tenderloin",
-        },
-        {
-          name: "Shishlik",
-          price: "65",
-          description: "Charcoal-grilled Kamouraska lamb chops",
-        },
-        {
-          name: "Duck Fesenjoon",
-          price: "48",
-          description:
-            "Duck leg confit, slow cooked walnut with pomegranate molasses",
-        },
-      ],
-      [
-        {
-          name: "Mast-o-Moosir",
-          price: "14",
-          description: "House-made yogurt, Persian shallots",
-        },
-        {
-          name: "Borani Bademjoon",
-          price: "14",
-          description: "House-made yogurt, smoked eggplant, spices",
-        },
-        {
-          name: "Persian Rice",
-          price: "8",
-          description: "Northern Iranian rice, saffron",
-        },
-      ],
-    ],
-    dessert: {
-      name: "Dessert of the day",
-      price: "11",
-    },
+    note: "For vegetarian options, please ask your server."
   },
   fr: {
     pageTitle: "Menu midi - BOUS Cuisine perse",
     sectionLabel: "Menu midi",
     heading: "Menu midi",
-    menuTitle: "Menu Table d'Hôte",
+    menuTitle: "Menu table d’hôte",
     price: "45 $ par personne",
-    includes: "Une entrée et un plat principal inclus",
-    pdfHref: "/lunch-menu.pdf",
-    pdfLabel: "Ouvrir le menu PDF",
+    includes: "Une entrée et un plat principal au choix",
+    pdfHref: "/lunch-menu.pdf#page=2",
+    pdfLabel: "Ouvrir le menu PDF bilingue",
     reserveLabel: "Faire une réservation",
-    addOnsTitle: "À la carte et ajouts optionnels",
+    addOnsTitle: "Suppléments au choix",
     sections: [
       {
         title: "Entrées",
         detail: "Choisissez une entrée",
         items: [
           {
-            name: "Kashk-o-Bademjoon",
-            description:
-              "Aubergine fumée, kashk, oignons croustillants, menthe, ail frit",
+            name: "Soupe du jour",
+            description: "Préparée avec des ingrédients frais de saison."
           },
           {
-            name: "Tahchin & yogourt",
-            description:
-              "Riz safrané croustillant servi sur notre yogourt maison, garni d'épine-vinettes et de pistaches",
+            name: "Kashk-e Bademjoon",
+            description: "Aubergine fumée au charbon, kashk, oignons croustillants, menthe frite et ail."
           },
           {
-            name: "Salade de melon d'eau et pêche grillée",
-            description:
-              "Melon d'eau, pêche grillée au charbon, menthe, feta et vinaigrette",
+            name: "Salade de chou rouge et de betteraves",
+            description: "Chou rouge émincé, betteraves rôties, orange sanguine, menthe fraîche et feta."
           },
           {
-            name: "Salade Shirazi du jardin",
-            description: "Concombre, tomate, oignon, menthe et verjus",
+            name: "Salade du jardin à la shirazi",
+            description: "Concombre, tomate, oignon, menthe et verjus."
           },
           {
             name: "Champignons acidulés",
-            description:
-              "Champignons grillés au charbon, marinés au beurre et au qara qurut",
+            description: "Champignons marinés au beurre et au qara qurut, puis grillés au charbon."
           },
-        ],
+          {
+            name: "Dolmeh Felfel",
+            price: "+5 $",
+            description: "Poivron farci à la persane, au bœuf, au riz et aux fines herbes."
+          }
+        ]
       },
       {
         title: "Plats principaux",
@@ -188,69 +173,51 @@ const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
         items: [
           {
             name: "Assiette de kabab koobideh",
-            description:
-              "Bœuf haché grillé au charbon, légumes grillés et riz persan",
+            description: "Bœuf haché grillé au charbon, légumes grillés et riz persan."
           },
           {
             name: "Assiette de joojeh kabab",
-            description:
-              "Poitrine de poulet du Québec marinée au safran, légumes grillés et riz persan",
+            description: "Poitrine de poulet du Québec marinée au safran, légumes grillés et riz persan."
           },
           {
-            name: "Assiette de kabab de poisson",
-            description:
-              "Poisson grillé au charbon, épices persanes, légumes grillés et riz persan",
+            name: "Assiette de kabab de saumon",
+            description: "Saumon grillé au charbon, épices persanes, légumes grillés et riz persan."
           },
           {
-            name: "Grillade végétarienne mixte",
-            description:
-              "Légumes de saison grillés, herbes fraîches et riz persan",
+            name: "Tahchin au gheimeh de filet de bœuf",
+            description: "Riz croustillant au safran et ragoût persan de filet de bœuf, de pois cassés jaunes, de tomates et de lime séchée."
           },
-        ],
+          {
+            name: "Barg Kabab",
+            price: "+15 $",
+            description: "Filet de bœuf grillé au charbon et riz persan."
+          },
+          {
+            name: "Shishlik",
+            price: "+20 $",
+            description: "Côtelettes d’agneau de Kamouraska grillées au charbon, légumes grillés et riz persan."
+          }
+        ]
+      }
+    ],
+    addOns: [
+      {
+        name: "Maast-o-Moosir",
+        price: "14",
+        description: "Yogourt maison aux échalotes persanes."
       },
+      {
+        name: "Borani Bademjoon",
+        price: "14",
+        description: "Aubergine, yogourt, ail et fines herbes."
+      },
+      {
+        name: "Dessert du jour",
+        price: "11"
+      }
     ],
-    addOnColumns: [
-      [
-        {
-          name: "Barg Kabab",
-          price: "54",
-          description: "Filet de bœuf grillé au charbon",
-        },
-        {
-          name: "Shishlik",
-          price: "65",
-          description: "Côtelettes d'agneau de Kamouraska grillées au charbon",
-        },
-        {
-          name: "Duck Fesenjoon",
-          price: "48",
-          description:
-            "Confit de cuisse de canard, noix mijotées à la mélasse de grenade",
-        },
-      ],
-      [
-        {
-          name: "Mast-o-Moosir",
-          price: "14",
-          description: "Yogourt maison, échalotes persanes",
-        },
-        {
-          name: "Borani Bademjoon",
-          price: "14",
-          description: "Yogourt maison, aubergine fumée, épices",
-        },
-        {
-          name: "Persian Rice",
-          price: "8",
-          description: "Riz du nord de l'Iran, safran",
-        },
-      ],
-    ],
-    dessert: {
-      name: "Dessert du moment",
-      price: "11",
-    },
-  },
+    note: "Pour les options végétariennes, renseignez-vous auprès de votre serveur."
+  }
 };
 
 function LunchMenuItemRow({ item }: { item: LunchMenuItem }) {
@@ -327,13 +294,11 @@ export default function LunchMenu() {
             {copy.addOnsTitle}
           </h2>
           <ol className="mt-6 space-y-4">
-            {copy.addOnColumns.flat().map((item) => (
+            {copy.addOns.map((item) => (
               <LunchMenuItemRow key={item.name} item={item} />
             ))}
           </ol>
-          <ol className="mt-4">
-            <LunchMenuItemRow item={copy.dessert} />
-          </ol>
+          <p className="mt-6 text-sm text-bous-burgundy/80">{copy.note}</p>
         </section>
       </div>
     </MenuPageLayout>
