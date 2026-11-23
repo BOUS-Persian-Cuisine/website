@@ -74,8 +74,7 @@ export function GroupInquiry({
   const [detailMenu, setDetailMenu] = useState("");
   const menuDialog = useRef<HTMLDialogElement>(null);
   const [items, setItems] = useState<Extra[]>([]);
-  const [category, setCategory] = useState("food");
-  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState({ food: "", pairing: "" });
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
   const [reference, setReference] = useState("");
@@ -193,13 +192,6 @@ export function GroupInquiry({
         onChange={(e) => change(k, e.target.value)}
       />,
     );
-  const shownExtras = choices.filter(
-    (extra) =>
-      extra.category === category &&
-      extra[language]
-        .toLocaleLowerCase()
-        .includes(search.trim().toLocaleLowerCase()),
-  );
   const quantityOf = (name: string) =>
     items.find((item) => item.name === name)?.quantity ?? 0;
   const updateExtra = (name: string, quantity: number) => {
@@ -222,10 +214,6 @@ export function GroupInquiry({
   const calendarDates = preferredDates
     .map((value) => dateFormatter.format(new Date(value + "T12:00:00Z")))
     .join(" · ");
-  const switchCategory = (value: string) => {
-    setCategory(value);
-    setSearch("");
-  };
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (shortGroup) {
@@ -657,144 +645,118 @@ export function GroupInquiry({
               {t("Choose ", "Choisir ") + detailMenu}
             </button>
           </dialog>
-          <div className={css.extraSection}>
-            <h3>{t("Optional extras", "Suppléments facultatifs")}</h3>
-            <div
-              className={css.extraTabs}
-              role="tablist"
-              aria-label={t("Optional extras", "Suppléments facultatifs")}
-            >
-              {["food", "pairing"].map((c) => (
-                <button
-                  type="button"
-                  id={"extras-tab-" + c}
-                  key={c}
-                  role="tab"
-                  aria-selected={category === c}
-                  tabIndex={category === c ? 0 : -1}
-                  aria-controls={"extras-panel-" + c}
-                  onKeyDown={(e) => {
-                    if (
-                      ["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)
-                    ) {
-                      e.preventDefault();
-                      const next =
-                        e.key === "Home"
-                          ? "food"
-                          : e.key === "End"
-                            ? "pairing"
-                            : c === "food"
-                              ? "pairing"
-                              : "food";
-                      switchCategory(next);
-                      document.getElementById("extras-tab-" + next)?.focus();
-                    }
-                  }}
-                  onClick={() => switchCategory(c)}
-                >
-                  {c === "food"
+          {(["food", "pairing"] as const).map((category) => {
+            const query = filters[category].trim().toLocaleLowerCase();
+            const shownExtras = choices.filter(
+              (extra) =>
+                extra.category === category &&
+                extra[language].toLocaleLowerCase().includes(query),
+            );
+            return (
+              <details key={category} className={css.fold}>
+                <summary>
+                  {category === "food"
                     ? t("Extra dishes", "Plats supplémentaires")
                     : t("Drink pairings", "Accords boissons")}
-                </button>
-              ))}
-            </div>
-            <div
-              role="tabpanel"
-              id={"extras-panel-" + category}
-              aria-labelledby={"extras-tab-" + category}
-            >
-              <div className={css.tools}>
-                {label(
-                  t("Filter by name", "Filtrer par nom"),
-                  <input
-                    type="search"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />,
-                )}
-              </div>
-              <ul className={css.extras}>
-                {shownExtras.map((x) => {
-                  const n = quantityOf(x.en);
-                  return (
-                    <li key={x.en}>
-                      <div>
-                        <strong>{x[language]}</strong>
-                        <small>
-                          {money(x.price, language)} / {x.unit[language]}
-                        </small>
-                      </div>
-                      {n > 0 ? (
-                        <div className={css.quantity}>
-                          <button
-                            type="button"
-                            aria-label={
-                              t("Remove one ", "Retirer une unité de ") +
-                              x[language]
-                            }
-                            onClick={() => updateExtra(x.en, n - 1)}
-                          >
-                            −
-                          </button>
-                          <input
-                            type="number"
-                            min="0"
-                            max="999"
-                            aria-label={
-                              t("Quantity for ", "Quantité pour ") + x[language]
-                            }
-                            value={n}
-                            onFocus={(e) => e.target.select()}
-                            onChange={(e) => {
-                              if (
-                                e.target.value !== "" &&
-                                Number.isInteger(e.target.valueAsNumber)
-                              )
-                                updateExtra(
-                                  x.en,
-                                  Math.min(
-                                    999,
-                                    Math.max(0, e.target.valueAsNumber),
-                                  ),
-                                );
-                            }}
-                          />
-                          <button
-                            type="button"
-                            disabled={n >= 999}
-                            aria-label={
-                              t("Add one ", "Ajouter une unité de ") +
-                              x[language]
-                            }
-                            onClick={() => updateExtra(x.en, n + 1)}
-                          >
-                            +
-                          </button>
-                        </div>
-                      ) : (
-                        <button
-                          type="button"
-                          className={css.add}
-                          aria-label={t("Add ", "Ajouter ") + x[language]}
-                          onClick={() => updateExtra(x.en, 1)}
-                        >
-                          {t("+ Add", "+ Ajouter")}
-                        </button>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-              {!shownExtras.length && (
-                <p>
-                  {t(
-                    "No matches. Try a different name.",
-                    "Aucun résultat. Essayez un autre nom.",
+                </summary>
+                <div className={css.tools}>
+                  {label(
+                    category === "food"
+                      ? t("Filter dishes", "Filtrer les plats")
+                      : t("Filter pairings", "Filtrer les accords"),
+                    <input
+                      type="search"
+                      value={filters[category]}
+                      onChange={(e) =>
+                        setFilters({ ...filters, [category]: e.target.value })
+                      }
+                    />,
                   )}
-                </p>
-              )}
-            </div>
-          </div>
+                </div>
+                <ul className={css.extras}>
+                  {shownExtras.map((x) => {
+                    const n = quantityOf(x.en);
+                    return (
+                      <li key={x.en}>
+                        <div>
+                          <strong>{x[language]}</strong>
+                          <small>
+                            {money(x.price, language)} / {x.unit[language]}
+                          </small>
+                        </div>
+                        {n > 0 ? (
+                          <div className={css.quantity}>
+                            <button
+                              type="button"
+                              aria-label={
+                                t("Remove one ", "Retirer une unité de ") +
+                                x[language]
+                              }
+                              onClick={() => updateExtra(x.en, n - 1)}
+                            >
+                              −
+                            </button>
+                            <input
+                              type="number"
+                              min="0"
+                              max="999"
+                              aria-label={
+                                t("Quantity for ", "Quantité pour ") +
+                                x[language]
+                              }
+                              value={n}
+                              onFocus={(e) => e.target.select()}
+                              onChange={(e) => {
+                                if (
+                                  e.target.value !== "" &&
+                                  Number.isInteger(e.target.valueAsNumber)
+                                )
+                                  updateExtra(
+                                    x.en,
+                                    Math.min(
+                                      999,
+                                      Math.max(0, e.target.valueAsNumber),
+                                    ),
+                                  );
+                              }}
+                            />
+                            <button
+                              type="button"
+                              disabled={n >= 999}
+                              aria-label={
+                                t("Add one ", "Ajouter une unité de ") +
+                                x[language]
+                              }
+                              onClick={() => updateExtra(x.en, n + 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            className={css.add}
+                            aria-label={t("Add ", "Ajouter ") + x[language]}
+                            onClick={() => updateExtra(x.en, 1)}
+                          >
+                            {t("+ Add", "+ Ajouter")}
+                          </button>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+                {!shownExtras.length && (
+                  <p>
+                    {t(
+                      "No matches. Try a different name.",
+                      "Aucun résultat. Essayez un autre nom.",
+                    )}
+                  </p>
+                )}
+              </details>
+            );
+          })}
           <details className={css.fold}>
             <summary>
               {t("Allergies & billing", "Allergies et facturation")}

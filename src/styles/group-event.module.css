@@ -577,30 +577,8 @@
   color: #614f49;
   font-size: 0.94rem;
 }
-.extraSection,
 .notes {
   margin-top: 1.15rem;
   padding-top: 1rem;
   border-top: 1px solid #dfd4c2;
-}
-.extraSection h3 {
-  font-size: 1.2rem;
-  margin: 0 0 0.6rem;
-}
-.extraTabs {
-  display: flex;
-  border-bottom: 1px solid #cbbdae;
-  margin-bottom: 0.8rem;
-}
-.extraTabs button {
-  flex: 1;
-  padding: 0.6rem 0.35rem;
-  min-height: 2.75rem;
-  border-bottom: 3px solid transparent;
-}
-.extraTabs [aria-selected="true"] {
-  color: #610e2a;
-  border-color: #610e2a;
-  font-weight: 600;
-  background: #fbf4f3;
 }
