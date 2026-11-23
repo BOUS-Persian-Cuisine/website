@@ -23,19 +23,19 @@ export const spaces = [
   option("Full restaurant buyout", "Privatisation du restaurant"),
 ];
 export const bills = [
-  option("To be decided", "À déterminer"),
   option("One bill", "Une seule facture"),
   option("Separate bills", "Factures séparées"),
   option("Company invoice", "Facture d’entreprise"),
+  option("Other", "Autre"),
 ];
 export const drinks = [
-  option("To be decided", "À déterminer"),
   option(
     "Guests pay for their drinks",
     "Consommations payées par les convives",
   ),
   option("Host covers drinks", "Consommations offertes par l’hôte"),
   option("Drink tickets", "Coupons de consommation"),
+  option("Other", "Autre"),
 ];
 export const styles = {
   sharing: option("Family-style sharing", "Menu à partager"),

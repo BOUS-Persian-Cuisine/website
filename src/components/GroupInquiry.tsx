@@ -36,8 +36,10 @@ const empty = {
   menu: "",
   dietary: "",
   notes: "",
-  billing: "To be decided",
-  drinks: "To be decided",
+  billing: "",
+  billingOther: "",
+  drinks: "",
+  drinksOther: "",
   name: "",
   company: "",
   email: "",
@@ -192,6 +194,33 @@ export function GroupInquiry({
         onChange={(e) => change(k, e.target.value)}
       />,
     );
+  const otherDetails = (
+    key: "drinksOther" | "billingOther",
+    title: string,
+    maxLength: number,
+  ) =>
+    label(
+      title,
+      <textarea
+        name={key}
+        rows={2}
+        required
+        maxLength={maxLength}
+        value={data[key]}
+        ref={(el) => {
+          el?.setCustomValidity(
+            data[key] && !data[key].trim()
+              ? t(
+                  "Please describe your preference.",
+                  "Veuillez préciser votre préférence.",
+                )
+              : "",
+          );
+        }}
+        onChange={(e) => change(key, e.target.value)}
+      />,
+      true,
+    );
   const quantityOf = (name: string) =>
     items.find((item) => item.name === name)?.quantity ?? 0;
   const updateExtra = (name: string, quantity: number) => {
@@ -271,7 +300,11 @@ export function GroupInquiry({
           dietary: data.dietary.trim(),
           notes: [
             data.endTime && "End time: " + data.endTime,
-            data.drinks !== "To be decided" && "Beverages: " + data.drinks,
+            data.drinks &&
+              "Beverages: " +
+                (data.drinks === "Other"
+                  ? "Other: " + data.drinksOther.trim()
+                  : data.drinks),
             data.notes.trim(),
           ]
             .filter(Boolean)
@@ -280,7 +313,10 @@ export function GroupInquiry({
           email: data.email.trim(),
           phone: data.phone.trim(),
           company: data.company.trim(),
-          billing: data.billing,
+          billing:
+            data.billing === "Other"
+              ? "Other: " + data.billingOther.trim()
+              : data.billing,
         });
       const response = await fetch(endpoint, {
         method: "POST",
@@ -811,11 +847,29 @@ export function GroupInquiry({
             t("Beverage arrangements", "Service des boissons"),
             drinks,
           )}
+          {data.drinks === "Other" &&
+            otherDetails(
+              "drinksOther",
+              t(
+                "Describe your beverage arrangements",
+                "Précisez le service des boissons souhaité",
+              ),
+              1150,
+            )}
           {options(
             "billing",
             t("Billing preference", "Préférence de facturation"),
             bills,
           )}
+          {data.billing === "Other" &&
+            otherDetails(
+              "billingOther",
+              t(
+                "Describe your billing preference",
+                "Précisez votre préférence de facturation",
+              ),
+              174,
+            )}
         </section>
         <section className={css.panel}>
           <h2>{t("Your contact details", "Vos coordonnées")}</h2>
