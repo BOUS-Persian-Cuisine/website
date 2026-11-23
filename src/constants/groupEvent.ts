@@ -83,16 +83,29 @@ export function menuChoices(style: Style, meal: string, dates: string[]) {
 export function money(n: number, lang: Language) {
   return lang === "fr" ? n + " $" : "$" + n;
 }
+export const extraDishCourses = [
+  ...courses.map((course) => ({
+    key: course.en,
+    label:
+      course.en === "Bread & appetisers"
+        ? option("Appetizers", "Entrées")
+        : option(course.en, course.fr),
+  })),
+  { key: "Dessert", label: option("Dessert", "Dessert") },
+];
+
 export const extras = [
   ...pairings.map((item) => ({
     ...item,
     unit: option("guest", "personne"),
     category: "pairing",
+    course: "",
   })),
   {
     en: "Tahchin with Persian Ossetra caviar",
     fr: "Tahchin au caviar persan Ossetra",
     price: 82,
+    course: "Bread & appetisers",
     unit: option("plate", "assiette"),
     category: "food",
   },
@@ -101,6 +114,7 @@ export const extras = [
       en: item.en,
       fr: item.fr ?? item.en,
       price: item.price,
+      course: course.en,
       category: "food",
       unit: item.unit
         ? option(
@@ -121,6 +135,7 @@ export const lunchExtras = [
     en: "Dessert of the day",
     fr: "Dessert du jour",
     price: 11,
+    course: "Dessert",
     unit: option("guest", "personne"),
     category: "food",
   },

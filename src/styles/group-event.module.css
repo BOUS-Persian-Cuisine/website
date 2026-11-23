@@ -338,8 +338,14 @@
   margin: 0;
   padding: 0;
 }
-.extras {
-  max-height: 20rem;
+.extraCourse {
+  color: #610e2a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.6rem 0 0.3rem;
+}
+.extraList {
+  max-height: 22rem;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 0 0.3rem;
@@ -471,25 +477,79 @@
     margin: 1.1rem 0.2rem;
   }
 }
-.dateRows {
-  display: grid;
-  gap: 0.5rem;
+.calendar {
+  width: min(100%, 22rem);
+  border: 1px solid #d4c6b7;
+  background: white;
+  padding: 0.55rem;
+  border-radius: 0.75rem;
+  margin: 0.65rem 0;
 }
-.dateRow {
+.monthHeader {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
 }
-.dateRow input[type="date"] {
-  max-width: 16rem;
-}
-.addDate {
+.monthHeader button {
   min-height: 2.75rem;
-  color: #610e2a;
-  font-weight: 600;
+  min-width: 2.75rem;
+  font-size: 1.55rem;
+}
+.monthHeader button:disabled {
+  opacity: 0.3;
+}
+.dayGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: center;
+  gap: 2px;
+}
+.dayGrid > span {
+  text-align: center;
+  font-size: 0.83rem;
+  color: #675851;
+  padding-bottom: 0.25rem;
+}
+.dayGrid .day {
+  min-width: 0;
+  min-height: 2.65rem;
+  border-radius: 0.45rem;
+  font-variant-numeric: tabular-nums;
+}
+.day[aria-current="date"] {
   text-decoration: underline;
-  text-decoration-color: #b09861;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.22rem;
+}
+.day:disabled,
+.day[aria-disabled="true"] {
+  color: #ad9f98;
+}
+.day:hover:not([aria-disabled="true"]):not([aria-pressed="true"]) {
+  background: #f7f2eb;
+}
+.day[aria-pressed="true"] {
+  background: #610e2a;
+  color: white;
+  font-weight: 600;
+}
+.dateChips {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 0.35rem;
+  margin: 0.6rem 0;
+  padding: 0;
+}
+.dateChips button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 2rem;
+  border: 1px solid #cbbdae;
 }
 .hospitality {
   color: #614f49;
