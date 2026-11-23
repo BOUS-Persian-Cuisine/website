@@ -24,7 +24,7 @@ import css from "@/styles/group-event.module.css";
 
 const empty = {
   occasion: "",
-  meal: "Dinner",
+  meal: "",
   date: "",
   time: "",
   alternateDate: "",
@@ -56,15 +56,22 @@ function montrealToday() {
   }).format(new Date());
 }
 
-export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
+export function GroupInquiry({
+  style,
+  onStyleChange,
+  onComplete,
+}: {
+  style: Style;
+  onStyleChange: (style: Style) => void;
+  onComplete: () => void;
+}) {
   const { language } = useLanguage();
   const t = (en: string, fr: string) => (language === "fr" ? fr : en);
   const [data, setData] = useState<Fields>({ ...empty });
-  const [style, setStyle] = useState(initialStyle);
-  const [step, setStep] = useState(0);
+
   const [items, setItems] = useState<Extra[]>([]);
-  const [item, setItem] = useState("");
-  const [qty, setQty] = useState("1");
+  const [category, setCategory] = useState("pairing");
+  const [search, setSearch] = useState("");
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
   const [reference, setReference] = useState("");
@@ -73,63 +80,44 @@ export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
   const submission = useRef("");
   const busy = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
-  const currentStep = useRef(0);
-  const steps = [
-    t("Event", "Événement"),
-    t("Menu", "Menu"),
-    t("Contact", "Contact"),
-    t("Review", "Révision"),
-  ];
-  const titles = [
-    t("Tell us about your gathering", "Parlez-nous de votre événement"),
-    t("Choose your menu", "Composez votre menu"),
-    t("Who’s organizing the event?", "Qui organise l’événement ?"),
-    t("Review your request", "Vérifiez votre demande"),
-  ];
   const available = menuChoices(style, data.meal, data.date);
   const currentMenu = available.find((m) => m.name === data.menu);
-  const choices = data.menu === "Table d’Hôte" ? lunchExtras : extras;
+  const choices = currentMenu?.name === "Table d’Hôte" ? lunchExtras : extras;
   const selected = (en: string, options: Option[]) =>
     options.find((o) => o.en === en)?.[language] || en;
   const today = montrealToday();
   useEffect(() => {
-    if (step !== currentStep.current || reference) {
-      heading.current?.focus();
-      heading.current?.scrollIntoView({ block: "start" });
-    }
-    currentStep.current = step;
-  }, [step, reference]);
+    if (reference) heading.current?.focus();
+  }, [reference]);
+
+  const restrictExtras = () =>
+    setItems((old) =>
+      old.filter((item) => lunchExtras.some((extra) => extra.en === item.name)),
+    );
   const change = (k: Field, value: string) => {
     setError("");
-    setData((d) => ({
-      ...d,
-      [k]: value,
-      ...((k === "meal" || k === "date") && d.menu === "Table d’Hôte"
-        ? { menu: "" }
-        : {}),
-    }));
-    if ((k === "meal" || k === "date") && data.menu === "Table d’Hôte") {
-      setItems([]);
-      setItem("");
-    }
-  };
-  const direct = (s: number) => {
-    setStep(s);
-    setError("");
+    setData((old) => {
+      const next = { ...old, [k]: value };
+      if (
+        next.menu &&
+        !menuChoices(style, next.meal, next.date).some(
+          (menu) => menu.name === next.menu,
+        )
+      )
+        next.menu = "";
+      return next;
+    });
   };
   const selectStyle = (value: Style) => {
-    setStyle(value);
-    setData((d) => ({ ...d, menu: "" }));
-    setItems([]);
-    setItem("");
+    onStyleChange(value);
+    const menus = menuChoices(value, data.meal, data.date);
+    if (!menus.some((menu) => menu.name === data.menu)) change("menu", "");
     setError("");
   };
   const setMenu = (value: string) => {
     change("menu", value);
-    setItem("");
-    if (value === "Table d’Hôte" || data.menu === "Table d’Hôte") setItems([]);
+    if (value === "Table d’Hôte") restrictExtras();
   };
-  const hint = t("Optional", "Facultatif");
   const label = (text: string, element: ReactNode, required = false) => (
     <label className={css.label}>
       <span>
@@ -159,29 +147,34 @@ export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
       />,
       required,
     );
-  const select = (
-    k: Field,
-    text: string,
-    options: Option[],
+  const options = (
+    key: Field,
+    title: string,
+    values: Option[],
     required = false,
-  ) =>
-    label(
-      text,
-      <select
-        name={k}
-        value={data[k]}
-        required={required}
-        onChange={(e) => change(k, e.target.value)}
-      >
-        {!data[k] && <option value="">{t("Please select", "Choisir")}</option>}
-        {options.map((o) => (
-          <option value={o.en} key={o.en}>
-            {o[language]}
-          </option>
+  ) => (
+    <fieldset className={css.choiceGroup}>
+      <legend>
+        {title}
+        {required && " *"}
+      </legend>
+      <div className={css.pills}>
+        {values.map((value) => (
+          <label key={value.en}>
+            <input
+              type="radio"
+              name={key}
+              value={value.en}
+              checked={data[key] === value.en}
+              required={required}
+              onChange={() => change(key, value.en)}
+            />
+            <span>{value[language]}</span>
+          </label>
         ))}
-      </select>,
-      required,
-    );
+      </div>
+    </fieldset>
+  );
   const textarea = (k: Field, text: string, placeholder: string) =>
     label(
       text,
@@ -193,152 +186,39 @@ export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
         onChange={(e) => change(k, e.target.value)}
       />,
     );
-  const addItem = () => {
-    const quantity = Number(qty);
-    if (
-      !item ||
-      !Number.isInteger(quantity) ||
-      quantity < 1 ||
-      quantity > 999
-    ) {
-      setError(
-        t(
-          "Choose an extra and a quantity from 1 to 999.",
-          "Choisissez un supplément et une quantité de 1 à 999.",
-        ),
-      );
-      return;
-    }
-    const previous = items.find((x) => x.name === item);
-    if (previous && previous.quantity + quantity > 999) {
-      setError(
-        t("The maximum quantity is 999.", "La quantité maximale est de 999."),
-      );
-      return;
-    }
-    setItems(
-      previous
-        ? items.map((x) =>
-            x.name === item ? { ...x, quantity: x.quantity + quantity } : x,
-          )
-        : [...items, { name: item, quantity }],
-    );
-    setItem("");
-    setQty("1");
-    setError("");
+  const shownExtras = choices.filter(
+    (extra) =>
+      extra.category === category &&
+      extra[language]
+        .toLocaleLowerCase()
+        .includes(search.trim().toLocaleLowerCase()),
+  );
+  const quantityOf = (name: string) =>
+    items.find((item) => item.name === name)?.quantity ?? 0;
+  const updateExtra = (name: string, quantity: number) => {
+    setItems((old) => {
+      const kept = old.filter((item) => item.name !== name);
+      return quantity > 0 ? [...kept, { name, quantity }] : kept;
+    });
   };
-  const validateMenu = () => {
-    if (style !== "undecided" && !currentMenu) {
-      setError(
-        t(
-          "Choose a menu or select “Help me choose”.",
-          "Sélectionnez un menu ou « Aidez-moi à choisir ».",
-        ),
-      );
-      return false;
-    }
-    if (style === "sharing" && Number(data.guests) < 8) {
-      setError(
-        t(
-          "Sharing menus are for eight guests or more. Choose individual dining or ask us for guidance.",
-          "Les menus à partager sont offerts aux groupes de huit ou plus. Choisissez un repas individuel ou demandez conseil.",
-        ),
-      );
-      return false;
-    }
-    if (item) {
-      setError(
-        t(
-          "Add your selected extra or clear the selection to continue.",
-          "Ajoutez le supplément choisi ou effacez votre sélection pour continuer.",
-        ),
-      );
-      return false;
-    }
-    return true;
-  };
-  const sections = [
-    {
-      title: steps[0],
-      rows: [
-        [t("Occasion", "Occasion"), selected(data.occasion, occasions)],
-        [
-          t("Date and time", "Date et heure"),
-          [
-            data.date,
-            data.time,
-            data.endTime && t("until ", "jusqu’à ") + data.endTime,
-          ]
-            .filter(Boolean)
-            .join(" · "),
-        ],
-        [t("Alternate date", "Autre date"), data.alternateDate],
-        [
-          t("Guests", "Convives"),
-          data.guests +
-            (Number(data.children) > 0
-              ? t(", including ", ", dont ") +
-                data.children +
-                t(" children", " enfants")
-              : ""),
-        ],
-        [t("Service", "Service"), selected(data.meal, meals)],
-        [t("Space", "Espace"), selected(data.space, spaces)],
-      ],
-    },
-    {
-      title: steps[1],
-      rows: [
-        [t("Dining style", "Style de service"), styles[style][language]],
-        [
-          t("Menu", "Menu"),
-          currentMenu
-            ? currentMenu.name +
-              " · " +
-              money(currentMenu.price, language) +
-              t(" per guest", " par personne")
-            : styles.undecided[language],
-        ],
-        [
-          t("Extras", "Suppléments"),
-          items
-            .map((x) => {
-              const extra = choices.find((o) => o.en === x.name)!;
-              return (
-                x.quantity +
-                " × " +
-                extra[language] +
-                " (" +
-                money(extra.price, language) +
-                " / " +
-                extra.unit[language] +
-                ")"
-              );
-            })
-            .join(", ") || t("None selected", "Aucun"),
-        ],
-        [t("Beverages", "Boissons"), selected(data.drinks, drinks)],
-        [t("Billing", "Facturation"), selected(data.billing, bills)],
-        [t("Budget", "Budget"), data.budget],
-        [t("Dietary needs", "Besoins alimentaires"), data.dietary],
-        [t("Other requests", "Autres demandes"), data.notes],
-      ],
-    },
-    {
-      title: steps[2],
-      rows: [
-        [t("Organizer", "Responsable"), data.name],
-        [t("Email", "Courriel"), data.email],
-        [t("Phone", "Téléphone"), data.phone],
-        [t("Organization", "Organisation"), data.company],
-      ],
-    },
-  ];
-  const submit = async (e: FormEvent) => {
+  const shortGroup =
+    style === "sharing" && data.guests !== "" && Number(data.guests) < 8;
+  const parsedDate = new Date(data.date + "T12:00:00Z");
+  const calendarDate = Number.isFinite(parsedDate.getTime())
+    ? new Intl.DateTimeFormat(language === "fr" ? "fr-CA" : "en-CA", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+      }).format(parsedDate)
+    : "";
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (step === 1 && !validateMenu()) return;
-    if (step < 3) {
-      direct(step + 1);
+    if (shortGroup) {
+      const guests = e.currentTarget.elements.namedItem(
+        "guests",
+      ) as HTMLInputElement;
+      guests.focus();
       return;
     }
     if (busy.current) return;
@@ -431,6 +311,7 @@ export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
       if (typeof result.reference !== "string" || !result.reference)
         throw Error("reference");
       setReference(result.reference);
+      onComplete();
     } catch {
       setAmbiguous(true);
       setError(
@@ -467,44 +348,51 @@ export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
         </p>
       </section>
     );
+  const eventSummary = [
+    [t("Occasion", "Occasion"), selected(data.occasion, occasions)],
+    [t("Date", "Date"), [calendarDate, data.time].filter(Boolean).join(" · ")],
+    [t("Guests", "Convives"), data.guests],
+    [t("Service", "Service"), selected(data.meal, meals)],
+    [
+      t("Menu", "Menu"),
+      currentMenu
+        ? currentMenu.name +
+          " · " +
+          money(currentMenu.price, language) +
+          t(" / guest", " / pers.")
+        : styles[style][language],
+    ],
+  ];
   return (
-    <>
-      <ol
-        className={css.progress}
-        aria-label={t("Request progress", "Progression de la demande")}
+    <form
+      onSubmit={submit}
+      className={css.planner}
+      onInvalidCapture={(e) => {
+        const field = e.target as HTMLInputElement;
+        const details = field.closest("details");
+        if (details) details.open = true;
+      }}
+    >
+      <fieldset
+        className={css.formBody}
+        disabled={sending || ambiguous}
+        aria-label={t("Event details", "Détails de l’événement")}
       >
-        {steps.map((s, i) => (
-          <li
-            key={i}
-            aria-current={step === i ? "step" : undefined}
-            className={i <= step ? css.reached : ""}
-          >
-            <span>{i + 1}</span>
-            {s}
-          </li>
-        ))}
-      </ol>
-      <form onSubmit={submit} className={css.form}>
-        <h2 ref={heading} tabIndex={-1}>
-          {titles[step]}
-        </h2>
-        {step < 3 && (
-          <p className={css.fine}>
-            {t(
-              "Fields marked * are required.",
-              "Les champs marqués d’un astérisque (*) sont obligatoires.",
-            )}
-          </p>
-        )}
-        {step === 0 && (
-          <div className={css.grid}>
-            {select("occasion", t("Occasion", "Occasion"), occasions, true)}
-            {select(
-              "meal",
-              t("Meal or reception", "Repas ou réception"),
-              meals,
-              true,
-            )}
+        <section className={css.panel}>
+          <h2>{t("Your gathering", "Votre événement")}</h2>
+          {options(
+            "occasion",
+            t("What’s the occasion?", "Quelle est l’occasion ?"),
+            occasions,
+            true,
+          )}
+          {options(
+            "meal",
+            t("When are you joining us?", "Pour quel service ?"),
+            meals,
+            true,
+          )}
+          <div className={css.three}>
             {input(
               "date",
               t("Preferred date", "Date souhaitée"),
@@ -512,219 +400,256 @@ export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
               true,
               { min: today },
             )}
-            {input(
-              "time",
-              t("Preferred start time", "Heure de début souhaitée"),
-              "time",
-              true,
-            )}
+            {input("time", t("Start time", "Heure de début"), "time", true)}
             {input(
               "guests",
-              t(
-                "Estimated guests, including children",
-                "Nombre de convives, enfants compris",
-              ),
+              t("Guests, including children", "Convives, enfants compris"),
               "number",
               true,
-              { min: 1, max: 1000, step: 1 },
-            )}
-            {input(
-              "children",
-              t("Children in the group", "Enfants dans le groupe"),
-              "number",
-              false,
-              { min: 0, max: Number(data.guests) || 1000, step: 1 },
-            )}
-            <div>
-              {select(
-                "space",
-                t("Space preference", "Espace souhaité"),
-                spaces,
-              )}
-              {data.space === "Private room" && (
-                <p className={css.fine}>
-                  {t(
-                    "The private room seats up to 10. For larger groups, we can discuss the dining room or a buyout.",
-                    "Le salon privé accueille jusqu’à 10 personnes. Pour un groupe plus nombreux, nous pouvons vous proposer la salle à manger ou une privatisation.",
-                  )}
-                </p>
-              )}
-            </div>
-            {input(
-              "alternateDate",
-              t("Alternate date", "Autre date possible"),
-              "date",
-              false,
-              { min: today },
-            )}
-            {input(
-              "endTime",
-              t("Preferred end time", "Heure de fin souhaitée"),
-              "time",
+              {
+                min: style === "sharing" ? 8 : 1,
+                max: 1000,
+                placeholder: t("How many?", "Combien ?"),
+                "aria-describedby": shortGroup ? "group-size-hint" : undefined,
+              },
             )}
           </div>
-        )}
-        {step === 1 && (
-          <>
-            <fieldset>
-              <legend>{t("Dining style", "Style de service")} *</legend>
-              <div className={css.styleOptions}>
-                {(Object.keys(styles) as Style[]).map((s) => (
-                  <label key={s}>
+          {shortGroup && (
+            <p id="group-size-hint" className={css.error}>
+              {t(
+                "Sharing menus start at eight guests. You can also choose individual dining below.",
+                "Les menus à partager sont offerts dès huit convives. Vous pouvez aussi choisir un menu individuel ci-dessous.",
+              )}
+            </p>
+          )}
+          <details className={css.fold}>
+            <summary>
+              {t(
+                "Seating, children & alternate dates",
+                "Espace, enfants et autres dates",
+              )}
+            </summary>
+            {options("space", t("Space preference", "Espace souhaité"), spaces)}
+            {data.space === "Private room" && (
+              <p className={css.fine}>
+                {t(
+                  "The private room seats up to 10 guests.",
+                  "Le salon privé accueille jusqu’à 10 convives.",
+                )}
+              </p>
+            )}
+            <div className={css.three}>
+              {input(
+                "children",
+                t("Children in guest count", "Enfants compris dans le total"),
+                "number",
+                false,
+                { min: 0, max: Number(data.guests) || 1000 },
+              )}
+              {input(
+                "alternateDate",
+                t("Alternate date", "Autre date possible"),
+                "date",
+                false,
+                { min: today },
+              )}
+              {input(
+                "endTime",
+                t("Preferred end time", "Heure de fin souhaitée"),
+                "time",
+              )}
+            </div>
+          </details>
+        </section>
+        <section className={css.panel}>
+          <h2>{t("At the table", "À table")}</h2>
+          <fieldset className={css.choiceGroup}>
+            <legend>{t("Dining style", "Style de service")}</legend>
+            <div className={css.pills}>
+              {(Object.keys(styles) as Style[]).map((s) => (
+                <label key={s}>
+                  <input
+                    type="radio"
+                    name="dining-style"
+                    checked={style === s}
+                    onChange={() => selectStyle(s)}
+                  />
+                  <span>{styles[s][language]}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          {style === "undecided" ? (
+            <p className={css.fine}>
+              {t(
+                "We’ll recommend a menu that suits your group.",
+                "Nous vous proposerons un menu adapté à votre groupe.",
+              )}
+            </p>
+          ) : (
+            <fieldset className={css.choiceGroup}>
+              <legend>
+                {t(
+                  "Choose one menu for the group",
+                  "Choisissez un menu pour le groupe",
+                )}{" "}
+                *
+              </legend>
+              <div className={css.menuCards}>
+                {available.map((menu) => (
+                  <label key={menu.name}>
                     <input
+                      name="menu"
                       type="radio"
-                      name="service"
-                      checked={style === s}
-                      onChange={() => selectStyle(s)}
+                      required
+                      checked={data.menu === menu.name}
+                      onChange={() => setMenu(menu.name)}
                     />
-                    {styles[s][language]}
+                    <span>
+                      <strong>{menu.name}</strong>
+                      <b>
+                        {money(menu.price, language)}{" "}
+                        <small>{t("/ guest", "/ pers.")}</small>
+                      </b>
+                      <span>{menu.detail[language]}</span>
+                    </span>
                   </label>
                 ))}
               </div>
-            </fieldset>
-            {style !== "undecided" && (
-              <fieldset>
-                <legend>
-                  {t("One menu for your group", "Un menu pour votre groupe")} *
-                </legend>
-                <div className={css.menuOptions}>
-                  {available.map((m) => (
-                    <label key={m.name}>
-                      <input
-                        type="radio"
-                        required
-                        checked={data.menu === m.name}
-                        onChange={() => setMenu(m.name)}
-                        name="menu"
-                      />
-                      <span>
-                        <strong>
-                          {m.name} · {money(m.price, language)}
-                        </strong>
-                        <small>{m.detail[language]}</small>
-                      </span>
-                    </label>
-                  ))}
-                </div>
-                <p className={css.fine}>
-                  {t(
-                    "Per guest, before tax and service. BOUS will confirm availability and any supplements.",
-                    "Par personne, avant taxes et service. BOUS confirmera la disponibilité et les suppléments.",
-                  )}
-                </p>
-              </fieldset>
-            )}
-            <fieldset>
-              <legend>
+              <p className={css.fine}>
                 {t(
-                  "Add plates or pairings",
-                  "Ajouter des plats ou des accords",
-                )}{" "}
-                <small>({hint})</small>
-              </legend>
-              <div className={css.extraControls}>
-                {label(
-                  t("Extra", "Supplément"),
-                  <select
-                    value={item}
-                    onChange={(e) => {
-                      setItem(e.target.value);
-                      setError("");
+                  "Prices in CAD, before tax and service.",
+                  "Prix en dollars canadiens, avant taxes et service.",
+                )}
+              </p>
+            </fieldset>
+          )}
+          <details className={css.fold}>
+            <summary>
+              {t(
+                "Add dishes or drink pairings",
+                "Ajouter des plats ou des accords",
+              )}
+              {items.length > 0 && <span> ({items.length})</span>}
+            </summary>
+            <div className={css.tools}>
+              <div
+                className={css.filters}
+                role="group"
+                aria-label={t("Browse extras", "Parcourir les suppléments")}
+              >
+                {["pairing", "food"].map((c) => (
+                  <button
+                    type="button"
+                    key={c}
+                    aria-pressed={category === c}
+                    onClick={() => {
+                      setCategory(c);
+                      setSearch("");
                     }}
                   >
-                    <option value="">
-                      {t("Select an extra", "Choisir un supplément")}
-                    </option>
-                    {["pairing", "food"].map((c) => (
-                      <optgroup
-                        key={c}
-                        label={
-                          c === "pairing"
-                            ? t("Drink pairings", "Accords boissons")
-                            : t("Additional plates", "Plats supplémentaires")
-                        }
-                      >
-                        {choices
-                          .filter((x) => x.category === c)
-                          .map((x) => (
-                            <option key={x.en} value={x.en}>
-                              {x[language]} · {money(x.price, language)} /{" "}
-                              {x.unit[language]}
-                            </option>
-                          ))}
-                      </optgroup>
-                    ))}
-                  </select>,
-                )}
-                {label(
-                  t("Quantity", "Quantité"),
-                  <input
-                    type="number"
-                    min={1}
-                    max={999}
-                    value={qty}
-                    onChange={(e) => setQty(e.target.value)}
-                  />,
-                )}
-                <button
-                  type="button"
-                  className={css.secondary}
-                  onClick={addItem}
-                >
-                  {t("Add", "Ajouter")}
-                </button>
+                    {c === "pairing"
+                      ? t("Pairings", "Accords")
+                      : t("Dishes", "Plats")}
+                  </button>
+                ))}
               </div>
-              {items.length > 0 && (
-                <ul className={css.added}>
-                  {items.map((x) => (
-                    <li key={x.name}>
-                      <span>
-                        {x.quantity} × {selected(x.name, choices)}
-                      </span>
-                      <button
-                        type="button"
-                        aria-label={
-                          t("Remove ", "Retirer ") + selected(x.name, choices)
-                        }
-                        onClick={() =>
-                          setItems(items.filter((i) => i.name !== x.name))
-                        }
-                      >
-                        {t("Remove", "Retirer")}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </fieldset>
-            <div className={css.grid}>
-              {select(
-                "drinks",
-                t("Beverage arrangements", "Service des boissons"),
-                drinks,
-              )}
-              {select(
-                "billing",
-                t("Billing preference", "Préférence de facturation"),
-                bills,
-              )}
-              {input(
-                "budget",
-                t(
-                  "Budget, per guest or total",
-                  "Budget, par personne ou au total",
-                ),
-                "text",
-                false,
-                {
-                  maxLength: 120,
-                  placeholder: t(
-                    "e.g. $120 per guest",
-                    "p. ex. 120 $ par personne",
-                  ),
-                },
+              {label(
+                t("Filter by name", "Filtrer par nom"),
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />,
               )}
             </div>
+            <ul className={css.extras}>
+              {shownExtras.map((x) => {
+                const n = quantityOf(x.en);
+                return (
+                  <li key={x.en}>
+                    <div>
+                      <strong>{x[language]}</strong>
+                      <small>
+                        {money(x.price, language)} / {x.unit[language]}
+                      </small>
+                    </div>
+                    {n > 0 ? (
+                      <div className={css.quantity}>
+                        <button
+                          type="button"
+                          aria-label={
+                            t("Remove one ", "Retirer une unité de ") +
+                            x[language]
+                          }
+                          onClick={() => updateExtra(x.en, n - 1)}
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          min="0"
+                          max="999"
+                          aria-label={
+                            t("Quantity for ", "Quantité pour ") + x[language]
+                          }
+                          value={n}
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => {
+                            if (
+                              e.target.value !== "" &&
+                              Number.isInteger(e.target.valueAsNumber)
+                            )
+                              updateExtra(
+                                x.en,
+                                Math.min(
+                                  999,
+                                  Math.max(0, e.target.valueAsNumber),
+                                ),
+                              );
+                          }}
+                        />
+                        <button
+                          type="button"
+                          disabled={n >= 999}
+                          aria-label={
+                            t("Add one ", "Ajouter une unité de ") + x[language]
+                          }
+                          onClick={() => updateExtra(x.en, n + 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        className={css.add}
+                        aria-label={t("Add ", "Ajouter ") + x[language]}
+                        onClick={() => updateExtra(x.en, 1)}
+                      >
+                        {t("+ Add", "+ Ajouter")}
+                      </button>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+            {!shownExtras.length && (
+              <p>
+                {t(
+                  "No matches. Try a different name.",
+                  "Aucun résultat. Essayez un autre nom.",
+                )}
+              </p>
+            )}
+          </details>
+          <details className={css.fold}>
+            <summary>
+              {t(
+                "Allergies, billing & special requests",
+                "Allergies, facturation et demandes particulières",
+              )}
+            </summary>
             {textarea(
               "dietary",
               t(
@@ -732,109 +657,113 @@ export function GroupInquiry({ initialStyle }: { initialStyle: Style }) {
                 "Allergies et restrictions alimentaires",
               ),
               t(
-                "Include how many guests are affected, if known.",
-                "Si possible, précisez le nombre de personnes concernées.",
+                "Include the number of guests affected, if known.",
+                "Si possible, précisez le nombre de convives concernés.",
               ),
+            )}
+            {options(
+              "drinks",
+              t("Beverage arrangements", "Service des boissons"),
+              drinks,
+            )}
+            {options(
+              "billing",
+              t("Billing preference", "Préférence de facturation"),
+              bills,
+            )}
+            {input(
+              "budget",
+              t(
+                "Budget, per guest or total",
+                "Budget, par personne ou au total",
+              ),
+              "text",
+              false,
+              { maxLength: 120 },
             )}
             {textarea(
               "notes",
+              t("Other requests", "Autres demandes"),
               t(
-                "Anything else we should plan for?",
-                "D’autres détails à prévoir ?",
-              ),
-              t(
-                "A long table, accessibility, a cake, children’s ages, speeches or audiovisual needs…",
-                "Une longue table, l’accessibilité, un gâteau, l’âge des enfants, un discours ou du matériel audiovisuel…",
+                "Accessibility, a cake, speeches or audiovisual needs…",
+                "Accessibilité, gâteau, discours ou matériel audiovisuel…",
               ),
             )}
-          </>
-        )}
-        {step === 2 && (
+          </details>
+        </section>
+        <section className={css.panel}>
+          <h2>{t("Your contact details", "Vos coordonnées")}</h2>
           <div className={css.grid}>
             {input("name", t("Full name", "Nom complet"), "text", true, {
               autoComplete: "name",
               maxLength: 100,
               pattern: ".*\\S.*",
             })}
-            {input(
-              "email",
-              t("Email address", "Adresse courriel"),
-              "email",
-              true,
-              { autoComplete: "email", maxLength: 254 },
-            )}
-            {input("phone", t("Phone number", "Téléphone"), "tel", false, {
-              autoComplete: "tel",
-              maxLength: 32,
+            {input("email", t("Email", "Courriel"), "email", true, {
+              autoComplete: "email",
+              maxLength: 254,
             })}
             {input(
+              "phone",
+              t("Phone (optional)", "Téléphone (facultatif)"),
+              "tel",
+              false,
+              { autoComplete: "tel", maxLength: 32 },
+            )}
+            {input(
               "company",
-              t("Company or organization", "Entreprise ou organisation"),
+              t("Organization (optional)", "Organisation (facultatif)"),
               "text",
               false,
               { autoComplete: "organization", maxLength: 120 },
             )}
           </div>
-        )}
-        {step === 3 && (
-          <>
-            {sections.map((section, i) => (
-              <section className={css.review} key={i}>
-                <div>
-                  <h3>{section.title}</h3>
-                  <button
-                    type="button"
-                    disabled={sending || ambiguous}
-                    onClick={() => direct(i)}
-                  >
-                    {t("Edit", "Modifier")}
-                  </button>
-                </div>
-                <dl>
-                  {section.rows
-                    .filter((r) => r[1])
-                    .map(([key, value]) => (
-                      <div key={key}>
-                        <dt>{key}</dt>
-                        <dd>{value}</dd>
-                      </div>
-                    ))}
-                </dl>
-              </section>
+        </section>
+      </fieldset>
+      <aside
+        className={css.summary}
+        aria-label={t("Your request", "Votre demande")}
+      >
+        <div aria-hidden="true" className={css.summaryPhoto} />
+        <div className={css.summaryBody}>
+          <h2>{t("Your event at BOUS", "Votre événement chez BOUS")}</h2>
+          <dl>
+            {eventSummary.map(([key, value]) => (
+              <div key={key}>
+                <dt>{key}</dt>
+                <dd>{value || "—"}</dd>
+              </div>
             ))}
-            <p className={css.notice}>
-              {t(
-                "Submitting sends your request to BOUS for review. Your event is booked once our team contacts you and confirms the arrangements.",
-                "Votre demande sera transmise à BOUS pour vérification. Votre événement sera réservé une fois que notre équipe vous aura contacté et aura confirmé les modalités.",
-              )}
-            </p>
-          </>
-        )}
-        {error && (
-          <p className={css.error} role="alert">
-            {error}
-          </p>
-        )}
-        <div className={css.formActions}>
-          {step > 0 && (
-            <button
-              className={css.textLink}
-              type="button"
-              disabled={sending || ambiguous}
-              onClick={() => direct(step - 1)}
-            >
-              {t("Back", "Retour")}
-            </button>
+          </dl>
+          {items.length > 0 && (
+            <ul className={css.selectedExtras}>
+              {items.map((x) => (
+                <li key={x.name}>
+                  {x.quantity} × {selected(x.name, choices)}
+                </li>
+              ))}
+            </ul>
           )}
-          <button className={css.primary} type="submit" disabled={sending}>
-            {step < 3
-              ? t("Continue", "Continuer")
-              : sending
-                ? t("Sending…", "Envoi…")
-                : t("Submit event request", "Envoyer la demande")}
+          <p className={css.fine}>
+            {t(
+              "We’ll confirm availability and details with you by email.",
+              "Nous vous écrirons pour confirmer la disponibilité et les détails.",
+            )}
+          </p>
+          {error && (
+            <p className={css.error} role="alert">
+              {error}
+            </p>
+          )}
+          <button className={css.primary} disabled={sending} type="submit">
+            {sending
+              ? t("Sending…", "Envoi…")
+              : ambiguous
+                ? t("Retry submission", "Réessayer l’envoi")
+                : t("Send event request", "Envoyer la demande")}
           </button>
         </div>
-      </form>
-    </>
+      </aside>
+    </form>
   );
 }

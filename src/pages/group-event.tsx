@@ -14,6 +14,8 @@ export default function GroupEvent() {
   const [comparison, setComparison] = useState<"sharing" | "individual">(
     "sharing",
   );
+  const [completed, setCompleted] = useState(false);
+  const [requestNumber, setRequestNumber] = useState(0);
   const title = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     const sync = () => setOpen(window.location.hash === "#request");
@@ -24,8 +26,12 @@ export default function GroupEvent() {
   useEffect(() => {
     if (open) title.current?.focus();
   }, [open]);
-  const begin = (preferred: Style) => {
-    setStyle(preferred);
+  const begin = (preferred?: Style) => {
+    if (completed) {
+      setRequestNumber((n) => n + 1);
+      setCompleted(false);
+    }
+    if (preferred || completed) setStyle(preferred ?? "undecided");
     window.location.hash = "request";
     setOpen(true);
     window.scrollTo(0, 0);
@@ -54,7 +60,7 @@ export default function GroupEvent() {
                   <button
                     type="button"
                     className={css.primary}
-                    onClick={() => begin("undecided")}
+                    onClick={() => begin()}
                   >
                     {t("Plan my event", "Organiser mon événement")}
                   </button>
@@ -167,26 +173,32 @@ export default function GroupEvent() {
             </section>
           </>
         )}
-        {open && (
-          <div className={css.formWrap}>
-            <a
-              className={css.textLink}
-              href="#menus"
-              onClick={() => setOpen(false)}
-            >
-              {t("Back to group menus", "Retour aux menus de groupe")}
-            </a>
-            <header className={css.formIntro}>
-              <p className={css.kicker}>
-                {t("Group event request", "Demande d’événement de groupe")}
-              </p>
-              <h1 ref={title} tabIndex={-1}>
-                {t("Plan your event", "Organisez votre événement")}
-              </h1>
-            </header>
-            <GroupInquiry initialStyle={style} />
-          </div>
-        )}
+        <div hidden={!open} className={css.formWrap}>
+          <a
+            className={css.textLink}
+            href="#menus"
+            onClick={() => setOpen(false)}
+          >
+            {t("Back to group menus", "Retour aux menus de groupe")}
+          </a>
+          <header className={css.formIntro}>
+            <h1 ref={title} tabIndex={-1}>
+              {t("Plan your event", "Organisez votre événement")}
+            </h1>
+            <p>
+              {t(
+                "Tell us what you have in mind. Fields marked * are required.",
+                "Parlez-nous de votre projet. Les champs marqués d’un astérisque (*) sont obligatoires.",
+              )}
+            </p>
+          </header>
+          <GroupInquiry
+            key={requestNumber}
+            style={style}
+            onStyleChange={setStyle}
+            onComplete={() => setCompleted(true)}
+          />
+        </div>
       </main>
     </SiteLayout>
   );
