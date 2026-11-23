@@ -40,6 +40,10 @@ type Translations = {
       contact: string;
     };
     addressLines: string[];
+    openingHours: {
+      title: string;
+      services: { name: string; periods: { days: string; time: string }[] }[];
+    };
     reserveTable: string;
     contactLinksLabel: string;
     links: {
@@ -111,6 +115,19 @@ export const translations: Record<Language, Translations> = {
         contact: "Contact",
       },
       addressLines: ["1310 Sherbrooke W", "Montréal, Québec", "H3G 1H9"],
+      openingHours: {
+        title: "Opening hours",
+        services: [
+          { name: "Lunch", periods: [{ days: "Mon–Fri", time: "11:30 am–2:30 pm" }] },
+          {
+            name: "Dinner",
+            periods: [
+              { days: "Sun–Thu", time: "5:30–10 pm" },
+              { days: "Fri–Sat", time: "5:30–11 pm" },
+            ],
+          },
+        ],
+      },
       reserveTable: "Reserve a table",
       contactLinksLabel: "Contact links",
       links: {
@@ -178,6 +195,19 @@ export const translations: Record<Language, Translations> = {
         "Montréal, Québec",
         "H3G 1H9",
       ],
+      openingHours: {
+        title: "Heures d’ouverture",
+        services: [
+          { name: "Dîner", periods: [{ days: "Lun–ven", time: "11 h 30–14 h 30" }] },
+          {
+            name: "Souper",
+            periods: [
+              { days: "Dim–jeu", time: "17 h 30–22 h" },
+              { days: "Ven–sam", time: "17 h 30–23 h" },
+            ],
+          },
+        ],
+      },
       reserveTable: "Réserver une table",
       contactLinksLabel: "Liens de contact",
       links: {

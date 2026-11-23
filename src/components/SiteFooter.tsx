@@ -114,21 +114,39 @@ export function SiteFooter() {
       id: "info",
       title: t.footer.sections.info,
       content: (
-        <address className="not-italic">
-          <a
-            href={`tel:${t.contact.phone.replace(/\s/g, "")}`}
-            className="underline-offset-4 hover:underline"
-          >
-            {t.contact.phone}
-          </a>
-          <br />
-          {t.footer.addressLines.map((line, index) => (
-            <span key={line}>
-              {line}
-              {index < t.footer.addressLines.length - 1 ? <br /> : null}
-            </span>
-          ))}
-        </address>
+        <>
+          <address className="not-italic">
+            <a
+              href={`tel:${t.contact.phone.replace(/\s/g, "")}`}
+              className="underline-offset-4 hover:underline"
+            >
+              {t.contact.phone}
+            </a>
+            <br />
+            {t.footer.addressLines.map((line, index) => (
+              <span key={line}>
+                {line}
+                {index < t.footer.addressLines.length - 1 ? <br /> : null}
+              </span>
+            ))}
+          </address>
+          <div className="mt-5">
+            <h3 className="text-base font-semibold">{t.footer.openingHours.title}</h3>
+            {t.footer.openingHours.services.map(({ name, periods }) => (
+              <div key={name} className="mt-2 text-sm leading-6">
+                <h4 className="font-semibold">{name}</h4>
+                <dl>
+                  {periods.map(({ days, time }) => (
+                    <div key={days} className="flex flex-wrap gap-x-3">
+                      <dt className="min-w-16">{days}</dt>
+                      <dd>{time}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </div>
+        </>
       ),
     },
     {
