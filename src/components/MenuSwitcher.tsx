@@ -104,7 +104,7 @@ export function MenuSwitcher({ active }: MenuSwitcherProps) {
             href={link.href}
             aria-current={isActive ? "page" : undefined}
             className={[
-              "inline-flex min-h-11 items-center justify-center border px-3 text-center text-[0.67rem] uppercase tracking-[0.16em] transition-[background-color,border-color,color,transform] active:translate-y-px focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bous-red sm:min-w-40 sm:px-5",
+              "inline-flex min-h-11 items-center justify-center border px-3 text-center text-[0.67rem] uppercase tracking-[0.16em] transition-colors focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bous-red sm:min-w-40 sm:px-5",
               isActive
                 ? "border-bous-burgundy bg-bous-burgundy text-bous-white"
                 : "border-bous-burgundy/25 bg-bous-white text-bous-burgundy/72 hover:border-bous-red hover:bg-bous-blush/45 hover:text-bous-red",

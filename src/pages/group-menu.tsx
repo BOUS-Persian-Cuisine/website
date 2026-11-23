@@ -1,4 +1,5 @@
-import { MenuSwitcher, RelatedMenuLinks } from "@/components/MenuSwitcher";
+import { MenuPageHeader } from "@/components/MenuPageHeader";
+import { RelatedMenuLinks } from "@/components/MenuSwitcher";
 import { SiteLayout } from "@/components/SiteLayout";
 import { getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
@@ -61,11 +62,10 @@ export default function GroupMenu() {
   return (
     <SiteLayout title={title + " · BOUS"}>
       <main className={styles.page}>
+        <MenuPageHeader active="group" heading={title} />
         <div className={styles.wrap}>
-          <MenuSwitcher active="group" />
           <header className={styles.hero}>
             <div className={styles.heroCopy}>
-              <h1>{title}</h1>
               <p>{t("Choose one menu for your table of eight or more. Every dish listed is served to share, from the first plates to dessert.", "Choisissez un menu pour votre table de huit personnes ou plus. Tous les plats indiqués sont servis à partager, des entrées au dessert.")}</p>
               <div className={styles.links}>
                 <a href={fr ? "/Options de menu de groupe.pdf" : "/Group Menu options.pdf"} download>

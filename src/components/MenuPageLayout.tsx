@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
 import {
-  MenuSwitcher,
   RelatedMenuLinks,
   type MenuKey,
 } from "@/components/MenuSwitcher";
+import { MenuPageHeader } from "@/components/MenuPageHeader";
 import { SiteLayout } from "@/components/SiteLayout";
 import { getOpenTableReservationUrl } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
@@ -39,15 +39,9 @@ export function MenuPageLayout({
     <SiteLayout title={title}>
       <main className="bg-bous-white text-bous-burgundy">
         <section aria-label={sectionLabel}>
-          <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
-            <header className="text-center">
-              <h1 className="font-operetta text-4xl font-light leading-tight tracking-[-0.02em] text-balance sm:text-5xl">
-                {heading}
-              </h1>
-            </header>
-
-            <div className="mt-7 text-center sm:mt-9">
-              <MenuSwitcher active={active} />
+          <MenuPageHeader active={active} heading={heading} />
+          <div className="mx-auto max-w-5xl px-5 pb-10 sm:px-8 sm:pb-14 lg:px-10">
+            <div className="text-center">
               <a
                 href={pdfHref}
                 target="_blank"

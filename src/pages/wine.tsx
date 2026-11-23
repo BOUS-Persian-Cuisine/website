@@ -1,4 +1,4 @@
-import { MenuSwitcher } from "@/components/MenuSwitcher";
+import { MenuPageHeader } from "@/components/MenuPageHeader";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -11,12 +11,9 @@ export default function WineMenu() {
 
   return (
     <SiteLayout title={title + " · BOUS"}>
-      <main className="w-full bg-white py-7">
-        <h1 className="sr-only">{title}</h1>
-        <div className="px-4">
-          <MenuSwitcher active="wine" />
-        </div>
-        <iframe src={wineAtlas} title={title} className="mx-auto block h-[85dvh] min-h-96 w-full border-0 bg-white" />
+      <main className="w-full bg-white pb-7">
+        <MenuPageHeader active="wine" heading={title} />
+        <iframe src={wineAtlas} title={title} className="mx-auto mt-7 block h-[85dvh] min-h-96 w-full border-0 bg-white" />
       </main>
     </SiteLayout>
   );

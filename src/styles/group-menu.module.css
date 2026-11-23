@@ -1,10 +1,9 @@
 .page { background: #fffdf9; color: var(--bous-burgundy); }
 .wrap { max-width: 75rem; margin: auto; padding: 1.8rem clamp(1rem, 4vw, 3.25rem) 3rem; }
-.hero { display: grid; grid-template-columns: 1fr 1fr; margin-top: 1.75rem; background: var(--bous-burgundy); color: #fff8ed; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; background: var(--bous-burgundy); color: #fff8ed; }
 .heroCopy { padding: clamp(1.75rem, 4.6vw, 4.5rem); align-self: center; }
-.page h1, .page h2 { font-family: var(--font-operetta), Georgia, serif; font-weight: 300; line-height: 1.1; }
-.page h1 { font-size: clamp(3rem, 5.6vw, 5.2rem); }
-.heroCopy p { margin: 1rem 0 1.6rem; max-width: 38ch; font-size: 1.1rem; }
+.page h2 { font-family: var(--font-operetta), Georgia, serif; font-weight: 300; line-height: 1.1; }
+.heroCopy p { margin: 0 0 1.6rem; max-width: 38ch; font-size: 1.1rem; }
 .photo { min-height: 17rem; background: url('/img/group-table.jpg') center 52% / cover; }
 .links { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.5rem; }
 .links a { padding-block: .25rem; text-decoration: underline; text-underline-offset: .4em; text-decoration-color: var(--bous-gold); }
