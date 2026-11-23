@@ -36,7 +36,6 @@ const empty = {
   menu: "",
   dietary: "",
   notes: "",
-  budget: "",
   billing: "To be decided",
   drinks: "To be decided",
   name: "",
@@ -282,7 +281,6 @@ export function GroupInquiry({
           phone: data.phone.trim(),
           company: data.company.trim(),
           billing: data.billing,
-          budget: data.budget.trim(),
         });
       const response = await fetch(endpoint, {
         method: "POST",
@@ -779,42 +777,6 @@ export function GroupInquiry({
               </details>
             );
           })}
-          <details className={css.fold}>
-            <summary>
-              {t("Allergies & billing", "Allergies et facturation")}
-            </summary>
-            {textarea(
-              "dietary",
-              t(
-                "Allergies and dietary needs",
-                "Allergies et restrictions alimentaires",
-              ),
-              t(
-                "Include the number of guests affected, if known.",
-                "Si possible, précisez le nombre de convives concernés.",
-              ),
-            )}
-            {options(
-              "drinks",
-              t("Beverage arrangements", "Service des boissons"),
-              drinks,
-            )}
-            {options(
-              "billing",
-              t("Billing preference", "Préférence de facturation"),
-              bills,
-            )}
-            {input(
-              "budget",
-              t(
-                "Budget, per guest or total",
-                "Budget, par personne ou au total",
-              ),
-              "text",
-              false,
-              { maxLength: 120 },
-            )}
-          </details>
           <div className={css.notes}>
             {textarea(
               "notes",
@@ -828,6 +790,32 @@ export function GroupInquiry({
               ),
             )}
           </div>
+        </section>
+        <section className={css.panel} aria-labelledby="allergies-billing">
+          <h2 id="allergies-billing">
+            {t("Allergies & billing", "Allergies et facturation")}
+          </h2>
+          {textarea(
+            "dietary",
+            t(
+              "Allergies and dietary needs",
+              "Allergies et restrictions alimentaires",
+            ),
+            t(
+              "Include the number of guests affected, if known.",
+              "Si possible, précisez le nombre de convives concernés.",
+            ),
+          )}
+          {options(
+            "drinks",
+            t("Beverage arrangements", "Service des boissons"),
+            drinks,
+          )}
+          {options(
+            "billing",
+            t("Billing preference", "Préférence de facturation"),
+            bills,
+          )}
         </section>
         <section className={css.panel}>
           <h2>{t("Your contact details", "Vos coordonnées")}</h2>
