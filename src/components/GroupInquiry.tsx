@@ -845,6 +845,36 @@ export function GroupInquiry({
             )}
           </div>
         </section>
+        <section className={css.bookingTerms} aria-labelledby="booking-terms">
+          <h2 id="booking-terms">
+            {t("Terms and conditions", "Conditions de réservation")}
+          </h2>
+          <p>
+            <strong>
+              {t("Final guest count.", "Nombre final de convives.")}
+            </strong>{" "}
+            {t(
+              "Please confirm your final number of guests at least 48 hours before your event.",
+              "Veuillez confirmer le nombre final de convives au moins 48 heures avant votre événement.",
+            )}
+          </p>
+          <p>
+            <strong>
+              {t("Changes and cancellations.", "Modifications et annulations.")}
+            </strong>{" "}
+            {t(
+              "A fee of $25 per person applies to changes or cancellations made less than 48 hours before your event.",
+              "Des frais de 25 $ par personne s’appliquent à toute modification ou annulation faite moins de 48 heures avant votre événement.",
+            )}
+          </p>
+          <p>
+            <strong>{t("Food allergies.", "Allergies alimentaires.")}</strong>{" "}
+            {t(
+              "Please let us know about any food allergies at least 48 hours before your event.",
+              "Veuillez nous signaler toute allergie alimentaire au moins 48 heures avant votre événement.",
+            )}
+          </p>
+        </section>
       </fieldset>
       <aside
         className={css.summary}

@@ -177,6 +177,21 @@
   padding: clamp(1.15rem, 2.7vw, 2rem);
   margin-bottom: 1rem;
 }
+.bookingTerms {
+  color: #615f5c;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0.2rem clamp(0.25rem, 1vw, 0.9rem);
+}
+.bookingTerms h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  margin: 0 0 0.55rem;
+}
+.bookingTerms p + p {
+  margin-top: 0.45rem;
+}
 .panel h2,
 .summary h2,
 .receipt h2 {
