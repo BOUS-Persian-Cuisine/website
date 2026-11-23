@@ -85,7 +85,7 @@ export function SiteHeader() {
         <div className="mx-auto grid h-18 w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:h-20 lg:px-10">
           <nav
             aria-label={t.header.menuLabel}
-            className="hidden items-center gap-8 md:flex"
+            className="hidden items-center gap-4 lg:flex xl:gap-8"
           >
             <a
               href={reservationUrl}
@@ -102,11 +102,14 @@ export function SiteHeader() {
             <Link href="/contact" className={navLinkClass}>
               {t.header.nav.contact}
             </Link>
+            <Link href="/press" className={navLinkClass}>
+              {t.header.nav.press}
+            </Link>
           </nav>
 
           <button
             type="button"
-            className={`${iconButtonClass} justify-self-start md:hidden`}
+            className={`${iconButtonClass} justify-self-start lg:hidden`}
             aria-controls="site-menu"
             aria-expanded={isMobileMenuOpen}
             aria-label={t.header.openMenu}
@@ -157,7 +160,7 @@ export function SiteHeader() {
             />
           </Link>
 
-          <div className="hidden items-center justify-end gap-2 md:flex">
+          <div className="hidden items-center justify-end gap-2 lg:flex">
             {languageOptions.map((option) => {
               const isSelected = language === option;
 
@@ -185,7 +188,7 @@ export function SiteHeader() {
             })}
           </div>
 
-          <div className="h-11 w-11 justify-self-end md:hidden" aria-hidden />
+          <div className="h-11 w-11 justify-self-end lg:hidden" aria-hidden />
         </div>
       </header>
 
@@ -265,6 +268,13 @@ export function SiteHeader() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t.header.nav.contact}
+              </Link>
+              <Link
+                href="/press"
+                className="transition-colors hover:text-bous-red"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t.header.nav.press}
               </Link>
 
               <div className="flex gap-4 pt-4 text-sm tracking-[0.24em]">
