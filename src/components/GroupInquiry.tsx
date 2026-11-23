@@ -38,6 +38,7 @@ const empty = {
   notes: "",
   billing: "",
   billingOther: "",
+  billingNotes: "",
   drinks: "",
   drinksOther: "",
   name: "",
@@ -187,6 +188,7 @@ export function GroupInquiry({
     label(
       text,
       <textarea
+        name={k}
         rows={3}
         maxLength={1150}
         value={data[k]}
@@ -313,6 +315,7 @@ export function GroupInquiry({
           email: data.email.trim(),
           phone: data.phone.trim(),
           company: data.company.trim(),
+          billingNotes: data.billingNotes.trim() || undefined,
           billing:
             data.billing === "Other"
               ? "Other: " + data.billingOther.trim()
@@ -549,8 +552,8 @@ export function GroupInquiry({
             </div>
           </details>
         </section>
-        <section className={css.panel}>
-          <h2>{t("At the table", "À table")}</h2>
+        <section className={css.panel} aria-labelledby="event-table">
+          <h2 id="event-table">{t("At the table", "À table")}</h2>
           <fieldset className={css.choiceGroup}>
             <legend>{t("Dining style", "Style de service")}</legend>
             <div className={css.pills}>
@@ -825,23 +828,21 @@ export function GroupInquiry({
                 "Y a-t-il autre chose à prévoir pour votre événement ?",
               ),
             )}
+            {textarea(
+              "dietary",
+              t(
+                "Allergies and dietary needs",
+                "Allergies et restrictions alimentaires",
+              ),
+              t(
+                "Include the number of guests affected, if known.",
+                "Si possible, précisez le nombre de convives concernés.",
+              ),
+            )}
           </div>
         </section>
-        <section className={css.panel} aria-labelledby="allergies-billing">
-          <h2 id="allergies-billing">
-            {t("Allergies & billing", "Allergies et facturation")}
-          </h2>
-          {textarea(
-            "dietary",
-            t(
-              "Allergies and dietary needs",
-              "Allergies et restrictions alimentaires",
-            ),
-            t(
-              "Include the number of guests affected, if known.",
-              "Si possible, précisez le nombre de convives concernés.",
-            ),
-          )}
+        <section className={css.panel} aria-labelledby="event-billing">
+          <h2 id="event-billing">{t("Billing", "Facturation")}</h2>
           {options(
             "drinks",
             t("Beverage arrangements", "Service des boissons"),
@@ -870,6 +871,19 @@ export function GroupInquiry({
               ),
               174,
             )}
+          <div className={css.notes}>
+            {textarea(
+              "billingNotes",
+              t(
+                "Notes or other requests (optional)",
+                "Notes ou autres demandes (facultatif)",
+              ),
+              t(
+                "Anything else we should know about billing?",
+                "Avez-vous d’autres précisions concernant la facturation ?",
+              ),
+            )}
+          </div>
         </section>
         <section className={css.panel}>
           <h2>{t("Your contact details", "Vos coordonnées")}</h2>
