@@ -510,6 +510,42 @@ export function GroupInquiry({
                 )}
               </p>
             )}
+            {data.space === "Full restaurant buyout" && (
+              <div className={css.buyoutTerms}>
+                <p>
+                  {t(
+                    "Exclusive use of BOUS is available with the following minimum food and beverage commitments before tax and tip.",
+                    "Pour réserver BOUS en exclusivité, un minimum de consommation en nourriture et en boissons s’applique, avant taxes et pourboire.",
+                  )}
+                </p>
+                <ul>
+                  <li>
+                    <strong>
+                      {t("Sunday to Tuesday", "Du dimanche au mardi")}
+                    </strong>{" "}
+                    · {t("$10,000", "10 000 $")}
+                  </li>
+                  <li>
+                    <strong>
+                      {t("Wednesday and Thursday", "Le mercredi et le jeudi")}
+                    </strong>{" "}
+                    · {t("$12,500", "12 500 $")}
+                  </li>
+                  <li>
+                    <strong>
+                      {t("Friday and Saturday", "Le vendredi et le samedi")}
+                    </strong>{" "}
+                    · {t("$15,000", "15 000 $")}
+                  </li>
+                </ul>
+                <p>
+                  {t(
+                    "All food and beverage purchases are applied toward the minimum commitment. If the final food and beverage total is below the applicable minimum, the difference will be charged as a buyout fee.",
+                    "Tous les achats de nourriture et de boissons comptent dans ce minimum. Si le total est inférieur au minimum applicable, la différence sera facturée à titre de frais de privatisation.",
+                  )}
+                </p>
+              </div>
+            )}
             <div className={css.grid}>
               {input(
                 "children",

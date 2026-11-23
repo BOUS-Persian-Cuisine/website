@@ -285,6 +285,17 @@
 .fold + .fold {
   margin-top: 0.35rem;
 }
+.buyoutTerms {
+  margin: 0.75rem 0 1rem;
+  padding: 1rem;
+  background: #fff8ef;
+  border-left: 3px solid #b09861;
+}
+.buyoutTerms ul {
+  margin: 0.65rem 0;
+  padding-left: 1.35rem;
+  list-style: disc;
+}
 .fold summary {
   cursor: pointer;
   display: flex;
