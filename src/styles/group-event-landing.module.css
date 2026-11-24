@@ -124,23 +124,10 @@
   padding-block: 0.7rem;
   margin-top: 0.35rem;
 }
-.tablePhotos {
-  position: relative;
-  padding: 0 0 clamp(2.7rem, 5vw, 5rem) clamp(1rem, 3vw, 3rem);
-}
-.tablePhotos .spread {
-  aspect-ratio: 1.35;
+.story .chef {
+  justify-self: center;
+  max-width: 27rem;
   height: auto;
-}
-.tablePhotos .chef {
-  position: absolute;
-  width: 36%;
-  height: auto;
-  aspect-ratio: 3/4;
-  object-position: center 59%;
-  bottom: 0;
-  left: 0;
-  border: clamp(4px, 0.45vw, 8px) solid #fffdf9;
 }
 .address {
   display: grid;
@@ -169,21 +156,23 @@
 .address p {
   max-width: 33rem;
 }
+.landing .barPhoto {
+  margin-top: clamp(1rem, 2.5vw, 2.5rem);
+  height: auto;
+  object-fit: contain;
+}
 .occasions {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 .pair {
   display: grid;
-  grid-template-columns: 1fr 0.88fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(0.55rem, 1.2vw, 1.3rem);
   align-items: start;
 }
 .pair img {
   aspect-ratio: 2/3;
   height: auto;
-}
-.pair img + img {
-  margin-top: clamp(2.4rem, 5vw, 5.3rem);
 }
 .occasionText dl > div {
   padding: 0.8rem 0;

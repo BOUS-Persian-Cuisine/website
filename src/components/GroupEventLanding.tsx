@@ -12,13 +12,13 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
       <section className={css.hero} aria-labelledby="gather-heading">
         <Image
           className={css.heroImage}
-          src="/img/group-events/bar.webp"
+          src="/img/bous-shared-table.webp"
           alt={t(
-            "The warmly lit bar and sculpted ceiling at BOUS",
-            "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
+            "Guests sharing kababs, rice and small plates at BOUS",
+            "Des convives se partagent kababs, riz et petites assiettes chez BOUS",
           )}
-          width={1600}
-          height={1067}
+          width={1400}
+          height={933}
           priority
           sizes="100vw"
         />
@@ -69,30 +69,17 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
             {t("Explore the sharing menus", "Découvrir les menus à partager")}
           </Link>
         </div>
-        <div className={css.tablePhotos}>
-          <Image
-            className={css.spread}
-            width={1400}
-            height={933}
-            sizes="(max-width: 760px) 92vw, 50vw"
-            src="/img/bous-shared-table.webp"
-            alt={t(
-              "Guests sharing kababs, rice and small plates at BOUS",
-              "Des convives se partagent kababs, riz et petites assiettes chez BOUS",
-            )}
-          />
-          <Image
-            className={css.chef}
-            width={640}
-            height={959}
-            sizes="(max-width: 760px) 35vw, 18vw"
-            src="/img/group-events/chef-at-the-pass.webp"
-            alt={t(
-              "A chef finishing golden tahchin at the pass",
-              "Un chef apporte la dernière touche à un tahchin doré",
-            )}
-          />
-        </div>
+        <Image
+          className={css.chef}
+          width={640}
+          height={959}
+          sizes="(max-width: 490px) 88vw, (max-width: 760px) 27rem, 38vw"
+          src="/img/group-events/chef-at-the-pass.webp"
+          alt={t(
+            "A chef finishing golden tahchin at the pass",
+            "Un chef apporte la dernière touche à un tahchin doré",
+          )}
+        />
       </section>
 
       <section className={css.address} aria-labelledby="address-heading">
@@ -133,6 +120,18 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
           </p>
         </div>
       </section>
+
+      <Image
+        className={css.barPhoto}
+        src="/img/group-events/bar.webp"
+        width={1600}
+        height={1067}
+        sizes="100vw"
+        alt={t(
+          "The warmly lit bar and sculpted ceiling at BOUS",
+          "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
+        )}
+      />
 
       <section className={css.occasions} aria-labelledby="occasions-heading">
         <div className={css.pair}>
