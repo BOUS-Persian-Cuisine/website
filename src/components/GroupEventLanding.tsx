@@ -80,6 +80,49 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
             "Un chef apporte la dernière touche à un tahchin doré",
           )}
         />
+        <div className={css.foodGallery}>
+          <figure>
+            <Image
+              width={840}
+              height={1260}
+              sizes="(max-width: 600px) 88vw, 28vw"
+              src="/img/group-events/smoked-eggplant.webp"
+              alt={t(
+                "Smoked eggplant with kashk, crisp onions and mint",
+                "Aubergine fumée garnie de kashk, d’oignons croustillants et de menthe",
+              )}
+            />
+            <figcaption>Kashk-o-Bademjoon</figcaption>
+          </figure>
+          <figure>
+            <Image
+              width={840}
+              height={1260}
+              sizes="(max-width: 600px) 88vw, 28vw"
+              src="/img/group-events/lamb-ghormeh-sabzi.webp"
+              alt={t(
+                "Braised lamb shank standing in a pool of herb sauce",
+                "Jarret d’agneau braisé dans une sauce aux fines herbes",
+              )}
+            />
+            <figcaption>
+              {t("Kamouraska Lamb Ghormeh Sabzi", "Ghormeh Sabzi à l’agneau de Kamouraska")}
+            </figcaption>
+          </figure>
+          <figure>
+            <Image
+              width={840}
+              height={1260}
+              sizes="(max-width: 600px) 88vw, 28vw"
+              src="/img/group-events/herbed-yogurt.webp"
+              alt={t(
+                "A bowl of yogurt topped with fresh herbs and colourful petals",
+                "Un bol de yogourt garni de fines herbes et de pétales colorés",
+              )}
+            />
+            <figcaption>{t("Herbed yogurt", "Yogourt aux fines herbes")}</figcaption>
+          </figure>
+        </div>
       </section>
 
       <section className={css.address} aria-labelledby="address-heading">
@@ -123,9 +166,9 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
 
       <Image
         className={css.barPhoto}
-        src="/img/group-events/bar.webp"
-        width={1600}
-        height={1067}
+        src="/img/group-events/bar-portrait.webp"
+        width={1365}
+        height={2048}
         sizes="100vw"
         alt={t(
           "The warmly lit bar and sculpted ceiling at BOUS",

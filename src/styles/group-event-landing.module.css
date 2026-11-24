@@ -129,6 +129,22 @@
   max-width: 27rem;
   height: auto;
 }
+.foodGallery {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+}
+.foodGallery figure {
+  margin: 0;
+}
+.foodGallery img {
+  height: auto;
+}
+.foodGallery figcaption {
+  margin-top: 0.65rem;
+  font-size: 1.05rem;
+}
 .address {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -217,5 +233,11 @@
   .storyText,
   .occasionText {
     max-width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .foodGallery {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
   }
 }
