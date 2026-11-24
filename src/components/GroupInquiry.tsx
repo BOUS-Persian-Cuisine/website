@@ -915,26 +915,6 @@ export function GroupInquiry({
         </section>
         <section className={css.panel} aria-labelledby="event-billing">
           <h2 id="event-billing">{t("Billing", "Facturation")}</h2>
-          <p className={css.fine}>
-            {t(
-              "Your group will receive one bill. You may use up to three credit cards to pay it.",
-              "Votre groupe recevra une seule facture. Vous pouvez la régler avec un maximum de trois cartes de crédit.",
-            )}
-          </p>
-          {options(
-            "drinks",
-            t("Beverage arrangements", "Service des boissons"),
-            drinks,
-          )}
-          {data.drinks === "Other" &&
-            otherDetails(
-              "drinksOther",
-              t(
-                "Describe your beverage arrangements",
-                "Précisez le service des boissons souhaité",
-              ),
-              1150,
-            )}
           {options(
             "billing",
             t("Billing preference", "Préférence de facturation"),
@@ -948,6 +928,20 @@ export function GroupInquiry({
                 "Précisez votre préférence de facturation",
               ),
               174,
+            )}
+          {options(
+            "drinks",
+            t("Beverage arrangements", "Service des boissons"),
+            drinks,
+          )}
+          {data.drinks === "Other" &&
+            otherDetails(
+              "drinksOther",
+              t(
+                "Describe your beverage arrangements",
+                "Précisez le service des boissons souhaité",
+              ),
+              1150,
             )}
           <div className={css.notes}>
             {textarea(
