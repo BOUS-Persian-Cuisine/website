@@ -8,6 +8,9 @@
 .links { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.5rem; }
 .links a { padding-block: .25rem; text-decoration: underline; text-underline-offset: .4em; text-decoration-color: var(--bous-gold); }
 .links a:hover { text-decoration-color: currentColor; }
+.links a.plannerLink { display: inline-flex; align-items: center; justify-content: center; gap: .85rem; min-height: 2.8rem; padding: .5rem 1.1rem; border-radius: 2rem; background: #fff4e6; color: var(--bous-burgundy); font-weight: 600; text-decoration: none; }
+.links a.plannerLink:hover { background: #dec8ad; }
+.plannerLink:focus-visible { outline: 2px solid #fff4e6; outline-offset: 4px; }
 .tiers { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1rem, 2.8vw, 2.5rem); margin-top: 2.5rem; align-items: start; }
 .tiers article { border-top: 1px solid var(--bous-gold); padding-top: 1.25rem; }
 .tiers h2 { font-size: 2.55rem; }

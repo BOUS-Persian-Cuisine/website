@@ -22,6 +22,10 @@ export default function GroupMenu() {
             <div className={styles.heroCopy}>
               <p>{t("Choose one menu for your table of eight or more. Every dish listed is served to share, from the first plates to dessert.", "Choisissez un menu pour votre table de huit personnes ou plus. Tous les plats indiqués sont servis à partager, des entrées au dessert.")}</p>
               <div className={styles.links}>
+                <Link className={styles.plannerLink} href="/group-event/#request">
+                  {t("Plan your event", "Organiser votre événement")}
+                  <span aria-hidden="true">→</span>
+                </Link>
                 <a href={fr ? "/Options de menu de groupe.pdf" : "/Group Menu options.pdf"} download>
                   {t("Group Menu options", "Options de menu de groupe")}
                 </a>
