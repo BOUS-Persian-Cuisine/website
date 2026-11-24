@@ -473,7 +473,7 @@
   overflow: hidden;
 }
 .summaryPhoto {
-  height: clamp(6rem, 11vw, 10rem);
+  height: clamp(4rem, 7vw, 6rem);
   background: url("/img/group-table.jpg") center 45% / cover;
 }
 .summaryBody {
@@ -502,7 +502,7 @@
     padding-inline: 3px;
   }
 }
-@media (max-height: 680px) {
+@media (max-height: 760px) {
   .summaryPhoto {
     display: none;
   }

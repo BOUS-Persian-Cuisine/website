@@ -1174,12 +1174,15 @@ export function GroupInquiry({
           </h2>
           <div className={css.summaryScroll}>
             <dl>
-              {eventSummary.map(([key, value]) => (
-                <div key={key}>
-                  <dt>{key}</dt>
-                  <dd>{value || "—"}</dd>
-                </div>
-              ))}
+              {eventSummary.map(
+                ([key, value]) =>
+                  value && (
+                    <div key={key}>
+                      <dt>{key}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ),
+              )}
             </dl>
             {lunchDateNotice && (
               <p className={css.availability}>{lunchDateNotice}</p>
