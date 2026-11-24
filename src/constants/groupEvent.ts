@@ -16,11 +16,15 @@ export const meals = [
   option("Lunch", "Dîner"),
   option("Reception", "Réception"),
 ];
+export const fullBuyout = option(
+  "Full restaurant buyout",
+  "Privatisation du restaurant",
+);
 export const spaces = [
   option("No preference", "Sans préférence"),
   option("Dining room", "Salle à manger"),
   option("Private room", "Salon privé"),
-  option("Full restaurant buyout", "Privatisation du restaurant"),
+  fullBuyout,
 ];
 export const bills = [
   option("One bill", "Une seule facture"),
