@@ -2,14 +2,14 @@ type Localized = { en: string; fr: string };
 const text = (en: string, fr = en): Localized => ({ en, fr });
 
 type PriceOption = { name: Localized; price: number };
-export type DinnerDish = {
+export type DinnerMenuItem = {
   name: Localized;
   price: number | PriceOption[];
   description?: Localized;
-  shortDescription: Localized;
   seasonal?: boolean;
   veganOption?: boolean;
 };
+export type DinnerDish = DinnerMenuItem & { shortDescription: Localized };
 type DinnerCourse = {
   id: string;
   title: Localized;
@@ -333,3 +333,50 @@ export const dinnerCourses: DinnerCourse[] = [
     ],
   },
 ];
+
+export const dessertCourse = {
+  id: "desserts",
+  title: text("Desserts"),
+  dishes: [
+    {
+      name: text("Faloodeh"),
+      price: 14,
+      description: text(
+        "Frozen rice vermicelli, lime and rosewater syrup, poached barberries, lime",
+        "Vermicelles de riz glacés, sirop à la lime et à l’eau de rose, épines-vinettes pochées, lime",
+      ),
+    },
+    {
+      name: text("Persian Love Cake"),
+      price: 18,
+      description: text(
+        "Cardamom financier, rosewater labneh cream, poached pear, pistachios",
+        "Financier à la cardamome, crème de labneh à l’eau de rose, poire pochée, pistaches",
+      ),
+    },
+    {
+      name: text("Chocolate Date Cake", "Gâteau au chocolat et aux dattes"),
+      price: 21,
+      description: text(
+        "Chocolate and date cake, chocolate date sauce, sesame halva ice cream, sesame brittle",
+        "Gâteau au chocolat et aux dattes, sauce chocolat-dattes, crème glacée au halva de sésame, croquant au sésame",
+      ),
+    },
+    {
+      name: text("Bastani Sonnati"),
+      price: 21,
+      description: text(
+        "Saffron, rose and pistachio ice cream, clotted cream, ghorabieh, freeze-dried raspberry",
+        "Crème glacée au safran, à la rose et à la pistache, crème caillée, ghorabieh, framboises lyophilisées",
+      ),
+    },
+    {
+      name: text("Beh"),
+      price: 21,
+      description: text(
+        "Poached quince, orange blossom custard, butter crumble, sea buckthorn sauce",
+        "Coing poché, crème à la fleur d’oranger, crumble au beurre, sauce à l’argousier",
+      ),
+    },
+  ] satisfies DinnerMenuItem[],
+};

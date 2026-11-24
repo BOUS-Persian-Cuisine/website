@@ -22,8 +22,8 @@
 .items p, .note { color: #61434d; line-height: 1.4; }
 .items p { margin-top: .2rem; }
 .note { margin-top: 1.1rem; font-size: .875rem; }
-.sides { margin-top: 2rem; }
-.sides .columns { row-gap: 1rem; }
+.fullWidthSection { margin-top: 2rem; scroll-margin-top: 6rem; }
+.fullWidthSection .columns { row-gap: 1rem; }
 @media (min-width: 48rem) {
   .columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

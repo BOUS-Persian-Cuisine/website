@@ -1,5 +1,5 @@
 import styles from "@/styles/dinner-menu.module.css";
-import { dinnerCourses, type DinnerDish } from "@/constants/dinnerMenu";
+import { dessertCourse, dinnerCourses, type DinnerMenuItem } from "@/constants/dinnerMenu";
 import { MenuPageLayout } from "@/components/MenuPageLayout";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -22,7 +22,7 @@ const menuCopy = {
   },
 };
 
-function MenuItems({ items }: { items: DinnerDish[] }) {
+function MenuItems({ items }: { items: DinnerMenuItem[] }) {
   const { language } = useLanguage();
   return (
     <ul className={styles.items}>
@@ -68,7 +68,6 @@ export default function Menu() {
   const { language } = useLanguage();
   const copy = menuCopy[language];
   const [starters, caviar, grill, slowCooked, sides] = dinnerCourses;
-  const halfway = Math.ceil(sides.dishes.length / 2);
 
   return (
     <MenuPageLayout
@@ -91,13 +90,18 @@ export default function Menu() {
             <MenuSection group={slowCooked} />
           </div>
         </div>
-        <section className={styles.sides}>
-          <h2>{sides.title[language]}</h2>
-          <div className={styles.columns}>
-            <MenuItems items={sides.dishes.slice(0, halfway)} />
-            <MenuItems items={sides.dishes.slice(halfway)} />
-          </div>
-        </section>
+        {[sides, dessertCourse].map(({ id, title, dishes }) => {
+          const halfway = Math.ceil(dishes.length / 2);
+          return (
+            <section key={id} id={id} className={styles.fullWidthSection}>
+              <h2>{title[language]}</h2>
+              <div className={styles.columns}>
+                <MenuItems items={dishes.slice(0, halfway)} />
+                <MenuItems items={dishes.slice(halfway)} />
+              </div>
+            </section>
+          );
+        })}
       </div>
     </MenuPageLayout>
   );
