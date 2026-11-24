@@ -15,7 +15,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/424d1b17497094e0.js"
   ],
   "/group-event": [
-    "static/chunks/79a76e1007b93acd.js"
+    "static/chunks/14f0b2fee9c9cab1.js"
   ],
   "/group-menu": [
     "static/chunks/1dda2eeb2386f903.js"
@@ -24,7 +24,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/7e9b2122994c988a.js"
   ],
   "/menu": [
-    "static/chunks/283f39f79c1a931d.js"
+    "static/chunks/d91f31d00bb29179.js"
   ],
   "/press": [
     "static/chunks/ad74d82ab3db7dc0.js"
