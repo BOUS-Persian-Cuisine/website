@@ -62,6 +62,15 @@ export function PreferredDatesCalendar({
       );
   }
   function navigateDay(event: KeyboardEvent<HTMLButtonElement>, date: Date) {
+    if (event.key === "PageUp" || event.key === "PageDown") {
+      event.preventDefault();
+      const offset = event.key === "PageUp" ? -1 : 1;
+      moveTo(
+        at(offset, Math.min(date.getUTCDate(), at(offset + 1, 0).getUTCDate())),
+        true,
+      );
+      return;
+    }
     const weekday = date.getUTCDay();
     const offsets: Record<string, number> = {
       ArrowLeft: -1,
@@ -81,14 +90,29 @@ export function PreferredDatesCalendar({
       ref={calendar}
       id="event-preferred-dates"
       tabIndex={-1}
-      aria-describedby="date-instructions"
+      aria-describedby={
+        invalid ? "date-instructions date-error" : "date-instructions"
+      }
+      aria-invalid={invalid || undefined}
     >
       <legend>{fr ? "Dates souhaitées" : "Preferred dates"} *</legend>
       <p id="date-instructions" className={css.fine}>
         {fr
           ? "Choisissez toutes les dates qui vous conviennent. Appuyez de nouveau sur une date pour la retirer."
           : "Select all the dates that work for you. Select a date again to remove it."}
+        <span className={css.srOnly}>
+          {fr
+            ? " Utilisez les flèches pour parcourir les dates."
+            : " Use the arrow keys to move between dates."}
+        </span>
       </p>
+      {invalid && (
+        <p id="date-error" className={css.error} role="alert">
+          {fr
+            ? "Choisissez au moins une date."
+            : "Select at least one preferred date."}
+        </p>
+      )}
       <div className={css.calendar}>
         <div className={css.monthHeader}>
           <button
@@ -157,7 +181,10 @@ export function PreferredDatesCalendar({
             <li key={key}>
               <button
                 type="button"
-                onClick={() => toggle(key)}
+                onClick={() => {
+                  toggle(key);
+                  moveTo(parseDay(key), true);
+                }}
                 aria-label={
                   (fr ? "Retirer le " : "Remove ") +
                   fullDate.format(parseDay(key))
@@ -175,13 +202,6 @@ export function PreferredDatesCalendar({
           {fr
             ? "Vous avez choisi 31 dates. Retirez-en une pour en ajouter une autre."
             : "You’ve selected 31 dates. Remove one to add another."}
-        </p>
-      )}
-      {invalid && (
-        <p className={css.error} role="alert">
-          {fr
-            ? "Choisissez au moins une date."
-            : "Select at least one preferred date."}
         </p>
       )}
     </fieldset>

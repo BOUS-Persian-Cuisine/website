@@ -61,14 +61,12 @@ export const individualDetails = [
     "Sharbat de bienvenue, cinq entrées à partager, jarret d’agneau pour la table, plats individuels, accompagnements et dessert.",
   ),
 ];
+export function isWeekday(date: string) {
+  const day = new Date(date + "T12:00:00Z").getUTCDay();
+  return day >= 1 && day <= 5;
+}
 export function allowsWeekdayLunch(dates: string[]) {
-  return (
-    !dates.length ||
-    dates.some((date) => {
-      const day = new Date(date + "T12:00:00Z").getUTCDay();
-      return day >= 1 && day <= 5;
-    })
-  );
+  return !dates.length || dates.some(isWeekday);
 }
 export function menuChoices(style: Style, meal: string, dates: string[]) {
   if (style === "undecided") return [];

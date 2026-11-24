@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { GroupInquiry } from "@/components/GroupInquiry";
+import { MenuInclusions } from "@/components/MenuInclusions";
 import { useLanguage } from "@/context/LanguageContext";
 import { individualDetails, money, type Style } from "@/constants/groupEvent";
 import { tiers } from "@/constants/groupMenus";
@@ -10,6 +11,7 @@ export default function GroupEvent() {
   const { language } = useLanguage();
   const t = (en: string, fr: string) => (language === "fr" ? fr : en);
   const [open, setOpen] = useState(false);
+  const [visitedPlanner, setVisitedPlanner] = useState(false);
   const [style, setStyle] = useState<Style>("undecided");
   const [comparison, setComparison] = useState<"sharing" | "individual">(
     "sharing",
@@ -18,13 +20,22 @@ export default function GroupEvent() {
   const [requestNumber, setRequestNumber] = useState(0);
   const title = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
-    const sync = () => setOpen(window.location.hash === "#request");
+    const sync = () => {
+      const isPlanner = window.location.hash === "#request";
+      if (isPlanner) setVisitedPlanner(true);
+      setOpen(isPlanner);
+    };
     sync();
     window.addEventListener("hashchange", sync);
     return () => window.removeEventListener("hashchange", sync);
   }, []);
   useEffect(() => {
     if (open) title.current?.focus();
+    else if (window.location.hash === "#menus") {
+      const menu = document.getElementById("group-menu-heading");
+      menu?.focus({ preventScroll: true });
+      menu?.scrollIntoView({ block: "start" });
+    }
   }, [open]);
   const begin = (preferred?: Style) => {
     if (completed) {
@@ -32,6 +43,7 @@ export default function GroupEvent() {
       setCompleted(false);
     }
     if (preferred || completed) setStyle(preferred ?? "undecided");
+    setVisitedPlanner(true);
     window.location.hash = "request";
     setOpen(true);
     window.scrollTo(0, 0);
@@ -83,7 +95,7 @@ export default function GroupEvent() {
                 <p className={css.kicker}>
                   {t("Menus for groups", "Menus de groupe")}
                 </p>
-                <h2>
+                <h2 id="group-menu-heading" tabIndex={-1}>
                   {t(
                     "How would you like to dine?",
                     "Comment souhaitez-vous partager le repas ?",
@@ -125,7 +137,7 @@ export default function GroupEvent() {
                       "Chaque convive choisit son plat principal à l’avance. Au dîner en semaine, la table d’hôte à 45 $ comprend aussi une entrée au choix.",
                     )}
               </p>
-              <div className={css.tiers}>
+              <div className={css.tiers} key={comparison}>
                 {tiers.map((tier, i) => (
                   <article key={tier.name}>
                     <h3>{tier.name}</h3>
@@ -140,6 +152,20 @@ export default function GroupEvent() {
                           : individualDetails[i])[language]
                       }
                     </p>
+                    <details
+                      name="group-menu-details"
+                      className={css.tierDetails}
+                    >
+                      <summary>
+                        {t("View full menu", "Voir le menu complet")}
+                        <span className={css.srOnly}> · {tier.name}</span>
+                      </summary>
+                      <MenuInclusions
+                        name={tier.name}
+                        style={comparison}
+                        language={language}
+                      />
+                    </details>
                   </article>
                 ))}
               </div>
@@ -173,32 +199,62 @@ export default function GroupEvent() {
             </section>
           </>
         )}
-        <div hidden={!open} className={css.formWrap}>
-          <a
-            className={css.textLink}
-            href="#menus"
-            onClick={() => setOpen(false)}
-          >
-            {t("Back to group menus", "Retour aux menus de groupe")}
-          </a>
-          <header className={css.formIntro}>
-            <h1 ref={title} tabIndex={-1}>
-              {t("Plan your event", "Organisez votre événement")}
-            </h1>
-            <p>
-              {t(
-                "Tell us what you have in mind. Fields marked * are required.",
-                "Parlez-nous de votre projet. Les champs marqués d’un astérisque (*) sont obligatoires.",
-              )}
-            </p>
-          </header>
-          <GroupInquiry
-            key={requestNumber}
-            style={style}
-            onStyleChange={setStyle}
-            onComplete={() => setCompleted(true)}
-          />
-        </div>
+        {visitedPlanner && (
+          <div hidden={!open} className={css.formWrap}>
+            <a
+              className={css.textLink}
+              href="#menus"
+              onClick={() => setOpen(false)}
+            >
+              {t("Back to group menus", "Retour aux menus de groupe")}
+            </a>
+            {!completed && (
+              <header className={css.formIntro}>
+                <h1 ref={title} tabIndex={-1}>
+                  {t("Plan your event", "Organisez votre événement")}
+                </h1>
+                <p>
+                  {t(
+                    "Send your preferences and our team will email you to confirm availability. Fields marked * are required.",
+                    "Envoyez-nous vos préférences. Notre équipe vous écrira pour confirmer les disponibilités. Les champs marqués d’un astérisque (*) sont obligatoires.",
+                  )}
+                </p>
+                <nav
+                  className={css.sectionLinks}
+                  aria-label={t("Jump to a section", "Accéder à une section")}
+                >
+                  {[
+                    ["event-table", t("At the table", "À table")],
+                    ["event-billing", t("Billing", "Facturation")],
+                    ["event-contact", t("Contact", "Coordonnées")],
+                    [
+                      "event-summary",
+                      t("Review request", "Vérifier la demande"),
+                    ],
+                  ].map(([id, label]) => (
+                    <button
+                      type="button"
+                      key={id}
+                      onClick={() => {
+                        const section = document.getElementById(id);
+                        section?.focus({ preventScroll: true });
+                        section?.scrollIntoView({ block: "start" });
+                      }}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </nav>
+              </header>
+            )}
+            <GroupInquiry
+              key={requestNumber}
+              style={style}
+              onStyleChange={setStyle}
+              onComplete={() => setCompleted(true)}
+            />
+          </div>
+        )}
       </main>
     </SiteLayout>
   );

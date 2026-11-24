@@ -15,6 +15,7 @@ import {
   lunchExtras,
   meals,
   allowsWeekdayLunch,
+  isWeekday,
   menuChoices,
   money,
   occasions,
@@ -76,8 +77,10 @@ export function GroupInquiry({
 
   const [preferredDates, setPreferredDates] = useState<string[]>([]);
   const [missingDates, setMissingDates] = useState(false);
+  const [lunchRemoved, setLunchRemoved] = useState(false);
   const [detailMenu, setDetailMenu] = useState("");
   const menuDialog = useRef<HTMLDialogElement>(null);
+  const seating = useRef<HTMLDetailsElement>(null);
   const [items, setItems] = useState<Extra[]>([]);
   const [canapeNotes, setCanapeNotes] = useState<string | null>(null);
   const [filters, setFilters] = useState({ food: "", pairing: "" });
@@ -111,6 +114,7 @@ export function GroupInquiry({
     );
   const change = (k: Field, value: string) => {
     setError("");
+    if (k === "meal" || (k === "menu" && value)) setLunchRemoved(false);
     if (k === "meal" && value !== "Reception") setCanapeNotes(null);
     setData((old) => {
       const next = { ...old, [k]: value };
@@ -240,6 +244,7 @@ export function GroupInquiry({
   };
   const shortGroup =
     style === "sharing" && data.guests !== "" && Number(data.guests) < 8;
+  const overRoomCapacity = space === "Private room" && Number(data.guests) > 10;
   const dateFormatter = new Intl.DateTimeFormat(
     language === "fr" ? "fr-CA" : "en-CA",
     {
@@ -252,18 +257,42 @@ export function GroupInquiry({
   const calendarDates = preferredDates
     .map((value) => dateFormatter.format(new Date(value + "T12:00:00Z")))
     .join(" · ");
+  const lunchWeekendDates =
+    currentMenu?.name === "Table d’Hôte"
+      ? preferredDates.filter((date) => !isWeekday(date))
+      : [];
+  const lunchDateNotice = lunchWeekendDates.length
+    ? t(
+        "A different menu is needed for these weekend dates",
+        "Un autre menu sera nécessaire pour ces dates de fin de semaine",
+      ) +
+      " (" +
+      lunchWeekendDates
+        .map((date) => dateFormatter.format(new Date(date + "T12:00:00Z")))
+        .join(", ") +
+      ")."
+    : "";
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!preferredDates.length) {
-      setMissingDates(true);
-      document.getElementById("event-preferred-dates")?.focus();
+    const field = e.currentTarget.querySelector<
+      HTMLInputElement | HTMLTextAreaElement
+    >("input:invalid, textarea:invalid");
+    const calendar = document.getElementById("event-preferred-dates");
+    setMissingDates(!preferredDates.length);
+    if (
+      !preferredDates.length &&
+      calendar &&
+      (!field ||
+        calendar.compareDocumentPosition(field) &
+          Node.DOCUMENT_POSITION_FOLLOWING)
+    ) {
+      calendar.focus();
       return;
     }
-    if (shortGroup) {
-      const guests = e.currentTarget.elements.namedItem(
-        "guests",
-      ) as HTMLInputElement;
-      guests.focus();
+    if (field) {
+      const fold = field.closest("details");
+      if (fold) fold.open = true;
+      field.reportValidity();
       return;
     }
     if (busy.current) return;
@@ -389,9 +418,9 @@ export function GroupInquiry({
   if (reference)
     return (
       <section className={css.receipt} role="status">
-        <h2 ref={heading} tabIndex={-1}>
+        <h1 ref={heading} tabIndex={-1}>
           {t("Request received", "Demande reçue")}
-        </h2>
+        </h1>
         <p>
           {t("Your reference is ", "Votre numéro de référence est ")}
           <strong>{reference}</strong>.
@@ -407,15 +436,63 @@ export function GroupInquiry({
             " pour discuter de la disponibilité et confirmer les détails.",
           )}
         </p>
+        <dl className={css.receiptFacts}>
+          <div>
+            <dt>{t("Preferred dates", "Dates souhaitées")}</dt>
+            <dd>{calendarDates}</dd>
+          </div>
+          <div>
+            <dt>{t("Start time", "Heure de début")}</dt>
+            <dd>{data.time}</dd>
+          </div>
+          <div>
+            <dt>{t("Estimated guests", "Nombre estimé de convives")}</dt>
+            <dd>{data.guests}</dd>
+          </div>
+          <div>
+            <dt>{t("Menu", "Menu")}</dt>
+            <dd>
+              {currentMenu?.name ||
+                t("To discuss with BOUS", "À déterminer avec BOUS")}
+            </dd>
+          </div>
+        </dl>
+        {lunchDateNotice && <p>{lunchDateNotice}</p>}
+        <a
+          className={css.textLink}
+          href={
+            "mailto:info@bous.ca?subject=" +
+            encodeURIComponent("BOUS · " + reference)
+          }
+        >
+          {t(
+            "Contact BOUS about this request",
+            "Écrire à BOUS au sujet de cette demande",
+          )}
+        </a>
       </section>
     );
-  const eventSummary = [
+  const eventSummary: [string, ReactNode][] = [
     [t("Occasion", "Occasion"), selected(data.occasion, occasions)],
-    [t("Preferred dates", "Dates souhaitées"), calendarDates],
+    [
+      t("Preferred dates", "Dates souhaitées"),
+      preferredDates.length > 3 ? (
+        <details className={css.summaryDates}>
+          <summary>
+            {preferredDates.length} {t("dates selected", "dates choisies")}
+          </summary>
+          {calendarDates}
+        </details>
+      ) : (
+        calendarDates
+      ),
+    ],
     [t("Start time", "Heure de début"), data.time],
     [t("Estimated guests", "Nombre estimé de convives"), data.guests],
     [t("Service", "Service"), selected(data.meal, meals)],
-    ...(isReception ? [[t("Space", "Espace"), fullBuyout[language]]] : []),
+    ...(space !== "No preference"
+      ? [[t("Space", "Espace"), selected(space, spaces)] as [string, string]]
+      : []),
     [
       t("Menu", "Menu"),
       currentMenu
@@ -423,22 +500,21 @@ export function GroupInquiry({
           " · " +
           money(currentMenu.price, language) +
           t(" / guest", " / pers.")
-        : styles[style][language],
+        : style === "undecided"
+          ? t("To discuss with BOUS", "À déterminer avec BOUS")
+          : styles[style][language],
     ],
     ...(hasCanapes
-      ? [[t("Canapés", "Canapés"), t("Requested", "Demandés")]]
+      ? [
+          [t("Canapés", "Canapés"), t("Requested", "Demandés")] as [
+            string,
+            string,
+          ],
+        ]
       : []),
   ];
   return (
-    <form
-      onSubmit={submit}
-      className={css.planner}
-      onInvalidCapture={(e) => {
-        const field = e.target as HTMLInputElement;
-        const details = field.closest("details");
-        if (details) details.open = true;
-      }}
-    >
+    <form onSubmit={submit} noValidate className={css.planner}>
       <fieldset
         className={css.formBody}
         disabled={sending || ambiguous}
@@ -464,12 +540,27 @@ export function GroupInquiry({
             invalid={missingDates}
             onChange={(values) => {
               setPreferredDates(values);
-              if (data.menu === "Table d’Hôte" && !allowsWeekdayLunch(values))
+              if (data.menu === "Table d’Hôte" && !allowsWeekdayLunch(values)) {
                 change("menu", "");
+                setLunchRemoved(true);
+              } else setLunchRemoved(false);
               setMissingDates(false);
               setError("");
             }}
           />
+          {lunchDateNotice && (
+            <p className={css.availability} role="status">
+              {lunchDateNotice}
+            </p>
+          )}
+          {lunchRemoved && (
+            <p className={css.availability} role="status">
+              {t(
+                "Table d’Hôte is served on weekdays. Choose another menu for your weekend lunch.",
+                "La table d’hôte est servie en semaine. Choisissez un autre menu pour votre dîner de fin de semaine.",
+              )}
+            </p>
+          )}
           <div className={css.grid}>
             {input("time", t("Start time", "Heure de début"), "time", true)}
             <div>
@@ -483,10 +574,13 @@ export function GroupInquiry({
                 true,
                 {
                   min: style === "sharing" ? 8 : 1,
-                  max: 1000,
+                  max: space === "Private room" ? 10 : 1000,
+                  "aria-invalid": shortGroup || overRoomCapacity || undefined,
                   "aria-describedby": shortGroup
                     ? "guest-count-hint group-size-hint"
-                    : "guest-count-hint",
+                    : overRoomCapacity
+                      ? "guest-count-hint room-capacity-hint"
+                      : "guest-count-hint",
                 },
               )}
               <p id="guest-count-hint" className={css.fine}>
@@ -505,7 +599,31 @@ export function GroupInquiry({
               )}
             </p>
           )}
+          {overRoomCapacity && (
+            <p className={css.error} id="room-capacity-hint">
+              {t(
+                "The private room seats up to 10 guests. ",
+                "Le salon privé accueille jusqu’à 10 convives. ",
+              )}
+              <button
+                type="button"
+                className={css.textLink}
+                onClick={() => {
+                  if (!seating.current) return;
+                  seating.current.open = true;
+                  seating.current
+                    .querySelector<HTMLInputElement>(
+                      'input[name="space"]:checked',
+                    )
+                    ?.focus();
+                }}
+              >
+                {t("Choose another space", "Choisir un autre espace")}
+              </button>
+            </p>
+          )}
           <details
+            ref={seating}
             key={isReception ? "reception" : "seating"}
             className={css.fold}
             open={isReception || undefined}
@@ -588,7 +706,9 @@ export function GroupInquiry({
           </details>
         </section>
         <section className={css.panel} aria-labelledby="event-table">
-          <h2 id="event-table">{t("At the table", "À table")}</h2>
+          <h2 id="event-table" tabIndex={-1}>
+            {t("At the table", "À table")}
+          </h2>
           <fieldset className={css.choiceGroup}>
             <legend>{t("Dining style", "Style de service")}</legend>
             <div className={css.pills}>
@@ -636,6 +756,7 @@ export function GroupInquiry({
                     <button
                       type="button"
                       className={css.viewMenu}
+                      aria-haspopup="dialog"
                       aria-label={
                         t("View full menu for ", "Voir le menu complet de ") +
                         menu.name
@@ -767,6 +888,16 @@ export function GroupInquiry({
                   {category === "food"
                     ? t("Extra dishes", "Plats supplémentaires")
                     : t("Drink pairings", "Accords boissons")}
+                  {validItems.some((item) =>
+                    choices.some(
+                      (choice) =>
+                        choice.category === category && choice.en === item.name,
+                    ),
+                  ) && (
+                    <span className={css.foldSelected}>
+                      {t("Added", "Ajouté")}
+                    </span>
+                  )}
                 </summary>
                 {category === "food" && (
                   <p className={css.fine}>
@@ -914,7 +1045,9 @@ export function GroupInquiry({
           </div>
         </section>
         <section className={css.panel} aria-labelledby="event-billing">
-          <h2 id="event-billing">{t("Billing", "Facturation")}</h2>
+          <h2 id="event-billing" tabIndex={-1}>
+            {t("Billing", "Facturation")}
+          </h2>
           {options(
             "billing",
             t("Billing preference", "Préférence de facturation"),
@@ -958,7 +1091,9 @@ export function GroupInquiry({
           </div>
         </section>
         <section className={css.panel}>
-          <h2>{t("Your contact details", "Vos coordonnées")}</h2>
+          <h2 id="event-contact" tabIndex={-1}>
+            {t("Your contact details", "Vos coordonnées")}
+          </h2>
           <div className={css.grid}>
             {input("name", t("Full name", "Nom complet"), "text", true, {
               autoComplete: "name",
@@ -1034,24 +1169,31 @@ export function GroupInquiry({
       >
         <div aria-hidden="true" className={css.summaryPhoto} />
         <div className={css.summaryBody}>
-          <h2>{t("Your event at BOUS", "Votre événement chez BOUS")}</h2>
-          <dl>
-            {eventSummary.map(([key, value]) => (
-              <div key={key}>
-                <dt>{key}</dt>
-                <dd>{value || "—"}</dd>
-              </div>
-            ))}
-          </dl>
-          {validItems.length > 0 && (
-            <ul className={css.selectedExtras}>
-              {validItems.map((x) => (
-                <li key={x.name}>
-                  {x.quantity} × {selected(x.name, choices)}
-                </li>
+          <h2 id="event-summary" tabIndex={-1}>
+            {t("Your event at BOUS", "Votre événement chez BOUS")}
+          </h2>
+          <div className={css.summaryScroll}>
+            <dl>
+              {eventSummary.map(([key, value]) => (
+                <div key={key}>
+                  <dt>{key}</dt>
+                  <dd>{value || "—"}</dd>
+                </div>
               ))}
-            </ul>
-          )}
+            </dl>
+            {lunchDateNotice && (
+              <p className={css.availability}>{lunchDateNotice}</p>
+            )}
+            {validItems.length > 0 && (
+              <ul className={css.selectedExtras}>
+                {validItems.map((x) => (
+                  <li key={x.name}>
+                    {x.quantity} × {selected(x.name, choices)}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <p className={css.fine}>
             {t(
               "We’ll confirm availability and details with you by email.",

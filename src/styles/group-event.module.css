@@ -11,6 +11,24 @@
   outline: 3px solid #7a632e;
   outline-offset: 3px;
 }
+.page summary:focus-visible {
+  outline: 3px solid #7a632e;
+  outline-offset: 3px;
+}
+.page [tabindex="-1"] {
+  scroll-margin-top: 6.5rem;
+}
+.page :is(h1, h2)[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -119,8 +137,19 @@
   margin: 1.6rem 0;
 }
 .tiers article {
+  min-width: 0;
   border-top: 1px solid #b09861;
   padding-top: 1rem;
+}
+.tierDetails summary {
+  width: fit-content;
+  margin-top: 0.45rem;
+  min-height: 2.75rem;
+  padding-block: 0.55rem;
+  cursor: pointer;
+  color: #610e2a;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
 }
 .tiers h3 {
   font-weight: 400;
@@ -153,6 +182,15 @@
 .formIntro p,
 .fine {
   color: #675851;
+}
+.sectionLinks {
+  display: none;
+}
+.availability {
+  padding: 0.55rem 0.8rem;
+  margin: 0.5rem 0 1rem;
+  border-inline-start: 3px solid #b09861;
+  background: #fff8ef;
 }
 .planner {
   display: grid;
@@ -356,6 +394,12 @@
   content: "+";
   font-size: 1.4rem;
 }
+.foldSelected {
+  color: #610e2a;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-inline: auto 0.8rem;
+}
 .fold[open] summary::after {
   content: "−";
 }
@@ -435,6 +479,34 @@
 .summaryBody {
   padding: clamp(1.05rem, 2.3vw, 1.65rem);
 }
+.summaryDates summary {
+  color: #610e2a;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+@media (min-width: 801px) {
+  .summary {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 7rem);
+  }
+  .summaryBody {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .summaryScroll {
+    min-height: 0;
+    overflow: auto;
+    padding-inline: 3px;
+  }
+}
+@media (max-height: 680px) {
+  .summaryPhoto {
+    display: none;
+  }
+}
 .summary dl {
   margin: 1rem 0;
   border-top: 1px solid #d9c8b2;
@@ -453,6 +525,35 @@
   text-align: right;
   font-weight: 600;
   overflow-wrap: anywhere;
+}
+.summary dt {
+  flex-shrink: 0;
+  max-width: 48%;
+}
+.receipt h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+.receipt {
+  margin-top: 1rem;
+  overflow-wrap: anywhere;
+}
+.receiptFacts {
+  border-block: 1px solid #dfd4c2;
+  padding-block: 0.75rem;
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0;
+}
+.receiptFacts div {
+  display: grid;
+  grid-template-columns: minmax(7rem, 1fr) 2fr;
+  gap: 0.75rem;
+}
+.receiptFacts dt {
+  color: #675851;
+}
+.receiptFacts dd {
+  font-weight: 600;
 }
 .selectedExtras {
   font-size: 0.95rem;
@@ -478,6 +579,24 @@
   margin: 0.7rem 0;
 }
 @media (max-width: 800px) {
+  .sectionLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.9rem;
+    border-block: 1px solid #dfd4c2;
+    margin-top: 0.8rem;
+  }
+  .sectionLinks button {
+    min-height: 2.75rem;
+    color: #610e2a;
+    font-size: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .extraList {
+    max-height: none;
+    overflow: visible;
+  }
   .planner {
     grid-template-columns: 1fr;
   }
