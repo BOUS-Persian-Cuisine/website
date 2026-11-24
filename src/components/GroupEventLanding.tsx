@@ -201,17 +201,39 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
                   )}
                 </p>
               </section>
-              <Image
-                className={css.roomPortrait}
-                width={760}
-                height={1139}
-                sizes="(max-width: 680px) 63vw, (max-width: 960px) 28vw, 18rem"
-                src="/img/group-events/brickwork-and-tapestry.webp"
-                alt={t(
-                  "A red wall hanging beside the open brick screen in the BOUS dining room",
-                  "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
-                )}
-              />
+              <div className={css.roomGallery}>
+                <Image
+                  className={css.loungePhoto}
+                  width={1600}
+                  height={1067}
+                  sizes="(max-width: 680px) 90vw, (max-width: 1080px) 42vw, 28rem"
+                  src="/img/group-events/dining-alcove.webp"
+                  alt={t(
+                    "Three pendant lights above an orchid and a wraparound banquette in the lounge",
+                    "Trois suspensions éclairent une orchidée et une banquette en U dans le salon",
+                  )}
+                />
+                <Image
+                  width={760}
+                  height={1139}
+                  sizes="(max-width: 680px) 44vw, (max-width: 1080px) 21vw, 14rem"
+                  src="/img/group-events/brickwork-and-tapestry.webp"
+                  alt={t(
+                    "A red wall hanging beside the open brick screen in the BOUS dining room",
+                    "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
+                  )}
+                />
+                <Image
+                  width={700}
+                  height={1049}
+                  sizes="(max-width: 680px) 44vw, (max-width: 1080px) 21vw, 14rem"
+                  src="/img/group-events/set-tables.webp"
+                  alt={t(
+                    "Wooden tables set for dinner beneath two illuminated wall niches",
+                    "Des tables en bois dressées pour le souper sous deux niches éclairées",
+                  )}
+                />
+              </div>
             </div>
           </div>
         </div>
