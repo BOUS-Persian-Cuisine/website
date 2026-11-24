@@ -13,6 +13,7 @@ import {
   extraDishCourses,
   lunchExtras,
   meals,
+  allowsWeekdayLunch,
   menuChoices,
   money,
   occasions,
@@ -124,8 +125,13 @@ export function GroupInquiry({
     setError("");
   };
   const setMenu = (value: string) => {
-    change("menu", value);
-    if (value === "Table d’Hôte") restrictExtras();
+    if (value === "Table d’Hôte") {
+      if (data.meal !== "Lunch" || !allowsWeekdayLunch(preferredDates)) return;
+      onStyleChange("individual");
+      setData((previous) => ({ ...previous, menu: value }));
+      restrictExtras();
+      setError("");
+    } else change("menu", value);
   };
   const label = (text: string, element: ReactNode, required = false) => (
     <label className={css.label}>
@@ -439,12 +445,48 @@ export function GroupInquiry({
             meals,
             true,
           )}
+          {data.meal === "Lunch" && (
+            <div className={css.lunchOption}>
+              <strong>
+                {t(
+                  "Table d’Hôte · $45 per guest",
+                  "Table d’hôte · 45 $ par personne",
+                )}
+              </strong>
+              <p>
+                {t(
+                  "Weekday lunch with one starter and one main of your choice.",
+                  "Au dîner en semaine, chaque convive choisit une entrée et un plat principal.",
+                )}
+              </p>
+              <button
+                className={css.textLink}
+                type="button"
+                onClick={() => {
+                  setDetailMenu("Table d’Hôte");
+                  menuDialog.current?.showModal();
+                }}
+              >
+                {currentMenu?.name === "Table d’Hôte"
+                  ? t(
+                      "View selected lunch menu",
+                      "Voir le menu du dîner sélectionné",
+                    )
+                  : t(
+                      "View and choose the lunch menu",
+                      "Voir et choisir le menu du dîner",
+                    )}
+              </button>
+            </div>
+          )}
           <PreferredDatesCalendar
             today={today}
             selected={preferredDates}
             invalid={missingDates}
             onChange={(values) => {
               setPreferredDates(values);
+              if (data.menu === "Table d’Hôte" && !allowsWeekdayLunch(values))
+                change("menu", "");
               setMissingDates(false);
               setError("");
             }}
@@ -660,7 +702,20 @@ export function GroupInquiry({
                 language={language}
               />
             )}
+            {detailMenu === "Table d’Hôte" &&
+              !allowsWeekdayLunch(preferredDates) && (
+                <p className={css.fine}>
+                  {t(
+                    "Add a weekday to your preferred dates to choose this lunch menu.",
+                    "Ajoutez une date en semaine pour choisir ce menu du dîner.",
+                  )}
+                </p>
+              )}
             <button
+              disabled={
+                detailMenu === "Table d’Hôte" &&
+                !allowsWeekdayLunch(preferredDates)
+              }
               className={css.primary}
               type="button"
               onClick={() => {
