@@ -29,25 +29,6 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
-.hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: #fff4e6;
-}
-.heroText {
-  max-width: 46rem;
-  justify-self: end;
-  align-self: center;
-  padding: clamp(2.3rem, 5.6vw, 6rem) clamp(1.5rem, 5vw, 5rem);
-}
-.kicker {
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: #7a632e;
-  margin-bottom: 0.8rem;
-}
 .page h1,
 .page h2,
 .page h3 {
@@ -69,19 +50,7 @@
   font-size: 1.55rem;
   font-weight: 600;
 }
-.photo {
-  min-height: 24rem;
-  background: url("/img/bous-shared-table.webp") 50% 52% / cover;
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.7rem;
-  margin-top: 1.6rem;
-}
-.primary,
-.secondary {
+.primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -97,71 +66,13 @@
 .primary:hover {
   background: #3c0014;
 }
-.secondary {
-  color: #610e2a;
-  background: #fffdf9;
-}
 .textLink,
 .textLink:hover {
   text-decoration: underline;
   text-decoration-color: #b09861;
   text-underline-offset: 0.3em;
 }
-.menuSection {
-  max-width: 75rem;
-  margin: auto;
-  padding: clamp(2.25rem, 5vw, 5rem) clamp(1.25rem, 5vw, 5rem);
-  scroll-margin-top: 5rem;
-}
-.intro {
-  max-width: 45rem;
-}
-.tabs {
-  display: inline-flex;
-  flex-wrap: wrap;
-  margin: 1.8rem 0 1rem;
-  border: 1px solid #b09861;
-}
-.tabs button {
-  padding: 0.65rem 1.1rem;
-  font-weight: 600;
-}
-.tabs button[aria-pressed="true"] {
-  background: #3c0014;
-  color: white;
-}
-.tiers {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 3vw, 3rem);
-  margin: 1.6rem 0;
-}
-.tiers article {
-  min-width: 0;
-  border-top: 1px solid #b09861;
-  padding-top: 1rem;
-}
-.tierDetails summary {
-  width: fit-content;
-  margin-top: 0.45rem;
-  min-height: 2.75rem;
-  padding-block: 0.55rem;
-  cursor: pointer;
-  color: #610e2a;
-  text-decoration: underline;
-  text-underline-offset: 0.22em;
-}
-.tiers h3 {
-  font-weight: 400;
-  font-size: 2rem;
-}
-.price {
-  color: #610e2a;
-  font-size: 1.35rem;
-  margin: 0.25rem 0 0.45rem;
-}
 .fine,
-.price small,
 .menuCards small {
   font-size: 0.94rem;
   color: #665350;
@@ -425,10 +336,29 @@
   padding: 0;
 }
 .extraCourse {
-  color: #610e2a;
-  font-size: 1.1rem;
+  color: #3c0014;
+  background: #f7f2eb;
+  border-inline-start: 3px solid #b09861;
+  font-size: 1.15rem;
   font-weight: 600;
-  padding: 0.6rem 0 0.3rem;
+  padding: 0.46rem 0.7rem;
+  margin: 1rem 0 0.2rem;
+}
+.extraList > div:first-child .extraCourse {
+  margin-top: 0.25rem;
+}
+.extras .dishDescription {
+  font-size: 0.94rem;
+  font-style: italic;
+}
+.extras .add[aria-pressed="true"] {
+  background: #610e2a;
+  color: white;
+  border-color: #610e2a;
+}
+.extras .add:disabled {
+  cursor: default;
+  opacity: 0.5;
 }
 .extraList {
   max-height: 22rem;
@@ -608,13 +538,6 @@
   }
   .panel:last-child {
     margin-bottom: 0;
-  }
-  .hero,
-  .tiers {
-    grid-template-columns: 1fr;
-  }
-  .photo {
-    min-height: 13rem;
   }
 }
 @media (max-width: 560px) {

@@ -82,6 +82,10 @@ export function GroupInquiry({
   const menuDialog = useRef<HTMLDialogElement>(null);
   const seating = useRef<HTMLDetailsElement>(null);
   const [items, setItems] = useState<Extra[]>([]);
+  const [pairingMode, setPairingMode] = useState<"quantity" | "group">(
+    "quantity",
+  );
+  const [groupPairing, setGroupPairing] = useState("");
   const [canapeNotes, setCanapeNotes] = useState<string | null>(null);
   const [filters, setFilters] = useState({ food: "", pairing: "" });
   const [error, setError] = useState("");
@@ -98,9 +102,27 @@ export function GroupInquiry({
   const available = menuChoices(style, data.meal, preferredDates);
   const currentMenu = available.find((m) => m.name === data.menu);
   const choices = currentMenu?.name === "Table d’Hôte" ? lunchExtras : extras;
+  const groupSize = (name: string) =>
+    Math.max(
+      0,
+      Number(data.guests) -
+        (name === "Sharbat Pairing" ? 0 : Number(data.children)),
+    );
+  const groupChoice =
+    pairingMode === "group" &&
+    groupPairing &&
+    (data.guests === "" || groupSize(groupPairing) > 0)
+      ? groupPairing
+      : "";
   const validItems = items.filter((item) =>
-    choices.some((extra) => extra.en === item.name),
+    choices.some(
+      (extra) =>
+        extra.en === item.name &&
+        (extra.category === "food" || pairingMode === "quantity"),
+    ),
   );
+  if (groupChoice)
+    validItems.push({ name: groupChoice, quantity: groupSize(groupChoice) });
   const selected = (en: string, options: Option[]) =>
     options.find((o) => o.en === en)?.[language] || en;
   const today = montrealToday();
@@ -335,6 +357,7 @@ export function GroupInquiry({
                 x.quantity +
                 " × " +
                 x.name +
+                (groupChoice === x.name ? " — whole group" : "") +
                 " ($" +
                 extra.price +
                 " / " +
@@ -427,13 +450,13 @@ export function GroupInquiry({
         </p>
         <p>
           {t(
-            "Our team will review your date and menu and follow up at ",
-            "Notre équipe vérifiera la date et le menu, puis vous écrira à ",
+            "We’ll email a copy of your request to ",
+            "Nous enverrons une copie de votre demande à ",
           )}
           <strong>{data.email}</strong>
           {t(
-            " to discuss availability and confirm the details.",
-            " pour discuter de la disponibilité et confirmer les détails.",
+            " from info@bous.ca. Our events team will follow up to confirm availability and discuss the details with you.",
+            " depuis info@bous.ca. Notre équipe vous contactera pour confirmer les disponibilités et discuter des détails avec vous.",
           )}
         </p>
         <dl className={css.receiptFacts}>
@@ -907,20 +930,63 @@ export function GroupInquiry({
                     )}
                   </p>
                 )}
-                <div className={css.tools}>
-                  {label(
-                    category === "food"
-                      ? t("Filter dishes", "Filtrer les plats")
-                      : t("Filter pairings", "Filtrer les accords"),
-                    <input
-                      type="search"
-                      value={filters[category]}
-                      onChange={(e) =>
-                        setFilters({ ...filters, [category]: e.target.value })
-                      }
-                    />,
-                  )}
-                </div>
+                {category === "pairing" && (
+                  <fieldset className={css.choiceGroup}>
+                    <legend>
+                      {t(
+                        "How would you like to add pairings?",
+                        "Comment souhaitez-vous ajouter les accords ?",
+                      )}
+                    </legend>
+                    <div className={css.pills}>
+                      {(["quantity", "group"] as const).map((mode) => (
+                        <label key={mode}>
+                          <input
+                            type="radio"
+                            name="pairing-mode"
+                            checked={pairingMode === mode}
+                            onChange={() => {
+                              setPairingMode(mode);
+                              setFilters((old) => ({ ...old, pairing: "" }));
+                            }}
+                          />
+                          <span>
+                            {mode === "group"
+                              ? t(
+                                  "One pairing for the whole group",
+                                  "Un accord pour tout le groupe",
+                                )
+                              : t("Choose quantities", "Choisir les quantités")}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                    {pairingMode === "group" && (
+                      <p className={css.fine}>
+                        {t(
+                          "Choose one pairing. Quantities follow your guest count. Alcoholic pairings count adults only.",
+                          "Choisissez un accord. La quantité suit le nombre de convives. Les accords alcoolisés sont comptés pour les adultes seulement.",
+                        )}
+                      </p>
+                    )}
+                  </fieldset>
+                )}
+                {(category === "food" || pairingMode === "quantity") && (
+                  <div className={css.tools}>
+                    {label(
+                      category === "food"
+                        ? t("Filter dishes", "Filtrer les plats")
+                        : t("Filter pairings", "Filtrer les accords"),
+                      <input
+                        type="search"
+                        value={filters[category]}
+                        onChange={(e) =>
+                          setFilters({ ...filters, [category]: e.target.value })
+                        }
+                      />,
+                    )}
+                  </div>
+                )}
                 <div className={css.extraList}>
                   {groups.map((group) => (
                     <div key={group.name}>
@@ -934,12 +1000,41 @@ export function GroupInquiry({
                             <li key={x.en}>
                               <div>
                                 <strong>{x[language]}</strong>
+                                <small className={css.dishDescription}>
+                                  {x.description[language]}
+                                </small>
                                 <small>
                                   {money(x.price, language)} /{" "}
                                   {x.unit[language]}
                                 </small>
                               </div>
-                              {n > 0 ? (
+                              {category === "pairing" &&
+                              pairingMode === "group" ? (
+                                <button
+                                  type="button"
+                                  className={css.add}
+                                  aria-pressed={groupChoice === x.en}
+                                  aria-label={
+                                    t(
+                                      "Select for the whole group: ",
+                                      "Choisir pour tout le groupe : ",
+                                    ) + x[language]
+                                  }
+                                  disabled={
+                                    Boolean(data.guests) &&
+                                    groupSize(x.en) === 0
+                                  }
+                                  onClick={() =>
+                                    setGroupPairing(
+                                      groupChoice === x.en ? "" : x.en,
+                                    )
+                                  }
+                                >
+                                  {groupChoice === x.en
+                                    ? t("Selected", "Choisi")
+                                    : t("Select", "Choisir")}
+                                </button>
+                              ) : n > 0 ? (
                                 <div className={css.quantity}>
                                   <button
                                     type="button"
@@ -1191,7 +1286,10 @@ export function GroupInquiry({
               <ul className={css.selectedExtras}>
                 {validItems.map((x) => (
                   <li key={x.name}>
-                    {x.quantity} × {selected(x.name, choices)}
+                    {x.quantity > 0 && x.quantity + " × "}
+                    {selected(x.name, choices)}
+                    {x.name === groupChoice &&
+                      t(" · Whole group", " · Tout le groupe")}
                   </li>
                 ))}
               </ul>

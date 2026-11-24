@@ -104,25 +104,30 @@ export const extraDishCourses = [
 export const extras = [
   ...pairings.map((item) => ({
     ...item,
+    description: item.glasses
+      ? option(item.glasses + " glasses", item.glasses + " verres")
+      : option("Sharbat, wine and cocktail", "Sharbat, vin et cocktail"),
     unit: option("guest", "personne"),
-    category: "pairing",
+    category: "pairing" as const,
     course: "",
   })),
   {
     en: "Tahchin with Persian Ossetra caviar",
     fr: "Tahchin au caviar persan Ossetra",
+    description: option("Crispy rice", "Riz croustillant"),
     price: 82,
     course: "Bread & appetisers",
     unit: option("plate", "assiette"),
-    category: "food",
+    category: "food" as const,
   },
   ...courses.flatMap((course) =>
     course.dishes.map((item) => ({
       en: item.en,
       fr: item.fr ?? item.en,
+      description: item.description,
       price: item.price,
       course: course.en,
-      category: "food",
+      category: "food" as const,
       unit: item.unit
         ? option(
             item.unit[0].replace("per ", ""),
@@ -141,9 +146,10 @@ export const lunchExtras = [
   {
     en: "Dessert of the day",
     fr: "Dessert du jour",
+    description: option("Chef’s selection", "Choix du chef"),
     price: 11,
     course: "Dessert",
     unit: option("guest", "personne"),
-    category: "food",
+    category: "food" as const,
   },
 ];

@@ -1,0 +1,227 @@
+.landing {
+  --gutter: clamp(1.25rem, 6vw, 6rem);
+  background: #fffdf9;
+  color: #3c0014;
+}
+.landing img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.landing .eyebrow {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #7a632e;
+  margin-bottom: 0.85rem;
+}
+.landing section h2 {
+  font-size: clamp(2.2rem, 4.8vw, 4.7rem);
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  font-weight: 400;
+  margin-bottom: 1.15rem;
+  text-wrap: balance;
+}
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: clamp(28rem, 68svh, 45rem);
+  background: #271814;
+  color: #fffdf9;
+}
+.hero .heroImage {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  object-position: 50% 53%;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(13, 8, 7, 0.69), rgba(13, 8, 7, 0.1) 75%),
+    linear-gradient(0deg, rgba(13, 8, 7, 0.64), transparent 78%);
+}
+.heroContent {
+  width: min(100%, 90rem);
+  margin-inline: auto;
+  padding: 3.2rem var(--gutter) clamp(2.8rem, 6vw, 6rem);
+}
+.heroContent .eyebrow,
+.address .eyebrow {
+  color: #dec8ad;
+}
+.hero .heroContent h1 {
+  font-size: clamp(3.8rem, 9vw, 8rem);
+  font-weight: 300;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  margin-bottom: 0.85rem;
+  text-wrap: balance;
+}
+.heroContent > p:not(.eyebrow) {
+  font-size: clamp(1.13rem, 2vw, 1.42rem);
+  max-width: 32rem;
+  line-height: 1.45;
+}
+.heroButton,
+.plan {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3rem;
+  margin-top: 1.55rem;
+  padding: 0.65rem 1.6rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+.heroButton {
+  background: #fff4e6;
+  color: #3c0014;
+}
+.heroButton:hover {
+  background: #fff;
+}
+.plan {
+  background: #610e2a;
+  color: #fffdf9;
+}
+.plan:hover {
+  background: #3c0014;
+}
+.story,
+.occasions {
+  max-width: 86rem;
+  margin-inline: auto;
+  padding: clamp(3.2rem, 7vw, 7rem) var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2.3rem, 6vw, 6.5rem);
+  align-items: center;
+}
+.storyText,
+.occasionText {
+  max-width: 35rem;
+}
+.storyText p + p {
+  margin-top: 0.8rem;
+}
+.storyText a {
+  display: inline-block;
+  color: #610e2a;
+  text-decoration: underline;
+  text-underline-offset: 0.28em;
+  text-decoration-color: #b09861;
+  padding-block: 0.7rem;
+  margin-top: 0.35rem;
+}
+.tablePhotos {
+  position: relative;
+  padding: 0 0 clamp(2.15rem, 4vw, 4.5rem) clamp(1rem, 3vw, 3rem);
+}
+.tablePhotos .spread {
+  aspect-ratio: 1.35;
+  height: auto;
+}
+.tablePhotos .chef {
+  position: absolute;
+  width: 31%;
+  height: auto;
+  aspect-ratio: 4/5;
+  bottom: 0;
+  left: 0;
+  border: clamp(4px, 0.45vw, 8px) solid #fffdf9;
+}
+.address {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  background: #350514;
+  color: #fff4e6;
+}
+.address img {
+  min-height: 100%;
+  aspect-ratio: 1.55;
+}
+.address > div {
+  align-self: center;
+  padding: clamp(2.5rem, 5vw, 5.5rem) var(--gutter) clamp(2.5rem, 5vw, 5.5rem)
+    clamp(2rem, 5vw, 5rem);
+  max-width: 42rem;
+}
+.address p {
+  max-width: 33rem;
+}
+.occasions {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 0.88fr;
+  gap: clamp(0.55rem, 1.2vw, 1.3rem);
+  align-items: start;
+}
+.pair img {
+  aspect-ratio: 2/3;
+  height: auto;
+}
+.pair img + img {
+  margin-top: clamp(2.4rem, 5vw, 5.3rem);
+}
+.occasionText dl > div {
+  padding: 0.8rem 0;
+  border-top: 1px solid #dec8ad;
+}
+.occasionText dt {
+  font-size: 1.22rem;
+  font-weight: 600;
+}
+.occasionText dd {
+  margin-top: 0.18rem;
+  color: #56443d;
+}
+@media (max-width: 760px) {
+  .hero {
+    min-height: clamp(28rem, 66svh, 36rem);
+  }
+  .heroContent {
+    padding-bottom: 2.6rem;
+  }
+  .hero .heroImage {
+    object-position: 55% center;
+  }
+  .hero .heroContent h1 {
+    font-size: clamp(3.3rem, 13vw, 5.4rem);
+  }
+  .story,
+  .occasions,
+  .address {
+    grid-template-columns: 1fr;
+  }
+  .story,
+  .occasions {
+    gap: 1.8rem;
+  }
+  .address img {
+    aspect-ratio: 1.65;
+    height: auto;
+  }
+  .address > div {
+    padding: 2.4rem var(--gutter) 2.7rem;
+  }
+  .pair {
+    max-width: 32rem;
+  }
+  .storyText,
+  .occasionText {
+    max-width: 100%;
+  }
+}
