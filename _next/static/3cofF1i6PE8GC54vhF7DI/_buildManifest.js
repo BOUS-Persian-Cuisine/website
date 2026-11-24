@@ -1,36 +1,36 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "static/chunks/1d53bcfc4d52f67a.js"
+    "static/chunks/b0addbe26ebb664b.js"
   ],
   "/_error": [
     "static/chunks/ac2d6cf5647174bd.js"
   ],
   "/about": [
-    "static/chunks/58302ad26562e2e6.js"
+    "static/chunks/f39a9812ddcec279.js"
   ],
   "/contact": [
-    "static/chunks/37ed28fe60243056.js"
+    "static/chunks/702fb400a66491a4.js"
   ],
   "/drinks-menu": [
-    "static/chunks/455c25dcacc80c65.js"
+    "static/chunks/424d1b17497094e0.js"
   ],
   "/group-event": [
-    "static/chunks/2ee3c2a9ac8b445f.js"
+    "static/chunks/79a76e1007b93acd.js"
   ],
   "/group-menu": [
-    "static/chunks/dd85511a20fc238e.js"
+    "static/chunks/c3a8db0076cdb380.js"
   ],
   "/lunch-menu": [
-    "static/chunks/b8388b2f4ce69192.js"
+    "static/chunks/7e9b2122994c988a.js"
   ],
   "/menu": [
-    "static/chunks/c54f9cace730a55b.js"
+    "static/chunks/283f39f79c1a931d.js"
   ],
   "/press": [
-    "static/chunks/7c0f3718ea9fbab8.js"
+    "static/chunks/ad74d82ab3db7dc0.js"
   ],
   "/wine": [
-    "static/chunks/4d738bd6f89968c2.js"
+    "static/chunks/5f6b3e15bf940f05.js"
   ],
   "__rewrites": {
     "afterFiles": [],
