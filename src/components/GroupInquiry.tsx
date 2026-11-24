@@ -1022,8 +1022,8 @@ export function GroupInquiry({
           <p>
             <strong>{t("Food allergies.", "Allergies alimentaires.")}</strong>{" "}
             {t(
-              "Please let us know about any food allergies at least 48 hours before your event.",
-              "Veuillez nous signaler toute allergie alimentaire au moins 48 heures avant votre événement.",
+              "Please let us know about any food allergies at least 48 hours before your event. With less notice, we can’t guarantee that our kitchen can accommodate your request.",
+              "Veuillez nous signaler toute allergie alimentaire au moins 48 heures avant votre événement. Avec un préavis plus court, nous ne pouvons pas garantir que notre équipe pourra adapter le menu.",
             )}
           </p>
         </section>
