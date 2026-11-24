@@ -53,6 +53,19 @@ type Fields = typeof empty;
 type Field = keyof Fields;
 type Extra = { name: string; quantity: number };
 
+function displayTime(value: string) {
+  if (!value) return "";
+  const [hour, minute] = value.split(":");
+  return (Number(hour) % 12 || 12) + ":" + minute + (Number(hour) < 12 ? " AM" : " PM");
+}
+
+const timeOptions = Array.from({ length: 96 }, (_, index) => {
+  const hour = String(Math.floor(index / 4)).padStart(2, "0");
+  const minute = String((index % 4) * 15).padStart(2, "0");
+  const value = hour + ":" + minute;
+  return { value, label: displayTime(value) };
+});
+
 function montrealToday() {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Toronto",
@@ -86,7 +99,6 @@ export function GroupInquiry({
     "quantity",
   );
   const [groupPairing, setGroupPairing] = useState("");
-  const [canapeNotes, setCanapeNotes] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
   const [reference, setReference] = useState("");
@@ -95,9 +107,7 @@ export function GroupInquiry({
   const submission = useRef("");
   const busy = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
-  const isReception = data.meal === "Reception";
-  const space = isReception ? fullBuyout.en : data.space;
-  const hasCanapes = isReception && canapeNotes !== null;
+  const space = data.space;
   const available = menuChoices(style, data.meal, preferredDates);
   const currentMenu = available.find((m) => m.name === data.menu);
   const choices = currentMenu?.name === "Table d’Hôte" ? lunchExtras : extras;
@@ -136,7 +146,6 @@ export function GroupInquiry({
   const change = (k: Field, value: string) => {
     setError("");
     if (k === "meal" || (k === "menu" && value)) setLunchRemoved(false);
-    if (k === "meal" && value !== "Reception") setCanapeNotes(null);
     setData((old) => {
       const next = { ...old, [k]: value };
       if (
@@ -187,6 +196,18 @@ export function GroupInquiry({
         {...props}
       />,
       required,
+    );
+  const timeSelect = (key: "time" | "endTime", title: string) =>
+    label(
+      title,
+      <select name={key} value={data[key]} required={key === "time"}
+        onChange={(event) => change(key, event.target.value)}>
+        <option value="">{t("Choose a time", "Choisir une heure")}</option>
+        {timeOptions.map((option) => (
+          <option key={option.value} value={option.value}>{option.label}</option>
+        ))}
+      </select>,
+      key === "time",
     );
   const options = (
     key: Field,
@@ -296,8 +317,8 @@ export function GroupInquiry({
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const field = e.currentTarget.querySelector<
-      HTMLInputElement | HTMLTextAreaElement
-    >("input:invalid, textarea:invalid");
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >("input:invalid, textarea:invalid, select:invalid");
     const calendar = document.getElementById("event-preferred-dates");
     setMissingDates(!preferredDates.length);
     if (
@@ -343,28 +364,20 @@ export function GroupInquiry({
           space,
           service: style,
           menu: currentMenu?.name ?? "Undecided",
-          addons: [
-            ...(hasCanapes
-              ? [
-                  "Passed canapés" +
-                    (canapeNotes.trim() ? " — " + canapeNotes.trim() : ""),
-                ]
-              : []),
-            ...validItems.map((x) => {
-              const extra = choices.find((o) => o.en === x.name)!;
-              return (
-                x.quantity +
-                " × " +
-                (extra.category === "food" ? extra[language] : x.name) +
-                (groupChoice === x.name ? " — whole group" : "") +
-                " ($" +
-                extra.price +
-                " / " +
-                extra.unit.en +
-                ")"
-              );
-            }),
-          ],
+          addons: validItems.map((x) => {
+            const extra = choices.find((o) => o.en === x.name)!;
+            return (
+              x.quantity +
+              " × " +
+              (extra.category === "food" ? extra[language] : x.name) +
+              (groupChoice === x.name ? " — whole group" : "") +
+              " ($" +
+              extra.price +
+              " / " +
+              extra.unit.en +
+              ")"
+            );
+          }),
           dietary: data.dietary.trim(),
           notes: [
             data.endTime && "End time: " + data.endTime,
@@ -465,7 +478,7 @@ export function GroupInquiry({
           </div>
           <div>
             <dt>{t("Start time", "Heure de début")}</dt>
-            <dd>{data.time}</dd>
+            <dd>{displayTime(data.time)}</dd>
           </div>
           <div>
             <dt>{t("Estimated guests", "Nombre estimé de convives")}</dt>
@@ -509,7 +522,8 @@ export function GroupInquiry({
         calendarDates
       ),
     ],
-    [t("Start time", "Heure de début"), data.time],
+    [t("Start time", "Heure de début"), displayTime(data.time)],
+    [t("Preferred end time", "Heure de fin souhaitée"), displayTime(data.endTime)],
     [t("Estimated guests", "Nombre estimé de convives"), data.guests],
     [t("Service", "Service"), selected(data.meal, meals)],
     ...(space !== "No preference"
@@ -526,14 +540,6 @@ export function GroupInquiry({
           ? t("To discuss with BOUS", "À déterminer avec BOUS")
           : styles[style][language],
     ],
-    ...(hasCanapes
-      ? [
-          [t("Canapés", "Canapés"), t("Requested", "Demandés")] as [
-            string,
-            string,
-          ],
-        ]
-      : []),
   ];
   return (
     <form onSubmit={submit} noValidate className={css.planner}>
@@ -584,7 +590,7 @@ export function GroupInquiry({
             </p>
           )}
           <div className={css.grid}>
-            {input("time", t("Start time", "Heure de début"), "time", true)}
+            {timeSelect("time", t("Start time", "Heure de début"))}
             <div>
               {input(
                 "guests",
@@ -646,9 +652,7 @@ export function GroupInquiry({
           )}
           <details
             ref={seating}
-            key={isReception ? "reception" : "seating"}
             className={css.fold}
-            open={isReception || undefined}
           >
             <summary>
               {t(
@@ -656,17 +660,7 @@ export function GroupInquiry({
                 "Espace, enfants et heure de fin",
               )}
             </summary>
-            {isReception ? (
-              <p className={css.requiredSpace}>
-                <strong>{fullBuyout[language]}</strong>{" "}
-                {t(
-                  "Required for receptions.",
-                  "Obligatoire pour les réceptions.",
-                )}
-              </p>
-            ) : (
-              options("space", t("Space preference", "Espace souhaité"), spaces)
-            )}
+            {options("space", t("Space preference", "Espace souhaité"), spaces)}
             {space === "Private room" && (
               <p className={css.fine}>
                 {t(
@@ -719,11 +713,7 @@ export function GroupInquiry({
                 false,
                 { min: 0, max: Number(data.guests) || 1000 },
               )}
-              {input(
-                "endTime",
-                t("Preferred end time", "Heure de fin souhaitée"),
-                "time",
-              )}
+              {timeSelect("endTime", t("Preferred end time", "Heure de fin souhaitée"))}
             </div>
           </details>
         </section>
@@ -849,43 +839,6 @@ export function GroupInquiry({
               {t("Choose ", "Choisir ") + detailMenu}
             </button>
           </dialog>
-          {isReception && (
-            <div className={css.canapes}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={hasCanapes}
-                  onChange={(e) => setCanapeNotes(e.target.checked ? "" : null)}
-                />
-                {t(
-                  "Add passed canapés",
-                  "Ajouter des canapés servis sur plateau",
-                )}
-              </label>
-              {hasCanapes && (
-                <>
-                  <p className={css.fine}>
-                    {t(
-                      "Our team will help you choose bites for your reception, such as kuku sabzi with tomato or saffron chicken kabab.",
-                      "Notre équipe vous aidera à choisir les bouchées pour votre réception, comme le kuku sabzi à la tomate ou le kabab de poulet au safran.",
-                    )}
-                  </p>
-                  {label(
-                    t(
-                      "Canapé preferences (optional)",
-                      "Préférences pour les canapés (facultatif)",
-                    ),
-                    <textarea
-                      rows={2}
-                      maxLength={140}
-                      value={canapeNotes}
-                      onChange={(e) => setCanapeNotes(e.target.value)}
-                    />,
-                  )}
-                </>
-              )}
-            </div>
-          )}
           {(["food", "pairing"] as const).map((category) => {
             const shownExtras = choices.filter(
               (extra) => extra.category === category,

@@ -295,8 +295,8 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
               </dt>
               <dd>
                 {t(
-                  "Host a reception with exclusive use of BOUS. Add passed canapés and choose drinks for the evening.",
-                  "Privatisez BOUS pour une réception, ajoutez des canapés servis sur plateau et choisissez les boissons de la soirée.",
+                  "Have BOUS to yourselves for a private lunch or dinner, with a menu and drinks chosen for your guests.",
+                  "Privatisez BOUS pour un dîner ou un souper et choisissez le menu et les boissons pour vos convives.",
                 )}
               </dd>
             </div>

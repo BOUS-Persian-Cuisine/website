@@ -82,10 +82,10 @@ export function SiteHeader() {
   return (
     <>
       <header className={headerClass}>
-        <div className="mx-auto grid h-18 w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:h-20 lg:px-10">
+        <div className="mx-auto grid h-18 w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:h-20 lg:max-w-none lg:gap-x-7 lg:px-8 xl:gap-x-10 xl:px-10">
           <nav
             aria-label={t.header.menuLabel}
-            className="hidden items-center gap-4 lg:flex 2xl:gap-6"
+            className="hidden items-center justify-end gap-4 lg:flex 2xl:gap-6"
           >
             <a
               href={reservationUrl}
@@ -154,8 +154,8 @@ export function SiteHeader() {
             />
           </Link>
 
-          <div className="hidden items-center justify-end gap-2 lg:flex">
-            <nav aria-label={t.header.infoLabel} className="mr-4 flex items-center gap-4 2xl:gap-6">
+          <div className="hidden items-center gap-2 lg:flex">
+            <nav aria-label={t.header.infoLabel} className="mr-auto flex items-center gap-4 pr-3 2xl:gap-6">
               <Link href="/about" className={navLinkClass}>
                 {t.header.nav.about}
               </Link>

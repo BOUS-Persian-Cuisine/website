@@ -15,7 +15,6 @@ export const occasions = [
 export const meals = [
   option("Dinner", "Souper"),
   option("Lunch", "Dîner"),
-  option("Reception", "Réception"),
 ];
 export const fullBuyout = option(
   "Full restaurant buyout",
