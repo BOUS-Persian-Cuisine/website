@@ -172,10 +172,20 @@
 .address p {
   max-width: 33rem;
 }
-.landing .barPhoto {
-  margin-top: clamp(1rem, 2.5vw, 2.5rem);
+.bar {
+  display: grid;
+  grid-template-columns: minmax(0, 18rem) minmax(0, 29rem);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.25rem, 6vw, 5.5rem);
+  margin-inline: auto;
+  padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter) 0;
+}
+.bar img {
   height: auto;
-  object-fit: contain;
+}
+.landing .bar h2 {
+  font-size: clamp(1.45rem, 3.8vw, 3.5rem);
 }
 .occasions {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -236,6 +246,14 @@
   }
 }
 @media (max-width: 600px) {
+  .bar {
+    grid-template-columns: minmax(0, 0.35fr) minmax(0, 0.65fr);
+    gap: 1rem;
+  }
+  .bar p {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
   .foodGallery {
     grid-template-columns: 1fr;
     gap: 1.6rem;

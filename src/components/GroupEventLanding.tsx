@@ -164,17 +164,29 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
         </div>
       </section>
 
-      <Image
-        className={css.barPhoto}
-        src="/img/group-events/bar-portrait.webp"
-        width={1365}
-        height={2048}
-        sizes="100vw"
-        alt={t(
-          "The warmly lit bar and sculpted ceiling at BOUS",
-          "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
-        )}
-      />
+      <section className={css.bar} aria-labelledby="bar-heading">
+        <Image
+          src="/img/group-events/bar-portrait.webp"
+          width={1365}
+          height={2048}
+          sizes="(max-width: 600px) 32vw, (max-width: 900px) 30vw, 18rem"
+          alt={t(
+            "The warmly lit bar and sculpted ceiling at BOUS",
+            "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
+          )}
+        />
+        <div>
+          <h2 id="bar-heading">
+            {t("One of Montréal’s most beautiful bars", "L’un des plus beaux bars de Montréal")}
+          </h2>
+          <p>
+            {t(
+              "The sculpted ceiling draws on the architecture of ancient Iran. Take a seat at the bar and look up to see how the warm light traces each arch.",
+              "Le plafond sculpté s’inspire de l’architecture de l’Iran antique. Prenez place au bar et levez les yeux pour voir la lumière dorée dessiner la courbe de chaque arche.",
+            )}
+          </p>
+        </div>
+      </section>
 
       <section className={css.occasions} aria-labelledby="occasions-heading">
         <div className={css.pair}>
