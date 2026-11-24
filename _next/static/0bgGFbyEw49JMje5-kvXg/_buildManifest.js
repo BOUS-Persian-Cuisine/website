@@ -18,7 +18,7 @@ self.__BUILD_MANIFEST = {
     "static/chunks/79a76e1007b93acd.js"
   ],
   "/group-menu": [
-    "static/chunks/c3a8db0076cdb380.js"
+    "static/chunks/1dda2eeb2386f903.js"
   ],
   "/lunch-menu": [
     "static/chunks/7e9b2122994c988a.js"
