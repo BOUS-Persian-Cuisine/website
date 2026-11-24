@@ -126,7 +126,7 @@
 }
 .tablePhotos {
   position: relative;
-  padding: 0 0 clamp(2.15rem, 4vw, 4.5rem) clamp(1rem, 3vw, 3rem);
+  padding: 0 0 clamp(2.7rem, 5vw, 5rem) clamp(1rem, 3vw, 3rem);
 }
 .tablePhotos .spread {
   aspect-ratio: 1.35;
@@ -134,9 +134,10 @@
 }
 .tablePhotos .chef {
   position: absolute;
-  width: 31%;
+  width: 36%;
   height: auto;
-  aspect-ratio: 4/5;
+  aspect-ratio: 3/4;
+  object-position: center 59%;
   bottom: 0;
   left: 0;
   border: clamp(4px, 0.45vw, 8px) solid #fffdf9;
@@ -147,11 +148,19 @@
   background: #350514;
   color: #fff4e6;
 }
-.address img {
-  min-height: 100%;
-  aspect-ratio: 1.55;
+.roomPhotos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0.35rem;
+  min-height: 0;
+  aspect-ratio: 1.45;
 }
-.address > div {
+.roomPhotos img {
+  min-height: 0;
+  object-position: 50% 60%;
+}
+.addressText {
   align-self: center;
   padding: clamp(2.5rem, 5vw, 5.5rem) var(--gutter) clamp(2.5rem, 5vw, 5.5rem)
     clamp(2rem, 5vw, 5rem);
@@ -210,11 +219,7 @@
   .occasions {
     gap: 1.8rem;
   }
-  .address img {
-    aspect-ratio: 1.65;
-    height: auto;
-  }
-  .address > div {
+  .addressText {
     padding: 2.4rem var(--gutter) 2.7rem;
   }
   .pair {

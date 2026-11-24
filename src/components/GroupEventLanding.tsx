@@ -83,10 +83,10 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
           />
           <Image
             className={css.chef}
-            width={700}
-            height={1050}
-            sizes="(max-width: 760px) 32vw, 14vw"
-            src="/img/group-events/finishing-tahchin.webp"
+            width={640}
+            height={959}
+            sizes="(max-width: 760px) 35vw, 18vw"
+            src="/img/group-events/chef-at-the-pass.webp"
             alt={t(
               "A chef finishing golden tahchin at the pass",
               "Un chef apporte la dernière touche à un tahchin doré",
@@ -96,17 +96,29 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
       </section>
 
       <section className={css.address} aria-labelledby="address-heading">
-        <Image
-          width={1600}
-          height={1067}
-          sizes="(max-width: 760px) 100vw, 55vw"
-          src="/img/group-events/dining-alcove.webp"
-          alt={t(
-            "A wood dining table, dark banquette and pendant lights at BOUS",
-            "Une table en bois, une banquette sombre et des suspensions chez BOUS",
-          )}
-        />
-        <div>
+        <div className={css.roomPhotos}>
+          <Image
+            width={760}
+            height={1139}
+            sizes="(max-width: 760px) 53vw, 29vw"
+            src="/img/group-events/brickwork-and-tapestry.webp"
+            alt={t(
+              "A red wall hanging beside the open brick screen in the BOUS dining room",
+              "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
+            )}
+          />
+          <Image
+            width={700}
+            height={1049}
+            sizes="(max-width: 760px) 47vw, 26vw"
+            src="/img/group-events/set-tables.webp"
+            alt={t(
+              "Wooden tables set for dinner beneath illuminated wall niches",
+              "Des tables en bois dressées sous les niches éclairées du mur",
+            )}
+          />
+        </div>
+        <div className={css.addressText}>
           <p className={css.eyebrow}>
             {t("1310 Sherbrooke Street West", "1310, rue Sherbrooke Ouest")}
           </p>
@@ -115,8 +127,8 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
           </h2>
           <p>
             {t(
-              "On one of Montréal’s grandest streets, warm wood, soft pendant lights and geometric lines drawn from Persian architecture give the dining room its character. Settle into a banquette for a birthday dinner or welcome your guests with a drink at the bar.",
-              "Sur l’une des grandes artères de Montréal, le bois chaleureux, les suspensions tamisées et les lignes géométriques inspirées de l’architecture persane donnent son caractère à la salle. Installez-vous sur une banquette pour un anniversaire ou accueillez vos invités autour d’un verre au bar.",
+              "On Sherbrooke Street West, a red woven wall hanging catches the eye through a screen of pale brick. Along the banquette, softly lit niches brighten the wooden tables. Welcome your guests at the bar, then settle in for dinner.",
+              "Rue Sherbrooke Ouest, une tenture rouge se découvre à travers une cloison de briques claires. Le long de la banquette, des niches éclairent doucement les tables en bois. Accueillez vos invités au bar, puis passez à table.",
             )}
           </p>
         </div>
@@ -125,13 +137,13 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
       <section className={css.occasions} aria-labelledby="occasions-heading">
         <div className={css.pair}>
           <Image
-            width={700}
-            height={1050}
+            width={840}
+            height={1258}
             sizes="(max-width:760px) 47vw, 23vw"
-            src="/img/group-events/saffron-kabab.webp"
+            src="/img/group-events/group-at-dinner.webp"
             alt={t(
-              "Saffron chicken kabab with grilled tomato and herbs",
-              "Kabab de poulet au safran, tomate grillée et fines herbes",
+              "Guests in conversation around a long dinner table, seen through the brick screen",
+              "Des convives discutent autour d’une longue table, à travers la cloison de briques",
             )}
           />
           <Image
