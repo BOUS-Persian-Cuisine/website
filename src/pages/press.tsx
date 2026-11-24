@@ -2,26 +2,43 @@ import Image from "next/image";
 
 import { SiteLayout } from "@/components/SiteLayout";
 import { useLanguage, type Language } from "@/context/LanguageContext";
+import styles from "@/styles/press.module.css";
 
 type Translation = Record<Language, string>;
 type Story = {
   outlet: string;
   date: string;
+  image: string;
+  photoCredit?: string;
+  linkText?: Translation;
   title: string | Translation;
   url: string | Translation;
   summary: Translation;
   sourceLanguage?: Language;
 };
 
-const bestNew = {
-  en: "https://tastet.ca/en/lists/best-new-restaurants-montreal-2026/",
-  fr: "https://tastet.ca/listes/meilleurs-nouveaux-restos-montreal-2026/",
-};
-
 const stories: Story[] = [
+  {
+    outlet: "Tastet",
+    date: "2026",
+    image: "shared-table",
+    title: { en: "The Best New Restaurants of 2026", fr: "Les meilleurs nouveaux restos de 2026" },
+    url: {
+      en: "https://tastet.ca/en/lists/best-new-restaurants-montreal-2026/",
+      fr: "https://tastet.ca/listes/meilleurs-nouveaux-restos-montreal-2026/",
+    },
+    summary: {
+      en: "Tastet names BOUS among its favourite new restaurants in Montréal.",
+      fr: "Tastet sélectionne BOUS parmi ses nouvelles tables préférées à Montréal.",
+    },
+    linkText: { en: "See the list", fr: "Voir la sélection" },
+  },
   {
     outlet: "CJAD 800",
     date: "2026-10-24",
+    image: "founders",
+    photoCredit: "Elizabeth Gartside",
+    linkText: { en: "Listen to the interview", fr: "Écouter l’entrevue" },
     title: "Unwined with Mandi Robertson",
     url: "https://podcasts.apple.com/ca/podcast/unwined-were-discovering-bous-a-montreal-restaurant/id1733077961?i=1000797929077",
     sourceLanguage: "en",
@@ -33,6 +50,7 @@ const stories: Story[] = [
   {
     outlet: "Mixte Magazine",
     date: "2026-10-23",
+    image: "ghormeh-sabzi",
     title: { en: "Gourmet Findings", fr: "Découvertes gastronomiques" },
     url: { en: "https://www.mixtemagazine.ca/en/restaurant/gourmet-findings/", fr: "https://www.mixtemagazine.ca/resto/decouvertes-gastronomiques/" },
     summary: {
@@ -43,6 +61,7 @@ const stories: Story[] = [
   {
     outlet: "Offshore Travel Magazine",
     date: "2026-09-14",
+    image: "dining-room",
     title: "Inside BOUS, Montreal’s Buzzy New Persian Restaurant",
     url: "https://offshoretravelmagazine.com/bous-montreal-persian-restaurant-interview/",
     sourceLanguage: "en",
@@ -52,8 +71,21 @@ const stories: Story[] = [
     },
   },
   {
+    outlet: "La Presse",
+    date: "2026-08-08",
+    image: "saffron-kabab",
+    title: "Lumière sur des saveurs millénaires chez BOUS",
+    url: "https://www.lapresse.ca/gourmand/multicolore/les-mille-et-une-couleurs-de-la-cuisine-persane/2026-08-08/cuisine-persane/lumiere-sur-des-saveurs-millenaires-chez-bous.php",
+    sourceLanguage: "fr",
+    summary: {
+      en: "Ève Dumas meets Hamed Masoumi and explores the colours of his Persian table, from golden saffron rice to ruby-red barberries.",
+      fr: "Ève Dumas rencontre Hamed Masoumi et découvre les couleurs de sa table persane, du riz doré au safran au rouge vif des épines-vinettes.",
+    },
+  },
+  {
     outlet: "Le Journal de Montréal",
     date: "2026-06-25",
+    image: "yogurt",
     title: "7 restaurants à visiter cet été",
     url: "https://www.journaldemontreal.com/2026/06/25/7-restaurants-a-visiter-cet-ete",
     sourceLanguage: "fr",
@@ -65,6 +97,7 @@ const stories: Story[] = [
   {
     outlet: "Tastet",
     date: "2026-06-18",
+    image: "bar",
     title: { en: "BOUS: A Chic Persian Restaurant on Sherbrooke Street West", fr: "BOUS : Adresse chic et cuisine persane sur la rue Sherbrooke Ouest" },
     url: { en: "https://tastet.ca/en/reviews/bous-a-chic-persian-restaurant-on-sherbrooke-street-west/", fr: "https://tastet.ca/critiques/bous-adresse-chic-et-cuisine-persane-sur-la-rue-sherbrooke-ouest/" },
     summary: {
@@ -75,6 +108,7 @@ const stories: Story[] = [
   {
     outlet: "La Métropole",
     date: "2026-05-24",
+    image: "cocktail",
     title: "Restaurant BOUS, une cuisine persane authentique",
     url: "https://lametropole.com/2026/05/24/gastronomie-restaurant-bous-une-cuisine-persane-authentique/",
     sourceLanguage: "fr",
@@ -86,6 +120,7 @@ const stories: Story[] = [
   {
     outlet: "Eat Drink & Be Carrie",
     date: "2026-05-21",
+    image: "dinner",
     title: { en: "BOUS Montreal: a NEW Persian Restaurant Redefining Elegant Cuisine", fr: "BOUS Montréal : un NOUVEAU restaurant perse qui redéfinit la cuisine raffinée" },
     url: { en: "https://eatdrinkbecarrie.com/bous-montreal-a-new-persian-restaurant-redefining-elegant-cuisine/", fr: "https://eatdrinkbecarrie.com/fr/bous-montreal-a-new-persian-restaurant-redefining-elegant-cuisine/" },
     summary: {
@@ -99,49 +134,60 @@ export default function Press() {
   const { language, t } = useLanguage();
   const french = language === "fr";
   const local = (value: string | Translation) => typeof value === "string" ? value : value[language];
-  const dateFormat = new Intl.DateTimeFormat(french ? "fr-CA" : "en-CA", {
-    month: "long", day: "numeric", year: "numeric", timeZone: "UTC",
-  });
+  const archiveLabels = french
+    ? { date: "Date", title: "Titre", description: "Description", links: "Liens", read: "Lire l’article" }
+    : { date: "Date", title: "Title", description: "Description", links: "Links", read: "Read article" };
 
   return (
     <SiteLayout title={t.header.nav.press + " · BOUS"}>
-      <main className="bg-[#fffdf9] text-bous-burgundy">
-        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-9 sm:py-16 lg:px-12">
-          <h1 className="font-operetta mb-8 text-5xl font-light sm:text-7xl">{t.header.nav.press}</h1>
-          <article className="grid overflow-hidden bg-bous-burgundy text-white md:grid-cols-2">
-            <div className="relative min-h-48 md:min-h-72">
-              <Image src="/img/group-table.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
-            </div>
-            <div className="flex flex-col justify-center p-7 sm:p-10">
-              <p className="text-sm uppercase tracking-[.14em] text-bous-cream">Tastet</p>
-              <h2 className="font-operetta mt-3 text-4xl font-light leading-tight">
-                {french ? "Les meilleurs nouveaux restos de 2026" : "The Best New Restaurants of 2026"}
-              </h2>
-              <p className="mt-4 leading-relaxed text-bous-cream">
-                {french ? "Tastet sélectionne BOUS parmi ses nouvelles tables préférées à Montréal." : "Tastet names BOUS among its favourite new restaurants in Montréal."}
-              </p>
-              <a href={bestNew[language]} className="mt-5 self-start underline underline-offset-4">
-                {french ? "Voir la sélection de Tastet" : "See Tastet’s selection"}
-              </a>
-            </div>
-          </article>
-          <ul className="mt-10 divide-y divide-bous-gold/50 border-y border-bous-gold/50">
-            {stories.map(story => (
-              <li key={story.outlet} className="grid gap-2 py-6 sm:grid-cols-[12rem_1fr] sm:gap-8">
-                <div>
-                  <p className="font-semibold">{story.outlet}</p>
-                  <time dateTime={story.date} className="text-sm text-bous-burgundy/75">{dateFormat.format(new Date(story.date))}</time>
-                </div>
-                <article>
-                  <h2 className="font-operetta text-2xl font-light sm:text-3xl">
-                    <a href={local(story.url)} hrefLang={story.sourceLanguage ?? language} lang={story.sourceLanguage ?? language} className="underline decoration-bous-gold underline-offset-4 hover:text-bous-red">
-                      {local(story.title)}
+      <main className={styles.page}>
+        <div className={styles.archive}>
+          <h1 className={styles.pageTitle}>{t.header.nav.press}</h1>
+          <div className={styles.columns} aria-hidden="true">
+            <span>{archiveLabels.date}</span>
+            <span>{archiveLabels.title}</span>
+            <span>{archiveLabels.description}</span>
+            <span>{archiveLabels.links}</span>
+          </div>
+          <ul className={styles.stories} role="list">
+            {stories.map((story, index) => {
+              const title = local(story.title);
+              const action = story.linkText?.[language] ?? archiveLabels.read;
+              const titleId = `press-title-${story.image}`;
+              return (
+                <li key={story.image}>
+                  <article className={styles.row} aria-labelledby={titleId}>
+                    <figure className={styles.photo}>
+                      <Image
+                        src={`/img/press/${story.image}.webp`}
+                        alt=""
+                        width={600}
+                        height={450}
+                        priority={index === 0}
+                      />
+                      {story.photoCredit && <figcaption>© {story.photoCredit}</figcaption>}
+                    </figure>
+                    <div className={styles.metadata}>
+                      <time className={styles.date} dateTime={story.date}>
+                        {story.date.split("-").reverse().join(".")}
+                      </time>
+                      <p className={styles.outlet}>{story.outlet}</p>
+                    </div>
+                    <h2 className={styles.heading} id={titleId} lang={story.sourceLanguage ?? language}>{title}</h2>
+                    <p className={styles.summary}>{story.summary[language]}</p>
+                    <a
+                      className={styles.link}
+                      href={local(story.url)}
+                      hrefLang={story.sourceLanguage ?? language}
+                      aria-label={`${action} · ${story.outlet} · ${title}`}
+                    >
+                      <span className={styles.arrow} aria-hidden="true" />
+                      <span>{action}</span>
                     </a>
-                  </h2>
-                  <p className="mt-2 max-w-[65ch] leading-relaxed">{story.summary[language]}</p>
-                </article>
-              </li>
-            ))}
+                  </article>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </main>
