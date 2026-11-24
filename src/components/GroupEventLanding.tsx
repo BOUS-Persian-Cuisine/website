@@ -176,40 +176,18 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
             </p>
           </div>
           <div className={css.settingGallery}>
-            <div className={css.roomPhotos}>
-              <Image
-                width={760}
-                height={1139}
-                sizes="(max-width: 960px) 50vw, 30vw"
-                src="/img/group-events/brickwork-and-tapestry.webp"
-                alt={t(
-                  "A red wall hanging beside the open brick screen in the BOUS dining room",
-                  "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
-                )}
-              />
-              <Image
-                width={700}
-                height={1049}
-                sizes="(max-width: 960px) 40vw, 20vw"
-                src="/img/group-events/set-tables.webp"
-                alt={t(
-                  "Wooden tables set for dinner beneath illuminated wall niches",
-                  "Des tables en bois dressées sous les niches éclairées du mur",
-                )}
-              />
-            </div>
-            <section className={css.bar} aria-labelledby="bar-heading">
-              <Image
-                src="/img/group-events/bar-portrait.webp"
-                width={1365}
-                height={2048}
-                sizes="(max-width: 600px) 31vw, (max-width: 960px) 13rem, 14vw"
-                alt={t(
-                  "The warmly lit bar and sculpted ceiling at BOUS",
-                  "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
-                )}
-              />
-              <div>
+            <Image
+              src="/img/group-events/bar-portrait.webp"
+              width={1365}
+              height={2048}
+              sizes="(max-width: 680px) 90vw, (max-width: 1440px) 44vw, 34rem"
+              alt={t(
+                "The warmly lit bar and sculpted ceiling at BOUS",
+                "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
+              )}
+            />
+            <div className={css.galleryDetails}>
+              <section className={css.bar} aria-labelledby="bar-heading">
                 <h3 id="bar-heading">
                   {t(
                     "One of Montréal’s most beautiful bars",
@@ -222,8 +200,30 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
                     "Le plafond sculpté s’inspire de l’architecture de l’Iran antique. Prenez place au bar et levez les yeux pour voir la lumière dorée dessiner la courbe de chaque arche.",
                   )}
                 </p>
+              </section>
+              <div className={css.roomPhotos}>
+                <Image
+                  width={760}
+                  height={1139}
+                  sizes="(max-width: 680px) 44vw, (max-width: 1200px) 22vw, 14rem"
+                  src="/img/group-events/brickwork-and-tapestry.webp"
+                  alt={t(
+                    "A red wall hanging beside the open brick screen in the BOUS dining room",
+                    "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
+                  )}
+                />
+                <Image
+                  width={700}
+                  height={1049}
+                  sizes="(max-width: 680px) 44vw, (max-width: 1200px) 22vw, 14rem"
+                  src="/img/group-events/set-tables.webp"
+                  alt={t(
+                    "Wooden tables set for dinner beneath illuminated wall niches",
+                    "Des tables en bois dressées sous les niches éclairées du mur",
+                  )}
+                />
               </div>
-            </section>
+            </div>
           </div>
         </div>
       </section>
