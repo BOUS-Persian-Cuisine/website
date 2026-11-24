@@ -88,17 +88,17 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
         <div className={css.foodGallery}>
           <figure>
             <Image
-              width={640}
-              height={959}
+              width={840}
+              height={1258}
               sizes="(max-width: 720px) 45vw, 23vw"
-              src="/img/group-events/chef-at-the-pass.webp"
+              src="/img/group-events/kabab-from-the-skewer.webp"
               alt={t(
-                "A chef finishing golden tahchin at the pass",
-                "Un chef apporte la dernière touche à un tahchin doré",
+                "A grilled kabab lifted from its skewer with flatbread over a plate of onions and grilled tomato",
+                "Un kabab grillé retiré de sa brochette avec du pain plat, au-dessus d’une assiette d’oignons et de tomate grillée",
               )}
             />
             <figcaption>
-              {t("Finishing the tahchin", "La finition du tahchin")}
+              {t("Charcoal-grilled kabab", "Kabab grillé au charbon de bois")}
             </figcaption>
           </figure>
           <figure>
