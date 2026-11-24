@@ -21,6 +21,7 @@ type Translations = {
     homeLabel: string;
     logoAlt: string;
     menuLabel: string;
+    infoLabel: string;
     nav: {
       reserve: string;
       menu: string;
@@ -94,6 +95,7 @@ export const translations: Record<Language, Translations> = {
       homeLabel: "BOUS home",
       logoAlt: "BOUS Persian Cuisine",
       menuLabel: "Menu",
+      infoLabel: "About BOUS",
       nav: {
         reserve: "Reserve",
         menu: "Menu",
@@ -171,6 +173,7 @@ export const translations: Record<Language, Translations> = {
       homeLabel: "Accueil BOUS",
       logoAlt: "BOUS Cuisine perse",
       menuLabel: "Menu",
+      infoLabel: "À propos de BOUS",
       nav: {
         reserve: "Réserver",
         menu: "Menu",

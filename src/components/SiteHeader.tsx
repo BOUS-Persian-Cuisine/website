@@ -85,7 +85,7 @@ export function SiteHeader() {
         <div className="mx-auto grid h-18 w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:h-20 lg:px-10">
           <nav
             aria-label={t.header.menuLabel}
-            className="hidden items-center gap-4 xl:flex 2xl:gap-6"
+            className="hidden items-center gap-4 lg:flex 2xl:gap-6"
           >
             <a
               href={reservationUrl}
@@ -99,20 +99,11 @@ export function SiteHeader() {
             <Link href="/group-event/" className={navLinkClass}>
               {t.header.nav.groupEvent}
             </Link>
-            <Link href="/about" className={navLinkClass}>
-              {t.header.nav.about}
-            </Link>
-            <Link href="/contact" className={navLinkClass}>
-              {t.header.nav.contact}
-            </Link>
-            <Link href="/press" className={navLinkClass}>
-              {t.header.nav.press}
-            </Link>
           </nav>
 
           <button
             type="button"
-            className={`${iconButtonClass} justify-self-start xl:hidden`}
+            className={`${iconButtonClass} justify-self-start lg:hidden`}
             aria-controls="site-menu"
             aria-expanded={isMobileMenuOpen}
             aria-label={t.header.openMenu}
@@ -163,7 +154,18 @@ export function SiteHeader() {
             />
           </Link>
 
-          <div className="hidden items-center justify-end gap-2 xl:flex">
+          <div className="hidden items-center justify-end gap-2 lg:flex">
+            <nav aria-label={t.header.infoLabel} className="mr-4 flex items-center gap-4 2xl:gap-6">
+              <Link href="/about" className={navLinkClass}>
+                {t.header.nav.about}
+              </Link>
+              <Link href="/contact" className={navLinkClass}>
+                {t.header.nav.contact}
+              </Link>
+              <Link href="/press" className={navLinkClass}>
+                {t.header.nav.press}
+              </Link>
+            </nav>
             {languageOptions.map((option) => {
               const isSelected = language === option;
 
@@ -191,7 +193,7 @@ export function SiteHeader() {
             })}
           </div>
 
-          <div className="h-11 w-11 justify-self-end xl:hidden" aria-hidden />
+          <div className="h-11 w-11 justify-self-end lg:hidden" aria-hidden />
         </div>
       </header>
 
