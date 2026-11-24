@@ -57,7 +57,7 @@ export default function GroupMenu() {
           </section>
           <section className={styles.booking}>
             <h2>{t("Group reservations", "Réservations de groupe")}</h2>
-            <p>{t("Confirm your final guest count 48 hours before the event. Please let us know about dietary restrictions in advance.", "Confirmez le nombre final de convives 48 heures avant l’événement. Veuillez nous informer à l’avance de toute restriction alimentaire.")}</p>
+            <p>{t("Please confirm your final guest count at least two business days before the event, excluding weekends. Please let us know about food allergies at least 48 hours before the event.", "Veuillez confirmer le nombre final de convives au moins deux jours ouvrables avant l’événement, sans compter les fins de semaine. Veuillez nous signaler toute allergie alimentaire au moins 48 heures avant l’événement.")}</p>
             <div className={styles.links}><Link href="/group-event/">{t("Plan a group event", "Organiser un événement de groupe")}</Link><a href="mailto:info@bous.ca">info@bous.ca</a></div>
           </section>
           <RelatedMenuLinks active="group" />

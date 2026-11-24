@@ -986,15 +986,8 @@ export function GroupInquiry({
               )}
             </strong>{" "}
             {t(
-              "A credit card and photo ID are required to confirm your reservation. Our team will tell you how to present your ID and provide the card number, expiry date and security code (CVV) for verification. Please leave these details out of this form and email.",
-              "Une carte de crédit et une pièce d’identité avec photo sont requises pour confirmer votre réservation. Notre équipe vous indiquera comment présenter votre pièce d’identité et fournir le numéro de carte, la date d’expiration et le code de sécurité (CVV) aux fins de vérification. Veuillez garder ces renseignements hors du formulaire et des courriels.",
-            )}
-          </p>
-          <p>
-            <strong>{t("Payment.", "Paiement.")}</strong>{" "}
-            {t(
-              "All food and drinks for the group are charged to a single bill. The group may use up to three credit cards to settle it.",
-              "Tous les plats et toutes les boissons du groupe figurent sur une seule facture. Le groupe peut la régler avec un maximum de trois cartes de crédit.",
+              "A credit card is required to confirm your reservation.",
+              "Une carte de crédit est requise pour confirmer votre réservation.",
             )}
           </p>
           <p>
@@ -1002,8 +995,8 @@ export function GroupInquiry({
               {t("Final guest count.", "Nombre final de convives.")}
             </strong>{" "}
             {t(
-              "Please confirm your final number of guests at least 48 hours before your event.",
-              "Veuillez confirmer le nombre final de convives au moins 48 heures avant votre événement.",
+              "Please confirm your final guest count at least two business days before your event, excluding weekends. If we do not receive your final count by then, the number in your original contract becomes the guaranteed count. You will be billed for the guaranteed number of guests or the number who attend, whichever is greater.",
+              "Veuillez confirmer le nombre final de convives au moins deux jours ouvrables avant votre événement, sans compter les fins de semaine. Sans confirmation de votre part dans ce délai, le nombre prévu au contrat initial devient le nombre garanti. Votre facture sera calculée selon le nombre garanti ou le nombre de convives présents, selon le nombre le plus élevé.",
             )}
           </p>
           <p>
@@ -1011,9 +1004,10 @@ export function GroupInquiry({
               {t("Changes and cancellations.", "Modifications et annulations.")}
             </strong>{" "}
             {t(
-              "If you need to cancel or your guest count changes, please contact BOUS as soon as possible.",
-              "Si vous devez annuler ou si le nombre de convives change, veuillez en informer BOUS dès que possible.",
-            )}
+              "If you need to cancel or your guest count changes, please contact BOUS as soon as possible. Changes or cancellations with less than 48 hours’ notice carry a",
+              "Si vous devez annuler ou si le nombre de convives change, veuillez en informer BOUS dès que possible. Toute modification ou annulation à moins de 48 heures de l’événement entraîne des",
+            )}{" "}
+            <strong>{t("$25 per-person fee", "frais de 25 $ par personne")}</strong>.
           </p>
           <p>
             <strong>{t("Food allergies.", "Allergies alimentaires.")}</strong>{" "}
