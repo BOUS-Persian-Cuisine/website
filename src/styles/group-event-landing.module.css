@@ -218,11 +218,8 @@
   display: grid;
   gap: clamp(1.5rem, 3vw, 3rem);
 }
-.roomPhotos {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  gap: clamp(0.65rem, 1.35vw, 1.4rem);
+.galleryDetails .roomPortrait {
+  width: min(70%, 18rem);
 }
 .bar {
   padding-top: clamp(1.2rem, 2.5vw, 2.5rem);
@@ -243,7 +240,7 @@
 .occasions {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-areas: "heading photos" "details photos";
+  grid-template-areas: "heading photo" "details photo";
   gap: 1.7rem clamp(2rem, 6vw, 6rem);
   align-items: start;
 }
@@ -273,13 +270,10 @@
   margin: 0;
   line-height: 1.5;
 }
-.pair {
-  grid-area: photos;
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-  gap: clamp(0.7rem, 1.4vw, 1.4rem);
-  align-self: center;
-  align-items: end;
+.dinnerPhoto {
+  grid-area: photo;
+  max-width: 27rem;
+  place-self: center;
 }
 @media (max-width: 960px) {
   .occasionText dl > div {
@@ -330,7 +324,7 @@
   }
   .occasions {
     grid-template-columns: 1fr;
-    grid-template-areas: "heading" "photos" "details";
+    grid-template-areas: "heading" "photo" "details";
   }
   .occasionText dl > div {
     grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);

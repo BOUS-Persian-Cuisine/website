@@ -201,28 +201,17 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
                   )}
                 </p>
               </section>
-              <div className={css.roomPhotos}>
-                <Image
-                  width={760}
-                  height={1139}
-                  sizes="(max-width: 680px) 44vw, (max-width: 1200px) 22vw, 14rem"
-                  src="/img/group-events/brickwork-and-tapestry.webp"
-                  alt={t(
-                    "A red wall hanging beside the open brick screen in the BOUS dining room",
-                    "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
-                  )}
-                />
-                <Image
-                  width={700}
-                  height={1049}
-                  sizes="(max-width: 680px) 44vw, (max-width: 1200px) 22vw, 14rem"
-                  src="/img/group-events/set-tables.webp"
-                  alt={t(
-                    "Wooden tables set for dinner beneath illuminated wall niches",
-                    "Des tables en bois dressées sous les niches éclairées du mur",
-                  )}
-                />
-              </div>
+              <Image
+                className={css.roomPortrait}
+                width={760}
+                height={1139}
+                sizes="(max-width: 680px) 63vw, (max-width: 960px) 28vw, 18rem"
+                src="/img/group-events/brickwork-and-tapestry.webp"
+                alt={t(
+                  "A red wall hanging beside the open brick screen in the BOUS dining room",
+                  "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
+                )}
+              />
             </div>
           </div>
         </div>
@@ -236,28 +225,17 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
         <h2 id="occasions-heading">
           {t("Make the space yours", "Un lieu pour votre occasion")}
         </h2>
-        <div className={css.pair}>
-          <Image
-            width={840}
-            height={1258}
-            sizes="(max-width:720px) 53vw, 30vw"
-            src="/img/group-events/group-at-dinner.webp"
-            alt={t(
-              "Guests in conversation around a long dinner table, seen through the brick screen",
-              "Des convives discutent autour d’une longue table, à travers la cloison de briques",
-            )}
-          />
-          <Image
-            width={667}
-            height={1000}
-            sizes="(max-width:720px) 32vw, 18vw"
-            src="/img/group-events/cocktail.webp"
-            alt={t(
-              "An amber cocktail on the veined stone bar",
-              "Un cocktail ambré sur le comptoir de pierre veiné",
-            )}
-          />
-        </div>
+        <Image
+          className={css.dinnerPhoto}
+          width={840}
+          height={1258}
+          sizes="(max-width: 480px) 90vw, (max-width: 720px) 27rem, (max-width: 1080px) 42vw, 27rem"
+          src="/img/group-events/group-at-dinner.webp"
+          alt={t(
+            "Guests in conversation around a long dinner table, seen through the brick screen",
+            "Des convives discutent autour d’une longue table, à travers la cloison de briques",
+          )}
+        />
         <div className={css.occasionText}>
           <dl>
             <div>
