@@ -29,15 +29,26 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
             <span>{t("Gather", "Recevoir")}</span>{" "}
             <span>{t("at BOUS", "chez BOUS")}</span>
           </h1>
-          <p>
+          <p className={css.heroIntro}>
             {t(
               "A Persian table for your guests in Montréal’s Golden Square Mile.",
               "Une table persane pour vos convives au cœur du Mille carré doré de Montréal.",
             )}
           </p>
-          <button className={css.heroButton} type="button" onClick={onPlan}>
+          <button
+            className={css.heroButton}
+            type="button"
+            onClick={onPlan}
+            aria-describedby="event-planner-description"
+          >
             {action} <span aria-hidden="true">→</span>
           </button>
+          <p className={css.plannerNote} id="event-planner-description">
+            {t(
+              "Explore group menus, choose your preferred dates, and send us your request.",
+              "Découvrez nos menus de groupe, indiquez vos dates préférées et envoyez-nous votre demande.",
+            )}
+          </p>
         </div>
       </section>
 

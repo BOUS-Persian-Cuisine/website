@@ -88,9 +88,16 @@
 .heroContent h1 span {
   display: block;
 }
-.heroContent > p:not(.eyebrow) {
+.heroIntro {
   max-width: 28rem;
   font-size: clamp(1.12rem, 1.6vw, 1.4rem);
+  line-height: 1.45;
+}
+.heroContent .plannerNote {
+  max-width: 36ch;
+  margin-top: 0.75rem;
+  color: var(--line);
+  font-size: 1rem;
   line-height: 1.45;
 }
 .heroButton,
