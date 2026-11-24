@@ -5,7 +5,7 @@ export const tiers = [
 ];
 
 // The first tier that includes a dish. A null tier is available only à la carte.
-type Dish = { en: string; fr?: string; description: { en: string; fr: string }; price: number; tier: number | null; unit?: [string, string] };
+type Dish = { en: string; fr?: string; description: { en: string; fr: string }; price: number; tier: number | null; unit?: [string, string]; dinnerName?: string };
 type Course = { en: string; fr: string; dishes: Dish[] };
 export const courses: Course[] = [
   { en: "Bread & appetisers", fr: "Pain et entrées", dishes: [
@@ -16,7 +16,7 @@ export const courses: Course[] = [
     { en: "Golden Square Mile Tahchin", fr: "Tahchin du Mille carré doré", description: { en: "Crispy Rice", fr: "Riz croustillant" }, price: 22, tier: 1 },
     { en: "Ghalieh Meygoo", description: { en: "King Shrimp", fr: "Crevettes géantes" }, price: 10, tier: 2, unit: ["per shrimp", "la crevette"] },
     { en: "Spicy Saffron Chicken Wings", fr: "Ailes de poulet épicées au safran", description: { en: "Chicken Wingettes", fr: "Ailerons épicés" }, price: 18, tier: null },
-    { en: "Caviar Tahdig Bite", fr: "Bouchée de tahdig au caviar", description: { en: "Baerii Caviar", fr: "Caviar Baerii" }, price: 15, tier: null, unit: ["per bite", "la bouchée"] },
+    { en: "Caviar Tahdig Bite", dinnerName: "CAVIAR on Tahdig Bites", fr: "Bouchée de tahdig au caviar", description: { en: "Baerii Caviar", fr: "Caviar Baerii" }, price: 15, tier: null, unit: ["per bite", "la bouchée"] },
   ] },
   { en: "Main dishes", fr: "Plats principaux", dishes: [
     { en: "Koobideh Kabab", description: { en: "Ground Beef", fr: "Bœuf haché" }, price: 36, tier: 0 },

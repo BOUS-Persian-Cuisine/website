@@ -87,7 +87,6 @@ export function GroupInquiry({
   );
   const [groupPairing, setGroupPairing] = useState("");
   const [canapeNotes, setCanapeNotes] = useState<string | null>(null);
-  const [filters, setFilters] = useState({ food: "", pairing: "" });
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
   const [reference, setReference] = useState("");
@@ -356,7 +355,7 @@ export function GroupInquiry({
               return (
                 x.quantity +
                 " × " +
-                x.name +
+                (extra.category === "food" ? extra[language] : x.name) +
                 (groupChoice === x.name ? " — whole group" : "") +
                 " ($" +
                 extra.price +
@@ -888,11 +887,8 @@ export function GroupInquiry({
             </div>
           )}
           {(["food", "pairing"] as const).map((category) => {
-            const query = filters[category].trim().toLocaleLowerCase();
             const shownExtras = choices.filter(
-              (extra) =>
-                extra.category === category &&
-                extra[language].toLocaleLowerCase().includes(query),
+              (extra) => extra.category === category,
             );
             const groups =
               category === "food"
@@ -945,10 +941,7 @@ export function GroupInquiry({
                             type="radio"
                             name="pairing-mode"
                             checked={pairingMode === mode}
-                            onChange={() => {
-                              setPairingMode(mode);
-                              setFilters((old) => ({ ...old, pairing: "" }));
-                            }}
+                            onChange={() => setPairingMode(mode)}
                           />
                           <span>
                             {mode === "group"
@@ -970,22 +963,6 @@ export function GroupInquiry({
                       </p>
                     )}
                   </fieldset>
-                )}
-                {(category === "food" || pairingMode === "quantity") && (
-                  <div className={css.tools}>
-                    {label(
-                      category === "food"
-                        ? t("Filter dishes", "Filtrer les plats")
-                        : t("Filter pairings", "Filtrer les accords"),
-                      <input
-                        type="search"
-                        value={filters[category]}
-                        onChange={(e) =>
-                          setFilters({ ...filters, [category]: e.target.value })
-                        }
-                      />,
-                    )}
-                  </div>
                 )}
                 <div className={css.extraList}>
                   {groups.map((group) => (
@@ -1103,14 +1080,6 @@ export function GroupInquiry({
                     </div>
                   ))}
                 </div>
-                {!shownExtras.length && (
-                  <p>
-                    {t(
-                      "No matches. Try a different name.",
-                      "Aucun résultat. Essayez un autre nom.",
-                    )}
-                  </p>
-                )}
               </details>
             );
           })}

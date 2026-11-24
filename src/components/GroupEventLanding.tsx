@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import css from "@/styles/group-event-landing.module.css";
 
@@ -20,14 +19,15 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
           width={1400}
           height={933}
           priority
-          sizes="100vw"
+          sizes="(max-width: 720px) 100vw, 56vw"
         />
         <div className={css.heroContent}>
           <p className={css.eyebrow}>
             {t("Private dining & events", "Repas privés et événements")}
           </p>
           <h1 id="gather-heading">
-            {t("Gather at BOUS", "Recevoir chez BOUS")}
+            <span>{t("Gather", "Recevoir")}</span>{" "}
+            <span>{t("at BOUS", "chez BOUS")}</span>
           </h1>
           <p>
             {t(
@@ -35,57 +35,77 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
               "Une table persane pour vos convives au cœur du Mille carré doré de Montréal.",
             )}
           </p>
-          <button className={css.heroButton} onClick={onPlan}>
-            {action}
+          <button className={css.heroButton} type="button" onClick={onPlan}>
+            {action} <span aria-hidden="true">→</span>
           </button>
         </div>
       </section>
+
+      <nav
+        className={css.contents}
+        aria-label={t("On this page", "Sur cette page")}
+      >
+        <a href="#menus">
+          {t("The food", "La cuisine")} <span aria-hidden="true">↓</span>
+        </a>
+        <a href="#setting">
+          {t("The space", "Les lieux")} <span aria-hidden="true">↓</span>
+        </a>
+        <a href="#occasions">
+          {t("Your event", "Votre événement")} <span aria-hidden="true">↓</span>
+        </a>
+      </nav>
 
       <section
         id="menus"
         className={css.story}
         aria-labelledby="group-menu-heading"
       >
-        <div className={css.storyText}>
-          <p className={css.eyebrow}>
-            {t("Persian hospitality", "Hospitalité persane")}
-          </p>
-          <h2 id="group-menu-heading" tabIndex={-1}>
-            {t("Around the sofreh", "Autour du sofreh")}
-          </h2>
-          <p>
-            {t(
-              "In a Persian home, the sofreh is the spread everyone gathers around. At BOUS, it starts with sangak bread and bowls of cucumber yogurt. Then come the saffron rice and charcoal-grilled kababs, passed from one end of the table to the other.",
-              "Dans une maison iranienne, le sofreh est la table dressée autour de laquelle on se réunit. Chez BOUS, on commence par le pain sangak et le yogourt au concombre. Puis viennent le riz au safran et les kababs grillés au charbon, qu’on se passe d’un bout à l’autre de la table.",
-            )}
-          </p>
-          <p>
-            {t(
-              "For groups of eight or more, our Sofreh, Mehmani and Bazm menus bring that tradition to your table. If your guests prefer to choose their own main, we can arrange that too.",
-              "Dès huit convives, nos menus Sofreh, Mehmani et Bazm font vivre cette tradition à votre table. Si vos invités préfèrent choisir leur propre plat principal, c’est aussi possible.",
-            )}
-          </p>
-          <Link href="/group-menu/">
-            {t("Explore the sharing menus", "Découvrir les menus à partager")}
-          </Link>
+        <div className={css.chapterHeader}>
+          <div>
+            <p className={css.eyebrow}>
+              {t("Persian hospitality", "Hospitalité persane")}
+            </p>
+            <h2 id="group-menu-heading" tabIndex={-1}>
+              {t("Around the sofreh", "Autour du sofreh")}
+            </h2>
+          </div>
+          <div className={css.storyCopy}>
+            <p>
+              {t(
+                "In a Persian home, the sofreh is the spread everyone gathers around. At BOUS, it starts with sangak bread and bowls of cucumber yogurt. Then come the saffron rice and charcoal-grilled kababs, passed from one end of the table to the other.",
+                "Dans une maison iranienne, le sofreh est la table dressée autour de laquelle on se réunit. Chez BOUS, on commence par le pain sangak et le yogourt au concombre. Puis viennent le riz au safran et les kababs grillés au charbon, qu’on se passe d’un bout à l’autre de la table.",
+              )}
+            </p>
+            <p>
+              {t(
+                "For groups of eight or more, our Sofreh, Mehmani and Bazm menus bring that tradition to your table. If your guests prefer to choose their own main, we can arrange that too.",
+                "Dès huit convives, nos menus Sofreh, Mehmani et Bazm font vivre cette tradition à votre table. Si vos invités préfèrent choisir leur propre plat principal, c’est aussi possible.",
+              )}
+            </p>
+          </div>
         </div>
-        <Image
-          className={css.chef}
-          width={640}
-          height={959}
-          sizes="(max-width: 490px) 88vw, (max-width: 760px) 27rem, 38vw"
-          src="/img/group-events/chef-at-the-pass.webp"
-          alt={t(
-            "A chef finishing golden tahchin at the pass",
-            "Un chef apporte la dernière touche à un tahchin doré",
-          )}
-        />
         <div className={css.foodGallery}>
+          <figure>
+            <Image
+              width={640}
+              height={959}
+              sizes="(max-width: 720px) 45vw, 23vw"
+              src="/img/group-events/chef-at-the-pass.webp"
+              alt={t(
+                "A chef finishing golden tahchin at the pass",
+                "Un chef apporte la dernière touche à un tahchin doré",
+              )}
+            />
+            <figcaption>
+              {t("Finishing the tahchin", "La finition du tahchin")}
+            </figcaption>
+          </figure>
           <figure>
             <Image
               width={840}
               height={1260}
-              sizes="(max-width: 600px) 88vw, 28vw"
+              sizes="(max-width: 720px) 45vw, 23vw"
               src="/img/group-events/smoked-eggplant.webp"
               alt={t(
                 "Smoked eggplant with kashk, crisp onions and mint",
@@ -98,7 +118,7 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
             <Image
               width={840}
               height={1260}
-              sizes="(max-width: 600px) 88vw, 28vw"
+              sizes="(max-width: 720px) 45vw, 23vw"
               src="/img/group-events/lamb-ghormeh-sabzi.webp"
               alt={t(
                 "Braised lamb shank standing in a pool of herb sauce",
@@ -106,94 +126,121 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
               )}
             />
             <figcaption>
-              {t("Kamouraska Lamb Ghormeh Sabzi", "Ghormeh Sabzi à l’agneau de Kamouraska")}
+              {t(
+                "Kamouraska Lamb Ghormeh Sabzi",
+                "Ghormeh Sabzi à l’agneau de Kamouraska",
+              )}
             </figcaption>
           </figure>
           <figure>
             <Image
               width={840}
               height={1260}
-              sizes="(max-width: 600px) 88vw, 28vw"
+              sizes="(max-width: 720px) 45vw, 23vw"
               src="/img/group-events/herbed-yogurt.webp"
               alt={t(
                 "A bowl of yogurt topped with fresh herbs and colourful petals",
                 "Un bol de yogourt garni de fines herbes et de pétales colorés",
               )}
             />
-            <figcaption>{t("Herbed yogurt", "Yogourt aux fines herbes")}</figcaption>
+            <figcaption>
+              {t("Herbed yogurt", "Yogourt aux fines herbes")}
+            </figcaption>
           </figure>
         </div>
       </section>
 
-      <section className={css.address} aria-labelledby="address-heading">
-        <div className={css.roomPhotos}>
-          <Image
-            width={760}
-            height={1139}
-            sizes="(max-width: 760px) 53vw, 29vw"
-            src="/img/group-events/brickwork-and-tapestry.webp"
-            alt={t(
-              "A red wall hanging beside the open brick screen in the BOUS dining room",
-              "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
-            )}
-          />
-          <Image
-            width={700}
-            height={1049}
-            sizes="(max-width: 760px) 47vw, 26vw"
-            src="/img/group-events/set-tables.webp"
-            alt={t(
-              "Wooden tables set for dinner beneath illuminated wall niches",
-              "Des tables en bois dressées sous les niches éclairées du mur",
-            )}
-          />
-        </div>
-        <div className={css.addressText}>
-          <p className={css.eyebrow}>
-            {t("1310 Sherbrooke Street West", "1310, rue Sherbrooke Ouest")}
-          </p>
-          <h2 id="address-heading">
-            {t("Inside the Golden Square Mile", "Au cœur du Mille carré doré")}
-          </h2>
-          <p>
-            {t(
-              "On Sherbrooke Street West, a red woven wall hanging catches the eye through a screen of pale brick. Along the banquette, softly lit niches brighten the wooden tables. Welcome your guests at the bar, then settle in for dinner.",
-              "Rue Sherbrooke Ouest, une tenture rouge se découvre à travers une cloison de briques claires. Le long de la banquette, des niches éclairent doucement les tables en bois. Accueillez vos invités au bar, puis passez à table.",
-            )}
-          </p>
+      <section
+        id="setting"
+        className={css.setting}
+        aria-labelledby="address-heading"
+      >
+        <div className={css.settingInner}>
+          <div className={css.chapterHeader}>
+            <div>
+              <p className={css.eyebrow}>
+                {t("1310 Sherbrooke Street West", "1310, rue Sherbrooke Ouest")}
+              </p>
+              <h2 id="address-heading">
+                {t(
+                  "Inside the Golden Square Mile",
+                  "Au cœur du Mille carré doré",
+                )}
+              </h2>
+            </div>
+            <p>
+              {t(
+                "On Sherbrooke Street West, a red woven wall hanging catches the eye through a screen of pale brick. Along the banquette, softly lit niches brighten the wooden tables. Welcome your guests at the bar, then settle in for dinner.",
+                "Rue Sherbrooke Ouest, une tenture rouge se découvre à travers une cloison de briques claires. Le long de la banquette, des niches éclairent doucement les tables en bois. Accueillez vos invités au bar, puis passez à table.",
+              )}
+            </p>
+          </div>
+          <div className={css.settingGallery}>
+            <div className={css.roomPhotos}>
+              <Image
+                width={760}
+                height={1139}
+                sizes="(max-width: 960px) 50vw, 30vw"
+                src="/img/group-events/brickwork-and-tapestry.webp"
+                alt={t(
+                  "A red wall hanging beside the open brick screen in the BOUS dining room",
+                  "Une tenture rouge près de la cloison de briques ajourée dans la salle de BOUS",
+                )}
+              />
+              <Image
+                width={700}
+                height={1049}
+                sizes="(max-width: 960px) 40vw, 20vw"
+                src="/img/group-events/set-tables.webp"
+                alt={t(
+                  "Wooden tables set for dinner beneath illuminated wall niches",
+                  "Des tables en bois dressées sous les niches éclairées du mur",
+                )}
+              />
+            </div>
+            <section className={css.bar} aria-labelledby="bar-heading">
+              <Image
+                src="/img/group-events/bar-portrait.webp"
+                width={1365}
+                height={2048}
+                sizes="(max-width: 600px) 31vw, (max-width: 960px) 13rem, 14vw"
+                alt={t(
+                  "The warmly lit bar and sculpted ceiling at BOUS",
+                  "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
+                )}
+              />
+              <div>
+                <h3 id="bar-heading">
+                  {t(
+                    "One of Montréal’s most beautiful bars",
+                    "L’un des plus beaux bars de Montréal",
+                  )}
+                </h3>
+                <p>
+                  {t(
+                    "The sculpted ceiling draws on the architecture of ancient Iran. Take a seat at the bar and look up to see how the warm light traces each arch.",
+                    "Le plafond sculpté s’inspire de l’architecture de l’Iran antique. Prenez place au bar et levez les yeux pour voir la lumière dorée dessiner la courbe de chaque arche.",
+                  )}
+                </p>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 
-      <section className={css.bar} aria-labelledby="bar-heading">
-        <Image
-          src="/img/group-events/bar-portrait.webp"
-          width={1365}
-          height={2048}
-          sizes="(max-width: 600px) 32vw, (max-width: 900px) 30vw, 18rem"
-          alt={t(
-            "The warmly lit bar and sculpted ceiling at BOUS",
-            "Le bar de BOUS sous un plafond sculpté, dans une lumière dorée",
-          )}
-        />
-        <div>
-          <h2 id="bar-heading">
-            {t("One of Montréal’s most beautiful bars", "L’un des plus beaux bars de Montréal")}
-          </h2>
-          <p>
-            {t(
-              "The sculpted ceiling draws on the architecture of ancient Iran. Take a seat at the bar and look up to see how the warm light traces each arch.",
-              "Le plafond sculpté s’inspire de l’architecture de l’Iran antique. Prenez place au bar et levez les yeux pour voir la lumière dorée dessiner la courbe de chaque arche.",
-            )}
-          </p>
-        </div>
-      </section>
-
-      <section className={css.occasions} aria-labelledby="occasions-heading">
+      <section
+        id="occasions"
+        className={css.occasions}
+        aria-labelledby="occasions-heading"
+      >
+        <h2 id="occasions-heading">
+          {t("Make the space yours", "Un lieu pour votre occasion")}
+        </h2>
         <div className={css.pair}>
           <Image
             width={840}
             height={1258}
-            sizes="(max-width:760px) 47vw, 23vw"
+            sizes="(max-width:720px) 53vw, 30vw"
             src="/img/group-events/group-at-dinner.webp"
             alt={t(
               "Guests in conversation around a long dinner table, seen through the brick screen",
@@ -203,7 +250,7 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
           <Image
             width={667}
             height={1000}
-            sizes="(max-width:760px) 44vw, 21vw"
+            sizes="(max-width:720px) 32vw, 18vw"
             src="/img/group-events/cocktail.webp"
             alt={t(
               "An amber cocktail on the veined stone bar",
@@ -212,9 +259,6 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
           />
         </div>
         <div className={css.occasionText}>
-          <h2 id="occasions-heading">
-            {t("Make the space yours", "Un lieu pour votre occasion")}
-          </h2>
           <dl>
             <div>
               <dt>{t("At the table", "À table")}</dt>
@@ -246,8 +290,8 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
               </dd>
             </div>
           </dl>
-          <button className={css.plan} onClick={onPlan}>
-            {action}
+          <button className={css.plan} type="button" onClick={onPlan}>
+            {action} <span aria-hidden="true">→</span>
           </button>
         </div>
       </section>

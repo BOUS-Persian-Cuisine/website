@@ -1,3 +1,4 @@
+import { dinnerCourses } from "./dinnerMenu";
 import { courses, pairings, tiers } from "./groupMenus";
 import type { Language } from "@/context/LanguageContext";
 
@@ -91,64 +92,93 @@ export function money(n: number, lang: Language) {
   return lang === "fr" ? n + " $" : "$" + n;
 }
 export const extraDishCourses = [
-  ...courses.map((course) => ({
-    key: course.en,
-    label:
-      course.en === "Bread & appetisers"
-        ? option("Appetizers", "Entrées")
-        : option(course.en, course.fr),
-  })),
-  { key: "Dessert", label: option("Dessert", "Dessert") },
+  { key: "appetizers", label: option("Appetizers", "Entrées") },
+  { key: "caviar", label: option("Persian caviar", "Caviar persan") },
+  {
+    key: "grill",
+    label: option("Mains · Charcoal grill", "Plats principaux · Grillades"),
+  },
+  {
+    key: "slow-cooked",
+    label: option("Mains · Slow-cooked", "Plats principaux · Plats mijotés"),
+  },
+  { key: "accompaniments", label: option("Accompaniments", "Accompagnements") },
+  { key: "dessert", label: option("Dessert", "Dessert") },
 ];
+const pairingExtras = pairings.map((item) => ({
+  ...item,
+  description: item.glasses
+    ? option(item.glasses + " glasses", item.glasses + " verres")
+    : option("Sharbat, wine and cocktail", "Sharbat, vin et cocktail"),
+  unit: option("guest", "personne"),
+  category: "pairing" as const,
+  course: "",
+}));
+const groupDishes = courses.flatMap((course) => course.dishes);
+const portionedDishes = new Map(
+  groupDishes
+    .filter((dish) => dish.unit)
+    .map((dish) => [dish.dinnerName ?? dish.en, dish]),
+);
+const plate = option("plate", "assiette");
 
 export const extras = [
-  ...pairings.map((item) => ({
-    ...item,
-    description: item.glasses
-      ? option(item.glasses + " glasses", item.glasses + " verres")
-      : option("Sharbat, wine and cocktail", "Sharbat, vin et cocktail"),
-    unit: option("guest", "personne"),
-    category: "pairing" as const,
-    course: "",
-  })),
-  {
-    en: "Tahchin with Persian Ossetra caviar",
-    fr: "Tahchin au caviar persan Ossetra",
-    description: option("Crispy rice", "Riz croustillant"),
-    price: 82,
-    course: "Bread & appetisers",
-    unit: option("plate", "assiette"),
-    category: "food" as const,
-  },
-  ...courses.flatMap((course) =>
-    course.dishes.map((item) => ({
-      en: item.en,
-      fr: item.fr ?? item.en,
-      description: item.description,
-      price: item.price,
-      course: course.en,
-      category: "food" as const,
-      unit: item.unit
-        ? option(
-            item.unit[0].replace("per ", ""),
-            item.unit[1].replace(/^(la |le )/, ""),
-          )
-        : option("plate", "assiette"),
-    })),
+  ...pairingExtras,
+  ...dinnerCourses.flatMap((course) =>
+    course.dishes.flatMap((dish) => {
+      const groupDish = portionedDishes.get(dish.name.en);
+      const details = {
+        description: dish.shortDescription,
+        course: course.id,
+        category: "food" as const,
+      };
+      if (groupDish?.unit) {
+        return [
+          {
+            ...details,
+            en: groupDish.en,
+            fr: groupDish.fr ?? groupDish.en,
+            price: groupDish.price,
+            unit: option(
+              groupDish.unit[0].replace(/^per /, ""),
+              groupDish.unit[1].replace(/^(la |le )/, ""),
+            ),
+          },
+        ];
+      }
+      const portions =
+        typeof dish.price === "number"
+          ? [{ name: dish.name, price: dish.price }]
+          : dish.price;
+      return portions.map((portion) => ({
+        ...details,
+        ...portion.name,
+        price: portion.price,
+        unit: plate,
+      }));
+    }),
   ),
 ];
+
 export const lunchExtras = [
-  ...extras.filter(
-    (item) =>
-      item.category === "pairing" ||
-      ["Maast-o-Moosir", "Borani Bademjoon"].includes(item.en),
-  ),
+  ...pairingExtras,
+  ...groupDishes
+    .filter((dish) => ["Maast-o-Moosir", "Borani Bademjoon"].includes(dish.en))
+    .map((dish) => ({
+      en: dish.en,
+      fr: dish.fr ?? dish.en,
+      price: dish.price,
+      description: dish.description,
+      course: "accompaniments",
+      unit: plate,
+      category: "food" as const,
+    })),
   {
     en: "Dessert of the day",
     fr: "Dessert du jour",
     description: option("Chef’s selection", "Choix du chef"),
     price: 11,
-    course: "Dessert",
+    course: "dessert",
     unit: option("guest", "personne"),
     category: "food" as const,
   },
