@@ -952,10 +952,9 @@ export function GroupInquiry({
               {t("Changes and cancellations.", "Modifications et annulations.")}
             </strong>{" "}
             {t(
-              "If you need to cancel or your guest count changes, please contact BOUS as soon as possible. Changes or cancellations with less than 48 hours’ notice carry a",
-              "Si vous devez annuler ou si le nombre de convives change, veuillez en informer BOUS dès que possible. Toute modification ou annulation à moins de 48 heures de l’événement entraîne des",
-            )}{" "}
-            <strong>{t("$25 per-person fee", "frais de 25 $ par personne")}</strong>.
+              "If you need to cancel or your guest count changes, please contact BOUS as soon as possible. Changes or cancellations with less than 48 hours’ notice carry a $25 per-person fee.",
+              "Si vous devez annuler ou si le nombre de convives change, veuillez en informer BOUS dès que possible. Toute modification ou annulation à moins de 48 heures de l’événement entraîne des frais de 25 $ par personne.",
+            )}
           </p>
           <p>
             <strong>{t("Food allergies.", "Allergies alimentaires.")}</strong>{" "}
