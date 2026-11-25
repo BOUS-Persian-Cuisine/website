@@ -20,10 +20,11 @@ export const fullBuyout = option(
   "Full restaurant buyout",
   "Privatisation du restaurant",
 );
+export const semiPrivateRoom = option("Semi-Private room", "Salon semi-privé");
 export const spaces = [
   option("No preference", "Sans préférence"),
   option("Dining room", "Salle à manger"),
-  option("Private room", "Salon privé"),
+  semiPrivateRoom,
   fullBuyout,
 ];
 export const bills = [

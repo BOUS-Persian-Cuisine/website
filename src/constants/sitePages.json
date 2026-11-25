@@ -12,8 +12,8 @@
     "fr": {"path": "/fr/menu-du-midi/", "title": "Table d’hôte du midi au centre-ville de Montréal | BOUS", "description": "Du lundi au vendredi, retrouvez notre table d’hôte persane rue Sherbrooke Ouest. Choisissez une entrée et un plat pour votre dîner au Mille carré doré."}
   },
   {
-    "en": {"path": "/group-event/", "title": "Private Dining & Group Events in Montréal | BOUS", "description": "Plan a Persian meal for eight or more, book a private room for up to ten, or reserve the whole restaurant in Montréal’s Golden Square Mile."},
-    "fr": {"path": "/fr/evenements-de-groupe/", "title": "Salon privé et repas de groupe à Montréal | BOUS", "description": "Réunissez huit convives ou plus autour d’un menu persan, réservez le salon privé pour dix personnes au maximum ou privatisez le restaurant à Montréal."}
+    "en": {"path": "/group-event/", "title": "Private Dining & Group Events in Montréal | BOUS", "description": "Plan a Persian meal for eight or more, book a semi-private room for up to ten, or reserve the whole restaurant in Montréal’s Golden Square Mile."},
+    "fr": {"path": "/fr/evenements-de-groupe/", "title": "Salon semi-privé et repas de groupe à Montréal | BOUS", "description": "Réunissez huit convives ou plus autour d’un menu persan, réservez le salon semi-privé pour dix personnes au maximum ou privatisez le restaurant à Montréal."}
   },
   {
     "en": {"path": "/group-menu/", "title": "Persian Sharing Menus for Groups in Montréal | BOUS", "description": "Compare Sofreh, Mehmani and Bazm, our three Persian sharing menus for groups of eight or more. See the dishes, prices and optional drink pairings."},

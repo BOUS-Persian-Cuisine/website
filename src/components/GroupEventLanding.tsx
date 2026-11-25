@@ -59,7 +59,7 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
             <dd>{t("Choose a Persian sharing menu for a table of eight or more.", "Dès huit convives, choisissez un menu persan à partager à table.")}</dd>
           </div>
           <div>
-            <dt>{t("Private room", "Salon privé")}</dt>
+            <dt>{t("Semi-Private room", "Salon semi-privé")}</dt>
             <dd>{t("Up to 10 guests, with a $1,500 minimum spend for the room.", "Jusqu’à 10 convives, avec un minimum de consommation de 1 500 $ pour le salon.")}</dd>
           </div>
           <div>
@@ -68,21 +68,6 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
           </div>
         </dl>
       </section>
-
-      <nav
-        className={css.contents}
-        aria-label={t("On this page", "Sur cette page")}
-      >
-        <a href="#menus">
-          {t("The food", "La cuisine")} <span aria-hidden="true">↓</span>
-        </a>
-        <a href="#setting">
-          {t("The space", "Les lieux")} <span aria-hidden="true">↓</span>
-        </a>
-        <a href="#occasions">
-          {t("Your event", "Votre événement")} <span aria-hidden="true">↓</span>
-        </a>
-      </nav>
 
       <section
         id="menus"
@@ -298,7 +283,7 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
               </dd>
             </div>
             <div>
-              <dt>{t("In the private room", "En salon privé")}</dt>
+              <dt>{t("In the semi-private room", "En salon semi-privé")}</dt>
               <dd>
                 {t(
                   "An intimate setting for up to 10 guests, with a $1,500 minimum spend for the room.",

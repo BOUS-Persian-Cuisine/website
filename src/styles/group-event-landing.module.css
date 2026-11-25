@@ -135,35 +135,6 @@
 .plan:hover {
   box-shadow: 0 0 0 2px #b09861;
 }
-.contents {
-  display: flex;
-  justify-content: center;
-  background: var(--cream);
-  border-bottom: 1px solid var(--line);
-}
-.contents a {
-  display: flex;
-  flex: 0 1 15rem;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.35rem, 1.6vw, 1.3rem);
-  padding: 1rem 0.3rem;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-.contents a + a {
-  border-left: 1px solid var(--line);
-}
-.contents span {
-  color: #7a632e;
-}
-.contents a:hover {
-  background: var(--paper);
-}
-.contents a:focus-visible {
-  outline-offset: -4px;
-}
 .story,
 .settingInner,
 .occasions {
@@ -320,9 +291,6 @@
   }
   .heroButton {
     margin-top: 1.1rem;
-  }
-  .contents a {
-    font-size: 0.92rem;
   }
   .chapterHeader {
     grid-template-columns: 1fr;

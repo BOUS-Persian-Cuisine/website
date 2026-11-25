@@ -21,6 +21,7 @@ import {
   money,
   occasions,
   spaces,
+  semiPrivateRoom,
   styles,
   type Option,
   type Style,
@@ -287,7 +288,7 @@ export function GroupInquiry({
   };
   const shortGroup =
     style === "sharing" && data.guests !== "" && Number(data.guests) < 8;
-  const overRoomCapacity = space === "Private room" && Number(data.guests) > 10;
+  const overRoomCapacity = space === semiPrivateRoom.en && Number(data.guests) > 10;
   const dateFormatter = new Intl.DateTimeFormat(
     language === "fr" ? "fr-CA" : "en-CA",
     {
@@ -362,7 +363,8 @@ export function GroupInquiry({
           meal: data.meal,
           guests: Number(data.guests),
           children: Number(data.children),
-          space,
+          // The booking API uses the original room identifier for capacity checks.
+          space: space === semiPrivateRoom.en ? "Private room" : space,
           service: style,
           menu: currentMenu?.name ?? "Undecided",
           addons: validItems.map((x) => {
@@ -604,7 +606,7 @@ export function GroupInquiry({
                 true,
                 {
                   min: style === "sharing" ? 8 : 1,
-                  max: space === "Private room" ? 10 : 1000,
+                  max: space === semiPrivateRoom.en ? 10 : 1000,
                   "aria-invalid": shortGroup || overRoomCapacity || undefined,
                   "aria-describedby": shortGroup
                     ? "guest-count-hint group-size-hint"
@@ -632,8 +634,8 @@ export function GroupInquiry({
           {overRoomCapacity && (
             <p className={css.error} id="room-capacity-hint">
               {t(
-                "The private room seats up to 10 guests. ",
-                "Le salon privé accueille jusqu’à 10 convives. ",
+                "The semi-private room seats up to 10 guests. ",
+                "Le salon semi-privé accueille jusqu’à 10 convives. ",
               )}
               <button
                 type="button"
@@ -663,11 +665,11 @@ export function GroupInquiry({
               )}
             </summary>
             {options("space", t("Space preference", "Espace souhaité"), spaces)}
-            {space === "Private room" && (
+            {space === semiPrivateRoom.en && (
               <p className={css.fine}>
                 {t(
-                  "The private room seats up to 10 guests and has a $1,500 minimum spend for the room.",
-                  "Le salon privé accueille un maximum de 10 convives. Un minimum de consommation de 1 500 $ s’applique à la salle.",
+                  "The semi-private room seats up to 10 guests and has a $1,500 minimum spend for the room.",
+                  "Le salon semi-privé accueille un maximum de 10 convives. Un minimum de consommation de 1 500 $ s’applique à la salle.",
                 )}
               </p>
             )}
