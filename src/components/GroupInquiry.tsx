@@ -478,8 +478,8 @@ export function GroupInquiry({
           )}
           <strong>{data.email}</strong>
           {t(
-            " from info@bous.ca. Our events team will follow up to confirm availability and discuss the details with you.",
-            " depuis info@bous.ca. Notre équipe vous contactera pour confirmer les disponibilités et discuter des détails avec vous.",
+            " from reservations@bous.ca. Our events team will follow up to confirm availability and discuss the details with you.",
+            " depuis reservations@bous.ca. Notre équipe vous contactera pour confirmer les disponibilités et discuter des détails avec vous.",
           )}
         </p>
         <dl className={css.receiptFacts}>
@@ -508,7 +508,7 @@ export function GroupInquiry({
         <a
           className={css.textLink}
           href={
-            "mailto:info@bous.ca?subject=" +
+            "mailto:reservations@bous.ca?subject=" +
             encodeURIComponent("BOUS · " + reference)
           }
         >
