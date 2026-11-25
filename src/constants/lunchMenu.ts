@@ -93,6 +93,11 @@ export const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
             description: "Crisp saffron rice with a Persian stew of beef tenderloin, yellow split peas, tomatoes and dried lime."
           },
           {
+            name: "Duck Fesenjoon",
+            price: "+$10",
+            description: "Slow-cooked walnut and pomegranate stew, and Persian rice"
+          },
+          {
             name: "Barg Kabab",
             price: "+$15",
             description: "Charcoal-grilled beef tenderloin, and Persian rice"
@@ -110,11 +115,6 @@ export const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
         name: "Maast-o-Moosir",
         price: "14",
         description: "House-made yogurt with Persian shallots"
-      },
-      {
-        name: "Borani Bademjoon",
-        price: "14",
-        description: "Eggplant, yogurt, garlic, and herbs"
       },
       {
         name: "Dessert of the Day",
@@ -187,6 +187,11 @@ export const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
             description: "Riz croustillant au safran et ragoût persan de filet de bœuf, de pois cassés jaunes, de tomates et de lime séchée."
           },
           {
+            name: "Fesenjoon au canard",
+            price: "+10 $",
+            description: "Canard mijoté aux noix de Grenoble et à la grenade, servi avec du riz persan."
+          },
+          {
             name: "Barg Kabab",
             price: "+15 $",
             description: "Filet de bœuf grillé au charbon et riz persan."
@@ -204,11 +209,6 @@ export const lunchMenuCopy: Record<Language, LunchMenuCopy> = {
         name: "Maast-o-Moosir",
         price: "14",
         description: "Yogourt maison aux échalotes persanes."
-      },
-      {
-        name: "Borani Bademjoon",
-        price: "14",
-        description: "Aubergine, yogourt, ail et fines herbes."
       },
       {
         name: "Dessert du jour",

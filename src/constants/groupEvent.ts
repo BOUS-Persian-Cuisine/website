@@ -163,7 +163,7 @@ export const extras = [
 export const lunchExtras = [
   ...pairingExtras,
   ...groupDishes
-    .filter((dish) => ["Maast-o-Moosir", "Borani Bademjoon"].includes(dish.en))
+    .filter((dish) => dish.en === "Maast-o-Moosir")
     .map((dish) => ({
       en: dish.en,
       fr: dish.fr ?? dish.en,
