@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[790],{2606:(_,e,u)=>{"use strict";u.r(e),u.d(e,{default:()=>n.default});var n=u(3319)},6456:(_,e,u)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/fr/menus-de-groupe",function(){return u(2606)}])}},_=>{_.O(0,[112,988,319,636,593,792],()=>_(_.s=6456)),_N_E=_.O()}]);

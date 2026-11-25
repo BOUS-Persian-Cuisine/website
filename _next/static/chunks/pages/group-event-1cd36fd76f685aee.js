@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[818],{9e3:(_,e,n)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/group-event",function(){return n(9192)}])}},_=>{_.O(0,[112,988,192,636,593,792],()=>_(_.s=9e3)),_N_E=_.O()}]);

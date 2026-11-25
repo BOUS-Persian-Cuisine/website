@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[28],{3744:(_,u,e)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/fr/menu-du-midi",function(){return e(4332)}])},4332:(_,u,e)=>{"use strict";e.r(u),e.d(u,{default:()=>n.default});var n=e(3812)}},_=>{_.O(0,[112,988,812,636,593,792],()=>_(_.s=3744)),_N_E=_.O()}]);

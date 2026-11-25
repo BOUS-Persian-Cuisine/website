@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[900],{5052:(e,_,u)=>{"use strict";u.r(_),u.d(_,{default:()=>n.default});var n=u(9192)},7248:(e,_,u)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/fr/evenements-de-groupe",function(){return u(5052)}])}},e=>{e.O(0,[112,988,192,636,593,792],()=>e(e.s=7248)),_N_E=e.O()}]);

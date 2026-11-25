@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[815],{378:(_,n,u)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/group-menu",function(){return u(3319)}])}},_=>{_.O(0,[112,988,319,636,593,792],()=>_(_.s=378)),_N_E=_.O()}]);
