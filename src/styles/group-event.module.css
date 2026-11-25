@@ -94,9 +94,6 @@
 .fine {
   color: #675851;
 }
-.sectionLinks {
-  display: none;
-}
 .availability {
   padding: 0.55rem 0.8rem;
   margin: 0.5rem 0 1rem;
@@ -475,20 +472,6 @@
   margin: 0.7rem 0;
 }
 @media (max-width: 800px) {
-  .sectionLinks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 0.9rem;
-    border-block: 1px solid #dfd4c2;
-    margin-top: 0.8rem;
-  }
-  .sectionLinks button {
-    min-height: 2.75rem;
-    color: #610e2a;
-    font-size: 1rem;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
   .extraList {
     max-height: none;
     overflow: visible;

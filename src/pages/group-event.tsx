@@ -71,32 +71,6 @@ export default function GroupEvent() {
                     "Envoyez-nous vos préférences. Notre équipe vous écrira pour confirmer les disponibilités. Les champs marqués d’un astérisque (*) sont obligatoires.",
                   )}
                 </p>
-                <nav
-                  className={css.sectionLinks}
-                  aria-label={t("Jump to a section", "Accéder à une section")}
-                >
-                  {[
-                    ["event-table", t("At the table", "À table")],
-                    ["event-billing", t("Billing", "Facturation")],
-                    ["event-contact", t("Contact", "Coordonnées")],
-                    [
-                      "event-summary",
-                      t("Review request", "Vérifier la demande"),
-                    ],
-                  ].map(([id, label]) => (
-                    <button
-                      type="button"
-                      key={id}
-                      onClick={() => {
-                        const section = document.getElementById(id);
-                        section?.focus({ preventScroll: true });
-                        section?.scrollIntoView({ block: "start" });
-                      }}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </nav>
               </header>
             )}
             <GroupInquiry
