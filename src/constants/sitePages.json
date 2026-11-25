@@ -1,0 +1,42 @@
+[
+  {
+    "en": {"path": "/", "title": "BOUS | Persian Restaurant in Downtown Montréal", "description": "Discover Persian cuisine in Montréal’s Golden Square Mile. Come for charcoal-grilled kababs, duck fesenjoon and saffron tahchin, for weekday lunch or dinner."},
+    "fr": {"path": "/fr/", "title": "BOUS | Restaurant persan au centre-ville de Montréal", "description": "Découvrez la cuisine persane au cœur du Mille carré doré de Montréal. Kababs au charbon de bois, fesenjoon de canard et tahchin au safran, le midi en semaine ou le soir."}
+  },
+  {
+    "en": {"path": "/menu/", "title": "Persian Dinner Menu in Montréal | BOUS", "description": "Explore the BOUS dinner menu, from sangak bread and smoked eggplant to charcoal-grilled kababs, duck fesenjoon and Persian desserts."},
+    "fr": {"path": "/fr/menu-du-soir/", "title": "Menu du soir · Cuisine persane à Montréal | BOUS", "description": "Au menu du soir de BOUS, retrouvez le pain sangak, les kababs au charbon de bois et le fesenjoon de canard. Terminez par un dessert persan."}
+  },
+  {
+    "en": {"path": "/lunch-menu/", "title": "Weekday Persian Lunch in Downtown Montréal | BOUS", "description": "Join us for our weekday table d’hôte on Sherbrooke Street West. Choose a starter and a main for lunch in Montréal’s Golden Square Mile."},
+    "fr": {"path": "/fr/menu-du-midi/", "title": "Table d’hôte du midi au centre-ville de Montréal | BOUS", "description": "Du lundi au vendredi, retrouvez notre table d’hôte persane rue Sherbrooke Ouest. Choisissez une entrée et un plat pour votre dîner au Mille carré doré."}
+  },
+  {
+    "en": {"path": "/group-event/", "title": "Private Dining & Group Events in Montréal | BOUS", "description": "Plan a Persian meal for eight or more, book a private room for up to ten, or reserve the whole restaurant in Montréal’s Golden Square Mile."},
+    "fr": {"path": "/fr/evenements-de-groupe/", "title": "Salon privé et repas de groupe à Montréal | BOUS", "description": "Réunissez huit convives ou plus autour d’un menu persan, réservez le salon privé pour dix personnes au maximum ou privatisez le restaurant à Montréal."}
+  },
+  {
+    "en": {"path": "/group-menu/", "title": "Persian Sharing Menus for Groups in Montréal | BOUS", "description": "Compare Sofreh, Mehmani and Bazm, our three Persian sharing menus for groups of eight or more. See the dishes, prices and optional drink pairings."},
+    "fr": {"path": "/fr/menus-de-groupe/", "title": "Menus persans à partager pour les groupes à Montréal | BOUS", "description": "Comparez Sofreh, Mehmani et Bazm, nos trois menus à partager dès huit convives. Consultez les plats, les prix et les accords de boissons."}
+  },
+  {
+    "en": {"path": "/drinks-menu/", "title": "Persian-Inspired Cocktails & Sharbat in Montréal | BOUS", "description": "Explore the drinks at BOUS, from the Persian Martini to rosewater and mint in the Golestan. Discover signature cocktails and alcohol-free options."},
+    "fr": {"path": "/fr/carte-des-boissons/", "title": "Cocktails d’inspiration persane et sharbat à Montréal | BOUS", "description": "Du martini persan au Golestan à la menthe et à l’eau de rose, découvrez les cocktails maison et les boissons sans alcool de BOUS."}
+  },
+  {
+    "en": {"path": "/wine/", "title": "Wine List · Persian Dining in Montréal | BOUS", "description": "Browse the BOUS wine list before your visit to our Persian restaurant on Sherbrooke Street West in downtown Montréal."},
+    "fr": {"path": "/fr/carte-des-vins/", "title": "Carte des vins · Restaurant persan à Montréal | BOUS", "description": "Parcourez la carte des vins de BOUS avant votre visite à notre restaurant persan de la rue Sherbrooke Ouest, au centre-ville de Montréal."}
+  },
+  {
+    "en": {"path": "/about/", "title": "About BOUS · Persian Hospitality in Montréal", "description": "Get to know BOUS and the Persian cooking and hospitality at the heart of our restaurant in Montréal’s Golden Square Mile."},
+    "fr": {"path": "/fr/a-propos/", "title": "À propos de BOUS · L’hospitalité persane à Montréal", "description": "Découvrez BOUS, sa cuisine et les traditions d’hospitalité persanes qui animent notre restaurant du Mille carré doré à Montréal."}
+  },
+  {
+    "en": {"path": "/contact/", "title": "Location, Hours & Contact · Downtown Montréal | BOUS", "description": "Find BOUS at 1310 Sherbrooke Street West in Montréal. See our lunch and dinner hours or reach the restaurant by phone or email."},
+    "fr": {"path": "/fr/contact/", "title": "Adresse, horaires et coordonnées à Montréal | BOUS", "description": "Retrouvez BOUS au 1310, rue Sherbrooke Ouest, à Montréal. Consultez nos horaires du midi et du soir ou joignez-nous par téléphone ou par courriel."}
+  },
+  {
+    "en": {"path": "/press/", "title": "BOUS in the Press · Montréal’s Persian Dining Scene", "description": "Read coverage of BOUS from La Presse, Tastet and other publications, and hear interviews about Persian cooking and hospitality in Montréal."},
+    "fr": {"path": "/fr/presse/", "title": "BOUS dans la presse · Cuisine persane à Montréal", "description": "Retrouvez les articles de La Presse, de Tastet et d’autres médias sur BOUS, ainsi que les entrevues sur la cuisine et l’hospitalité persanes à Montréal."}
+  }
+]

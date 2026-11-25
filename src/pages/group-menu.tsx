@@ -1,7 +1,7 @@
 import { MenuPageHeader } from "@/components/MenuPageHeader";
 import { RelatedMenuLinks } from "@/components/MenuSwitcher";
 import { SiteLayout } from "@/components/SiteLayout";
-import Link from "next/link";
+import Link from "@/components/LocalizedLink";
 import { tiers, courses, pairings } from "@/constants/groupMenus";
 import { useLanguage } from "@/context/LanguageContext";
 import styles from "@/styles/group-menu.module.css";

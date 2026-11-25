@@ -19,6 +19,17 @@ function writeFile(dest, contents) {
 
 ensureOutDir();
 
+// List only exported public pages. Each language version has its own canonical URL.
+const sitePages = JSON.parse(fs.readFileSync(new URL("../src/constants/sitePages.json", import.meta.url), "utf8"));
+const entries = sitePages.flatMap(({ en, fr }) => [en, fr]).map(({ path: route }) => {
+  if (!fs.existsSync(path.join(OUT_DIR, route, "index.html"))) {
+    throw new Error(`Missing exported page for sitemap: ${route}`);
+  }
+  return `  <url><loc>https://bous.ca${route}</loc></url>`;
+});
+writeFile(path.join(OUT_DIR, "sitemap.xml"),
+  ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">', ...entries, '</urlset>', ''].join("\n"));
+
 // GitHub Pages runs Jekyll by default, which ignores directories like `_next`.
 // A `.nojekyll` file at the site root disables that behavior.
 writeFile(path.join(OUT_DIR, ".nojekyll"), "");

@@ -1,5 +1,7 @@
+import { ReservationLink } from "@/components/ReservationLink";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/LocalizedLink";
 import { useEffect, useState } from "react";
 
 import {
@@ -7,12 +9,19 @@ import {
   useLanguage,
   type Language,
 } from "@/context/LanguageContext";
-import { getOpenTableReservationUrl } from "@/constants/links";
 
 const languageOptions: Language[] = ["en", "fr"];
 
 export function SiteHeader() {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, t } = useLanguage();
+  const router = useRouter();
+  const [suffix, setSuffix] = useState("");
+  useEffect(() => {
+    const sync = () => setSuffix(window.location.search + window.location.hash);
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, [router.asPath]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -77,7 +86,6 @@ export function SiteHeader() {
   ].join(" ");
   const menuCloseButtonClass =
     "inline-flex h-11 w-11 items-center justify-center rounded-full border border-bous-gold/35 bg-bous-white/45 text-foreground shadow-[0_10px_30px_rgba(53,5,20,0.08)] transition-colors hover:border-bous-red/45 hover:bg-bous-blush/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red";
-  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
     <>
@@ -87,12 +95,11 @@ export function SiteHeader() {
             aria-label={t.header.menuLabel}
             className="hidden items-center justify-end gap-4 lg:flex 2xl:gap-6"
           >
-            <a
-              href={reservationUrl}
+            <ReservationLink
               className={navLinkClass}
             >
               {t.header.nav.reserve}
-            </a>
+            </ReservationLink>
             <Link href="/menu" className={navLinkClass}>
               {t.header.nav.menu}
             </Link>
@@ -170,11 +177,14 @@ export function SiteHeader() {
               const isSelected = language === option;
 
               return (
-                <button
+                <Link
                   key={option}
-                  type="button"
+                  language={option}
+                  href={router.pathname + suffix}
+                  scroll={false}
+                  hrefLang={option === "fr" ? "fr-CA" : "en-CA"}
                   className={[
-                    "h-9 min-w-10 border-b text-[0.72rem] uppercase tracking-[0.22em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red",
+                    "inline-flex items-center justify-center h-9 min-w-10 border-b text-[0.72rem] uppercase tracking-[0.22em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red",
                     hasScrolled
                       ? isSelected
                         ? "border-foreground text-foreground"
@@ -184,11 +194,10 @@ export function SiteHeader() {
                         : "border-transparent text-bous-cream/62 hover:text-bous-gold",
                   ].join(" ")}
                   aria-label={t.header.languageAriaLabels[option]}
-                  aria-pressed={isSelected}
-                  onClick={() => setLanguage(option)}
+                  aria-current={isSelected ? "page" : undefined}
                 >
                   {languageLabels[option]}
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -246,13 +255,12 @@ export function SiteHeader() {
             </div>
 
             <nav className="flex flex-col gap-7 px-6 py-10 text-xl font-light tracking-[0.22em]">
-              <a
-                href={reservationUrl}
+              <ReservationLink
                 className="transition-colors hover:text-bous-red"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t.header.nav.reserve}
-              </a>
+              </ReservationLink>
               <Link
                 href="/menu"
                 className="transition-colors hover:text-bous-red"
@@ -290,9 +298,12 @@ export function SiteHeader() {
                   const isSelected = language === option;
 
                   return (
-                    <button
+                    <Link
                       key={option}
-                      type="button"
+                      language={option}
+                      href={router.pathname + suffix}
+                      scroll={false}
+                      hrefLang={option === "fr" ? "fr-CA" : "en-CA"}
                       className={[
                         "border-b pb-1 text-left transition-colors",
                         isSelected
@@ -300,14 +311,11 @@ export function SiteHeader() {
                           : "border-transparent text-foreground/50 hover:text-bous-red",
                       ].join(" ")}
                       aria-label={t.header.languageAriaLabels[option]}
-                      aria-pressed={isSelected}
-                      onClick={() => {
-                        setLanguage(option);
-                        setIsMobileMenuOpen(false);
-                      }}
+                      aria-current={isSelected ? "page" : undefined}
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {languageLabels[option]}
-                    </button>
+                    </Link>
                   );
                 })}
               </div>

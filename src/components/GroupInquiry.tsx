@@ -1,3 +1,4 @@
+import { trackBooking } from "@/constants/analytics";
 import {
   useEffect,
   useRef,
@@ -435,6 +436,7 @@ export function GroupInquiry({
       const result = await response.json();
       if (typeof result.reference !== "string" || !result.reference)
         throw Error("reference");
+      trackBooking("group_request_submitted", language);
       setReference(result.reference);
       onComplete();
     } catch {

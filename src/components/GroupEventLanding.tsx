@@ -52,6 +52,23 @@ export function GroupEventLanding({ onPlan }: { onPlan: () => void }) {
         </div>
       </section>
 
+      <section className={css.bookingOptions} aria-label={t("Group dining options", "Options pour les groupes")}>
+        <dl>
+          <div>
+            <dt>{t("Family-style dining", "Menus à partager")}</dt>
+            <dd>{t("Choose a Persian sharing menu for a table of eight or more.", "Dès huit convives, choisissez un menu persan à partager à table.")}</dd>
+          </div>
+          <div>
+            <dt>{t("Private room", "Salon privé")}</dt>
+            <dd>{t("Up to 10 guests, with a $1,500 minimum spend for the room.", "Jusqu’à 10 convives, avec un minimum de consommation de 1 500 $ pour le salon.")}</dd>
+          </div>
+          <div>
+            <dt>{t("Full restaurant buyout", "Privatisation du restaurant")}</dt>
+            <dd>{t("Have BOUS to yourselves for a private lunch or dinner.", "Réservez tout BOUS pour un dîner ou un souper privé.")}</dd>
+          </div>
+        </dl>
+      </section>
+
       <nav
         className={css.contents}
         aria-label={t("On this page", "Sur cette page")}

@@ -1,12 +1,13 @@
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
-  useState,
   type ReactNode,
 } from "react";
+
+import { useRouter } from "next/router";
+import { pageLanguage } from "@/constants/siteRoutes";
 
 export type Language = "en" | "fr";
 
@@ -75,8 +76,6 @@ type Translations = {
     bodySuffix: string;
   };
 };
-
-const storageKey = "bous-language";
 
 export const languageLabels: Record<Language, "EN" | "FR"> = {
   en: "EN",
@@ -248,8 +247,6 @@ export const translations: Record<Language, Translations> = {
 
 type LanguageContextValue = {
   language: Language;
-  setLanguage: (language: Language) => void;
-  toggleLanguage: () => void;
   t: Translations;
 };
 
@@ -257,65 +254,12 @@ const LanguageContext = createContext<LanguageContextValue | undefined>(
   undefined,
 );
 
-function parseLanguage(value: string | null): Language | null {
-  const normalized = value?.toLowerCase();
-
-  if (normalized === "en" || normalized === "fr") {
-    return normalized;
-  }
-
-  return null;
-}
-
-function getHtmlLang(language: Language) {
-  return language === "fr" ? "fr-CA" : "en";
-}
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
-  const [hasLoadedLanguage, setHasLoadedLanguage] = useState(false);
-
+  const language = pageLanguage(useRouter().pathname);
   useEffect(() => {
-    try {
-      const storedLanguage = parseLanguage(
-        window.localStorage.getItem(storageKey),
-      );
-
-      if (storedLanguage) {
-        setLanguage(storedLanguage);
-      }
-    } catch {
-      // Local storage can be blocked in private browsing or strict settings.
-    } finally {
-      setHasLoadedLanguage(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = getHtmlLang(language);
-
-    if (!hasLoadedLanguage) return;
-
-    try {
-      window.localStorage.setItem(storageKey, language);
-    } catch {
-      // Persistence is best-effort; the in-memory selection still works.
-    }
-  }, [hasLoadedLanguage, language]);
-
-  const toggleLanguage = useCallback(() => {
-    setLanguage((current) => (current === "en" ? "fr" : "en"));
-  }, []);
-
-  const value = useMemo(
-    () => ({
-      language,
-      setLanguage,
-      toggleLanguage,
-      t: translations[language],
-    }),
-    [language, toggleLanguage],
-  );
+    document.documentElement.lang = language === "fr" ? "fr-CA" : "en-CA";
+  }, [language]);
+  const value = useMemo(() => ({ language, t: translations[language] }), [language]);
 
   return (
     <LanguageContext.Provider value={value}>

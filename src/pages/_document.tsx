@@ -1,10 +1,11 @@
-import { Head, Html, Main, NextScript } from "next/document";
+import { Head, Html, Main, NextScript, type DocumentProps } from "next/document";
+import { pageLanguage } from "@/constants/siteRoutes";
 
 const googleTagManagerId = "GTM-5RBBHRJQ";
 
-export default function Document() {
+export default function Document({ __NEXT_DATA__ }: DocumentProps) {
   return (
-    <Html lang="en">
+    <Html lang={pageLanguage(__NEXT_DATA__.page) === "fr" ? "fr-CA" : "en-CA"}>
       <Head>
         <script
           dangerouslySetInnerHTML={{

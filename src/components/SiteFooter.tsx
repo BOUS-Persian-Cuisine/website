@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { ReservationLink } from "@/components/ReservationLink";
+import Link from "@/components/LocalizedLink";
 import {
   useEffect,
   useRef,
@@ -7,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 
-import { GIFT_CARD_URL, getOpenTableReservationUrl } from "@/constants/links";
+import { GIFT_CARD_URL } from "@/constants/links";
 import { useLanguage } from "@/context/LanguageContext";
 
 type FooterSection = "info" | "dine" | "contact";
@@ -36,11 +37,10 @@ const footerDividerInitialStyle = {
 } as CSSProperties;
 
 export function SiteFooter() {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   const footerRef = useRef<HTMLElement | null>(null);
   const [openFooterSection, setOpenFooterSection] =
     useState<FooterSection | null>("info");
-  const reservationUrl = getOpenTableReservationUrl(language);
 
   const toggleFooterSection = (section: FooterSection) =>
     setOpenFooterSection((current) => (current === section ? null : section));
@@ -178,12 +178,11 @@ export function SiteFooter() {
           >
             {t.footer.links.groupMenu}
           </Link>
-          <a
-            href={reservationUrl}
+          <ReservationLink
             className="underline-offset-4 hover:underline"
           >
             {t.footer.reserveTable}
-          </a>
+          </ReservationLink>
           <a
             href={GIFT_CARD_URL}
             className="underline-offset-4 hover:underline"

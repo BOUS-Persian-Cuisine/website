@@ -360,3 +360,26 @@
     gap: 0.25rem;
   }
 }
+
+.bookingOptions {
+  padding: clamp(1.5rem, 3vw, 2.7rem) var(--edge);
+  background: var(--paper);
+}
+.bookingOptions dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 4rem);
+  max-width: 80rem;
+  margin: 0 auto;
+}
+.bookingOptions dt {
+  margin-bottom: .3rem;
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.bookingOptions dd { margin: 0; max-width: 35ch; line-height: 1.5; }
+@media (max-width: 680px) {
+  .bookingOptions dl { grid-template-columns: 1fr; gap: .9rem; }
+  .bookingOptions dl > div + div { border-top: 1px solid var(--line); padding-top: .9rem; }
+}

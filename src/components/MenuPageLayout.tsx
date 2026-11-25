@@ -1,3 +1,4 @@
+import { ReservationLink } from "@/components/ReservationLink";
 import type { ReactNode } from "react";
 
 import {
@@ -6,8 +7,6 @@ import {
 } from "@/components/MenuSwitcher";
 import { MenuPageHeader } from "@/components/MenuPageHeader";
 import { SiteLayout } from "@/components/SiteLayout";
-import { getOpenTableReservationUrl } from "@/constants/links";
-import { useLanguage } from "@/context/LanguageContext";
 
 type MenuPageLayoutProps = {
   active: MenuKey;
@@ -32,8 +31,6 @@ export function MenuPageLayout({
   sectionLabel,
   title,
 }: MenuPageLayoutProps) {
-  const { language } = useLanguage();
-  const reservationUrl = getOpenTableReservationUrl(language);
 
   return (
     <SiteLayout title={title}>
@@ -60,12 +57,11 @@ export function MenuPageLayout({
             <div className={`mx-auto py-10 sm:py-14 ${active === "dining" ? "w-full" : "max-w-3xl"}`}>{children}</div>
 
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 pt-4 sm:pt-6">
-              <a
-                href={reservationUrl}
+              <ReservationLink
                 className="inline-flex min-h-12 items-center justify-center border border-bous-burgundy bg-bous-burgundy px-7 text-[0.7rem] uppercase tracking-[0.18em] text-bous-cream transition-colors hover:border-bous-red hover:bg-bous-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bous-red"
               >
                 {reserveLabel}
-              </a>
+              </ReservationLink>
               <RelatedMenuLinks active={active} />
             </div>
           </div>
