@@ -325,7 +325,7 @@ export const dinnerCourses: DinnerCourse[] = [
               "Side Mix Platter — 6 sides",
               "Assiette de 6 accompagnements",
             ),
-            price: 30,
+            price: 35,
           },
         ],
         shortDescription: text("Assorted sides", "Accompagnements variés"),
