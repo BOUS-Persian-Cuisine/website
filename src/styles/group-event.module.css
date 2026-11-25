@@ -249,6 +249,14 @@
   background: #fff8ef;
   border-left: 3px solid #b09861;
 }
+.buyoutTerms h3,
+.buyoutTerms h4 {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.buyoutTerms h4 {
+  margin-top: 1rem;
+}
 .buyoutTerms ul {
   margin: 0.65rem 0;
   padding-left: 1.35rem;

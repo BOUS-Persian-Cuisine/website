@@ -26,6 +26,7 @@ import {
   type Option,
   type Style,
 } from "@/constants/groupEvent";
+import { BuyoutTerms } from "@/components/BuyoutTerms";
 import { PreferredDatesCalendar } from "@/components/PreferredDatesCalendar";
 import { MenuInclusions } from "@/components/MenuInclusions";
 import css from "@/styles/group-event.module.css";
@@ -41,6 +42,7 @@ const empty = {
   menu: "",
   dietary: "",
   notes: "",
+  buyoutNotes: "",
   billing: "",
   billingOther: "",
   billingNotes: "",
@@ -68,6 +70,8 @@ const timeOptions = Array.from({ length: 96 }, (_, index) => {
   return { value, label: displayTime(value) };
 });
 
+const startTimeOptions = timeOptions.filter(({ value }) => value >= "11:30" && value <= "23:00");
+
 function montrealToday() {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Toronto",
@@ -78,7 +82,7 @@ function montrealToday() {
 }
 
 export function GroupInquiry({
-  style,
+  style: diningStyle,
   onStyleChange,
   onComplete,
 }: {
@@ -110,9 +114,12 @@ export function GroupInquiry({
   const busy = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const space = data.space;
+  const isBuyout = space === fullBuyout.en;
+  const style = isBuyout ? "undecided" : diningStyle;
+  const eventBriefLabel = t("Your event vision", "Votre projet d’événement");
   const available = menuChoices(style, data.meal, preferredDates);
   const currentMenu = available.find((m) => m.name === data.menu);
-  const choices = currentMenu?.name === "Table d’Hôte" ? lunchExtras : extras;
+  const choices = isBuyout ? [] : currentMenu?.name === "Table d’Hôte" ? lunchExtras : extras;
   const groupSize = (name: string) =>
     Math.max(
       0,
@@ -120,7 +127,7 @@ export function GroupInquiry({
         (name === "Sharbat Pairing" ? 0 : Number(data.children)),
     );
   const groupChoice =
-    pairingMode === "group" &&
+    !isBuyout && pairingMode === "group" &&
     groupPairing &&
     (data.guests === "" || groupSize(groupPairing) > 0)
       ? groupPairing
@@ -152,7 +159,7 @@ export function GroupInquiry({
       const next = { ...old, [k]: value };
       if (
         next.menu &&
-        !menuChoices(style, next.meal, preferredDates).some(
+        !menuChoices(diningStyle, next.meal, preferredDates).some(
           (menu) => menu.name === next.menu,
         )
       )
@@ -205,7 +212,7 @@ export function GroupInquiry({
       <select name={key} value={data[key]} required={key === "time"}
         onChange={(event) => change(key, event.target.value)}>
         <option value="">{t("Choose a time", "Choisir une heure")}</option>
-        {timeOptions.map((option) => (
+        {(key === "time" ? startTimeOptions : timeOptions).map((option) => (
           <option key={option.value} value={option.value}>{option.label}</option>
         ))}
       </select>,
@@ -381,15 +388,15 @@ export function GroupInquiry({
               ")"
             );
           }),
-          dietary: data.dietary.trim(),
+          dietary: isBuyout ? undefined : data.dietary.trim(),
           notes: [
             data.endTime && "End time: " + data.endTime,
-            data.drinks &&
+            !isBuyout && data.drinks &&
               "Beverages: " +
                 (data.drinks === "Other"
                   ? "Other: " + data.drinksOther.trim()
                   : data.drinks),
-            data.notes.trim(),
+            (isBuyout ? data.buyoutNotes : data.notes).trim(),
           ]
             .filter(Boolean)
             .join("\n"),
@@ -397,8 +404,8 @@ export function GroupInquiry({
           email: data.email.trim(),
           phone: data.phone.trim(),
           company: data.company.trim(),
-          billingNotes: data.billingNotes.trim() || undefined,
-          billing:
+          billingNotes: isBuyout ? undefined : data.billingNotes.trim() || undefined,
+          billing: isBuyout ? undefined :
             data.billing === "Other"
               ? "Other: " + data.billingOther.trim()
               : data.billing,
@@ -489,12 +496,13 @@ export function GroupInquiry({
             <dd>{data.guests}</dd>
           </div>
           <div>
-            <dt>{t("Menu", "Menu")}</dt>
+            <dt>{isBuyout ? t("Space", "Espace") : t("Menu", "Menu")}</dt>
             <dd>
-              {currentMenu?.name ||
+              {isBuyout ? fullBuyout[language] : currentMenu?.name ||
                 t("To discuss with BOUS", "À déterminer avec BOUS")}
             </dd>
           </div>
+          {isBuyout && data.buyoutNotes.trim() && <div><dt>{eventBriefLabel}</dt><dd>{data.buyoutNotes.trim()}</dd></div>}
         </dl>
         {lunchDateNotice && <p>{lunchDateNotice}</p>}
         <a
@@ -533,7 +541,7 @@ export function GroupInquiry({
     ...(space !== "No preference"
       ? [[t("Space", "Espace"), selected(space, spaces)] as [string, string]]
       : []),
-    [
+    isBuyout ? [eventBriefLabel, data.buyoutNotes.trim()] : [
       t("Menu", "Menu"),
       currentMenu
         ? currentMenu.name +
@@ -585,7 +593,7 @@ export function GroupInquiry({
               {lunchDateNotice}
             </p>
           )}
-          {lunchRemoved && (
+          {!isBuyout && lunchRemoved && (
             <p className={css.availability} role="status">
               {t(
                 "Table d’Hôte is served on weekdays. Choose another menu for your weekend lunch.",
@@ -606,7 +614,7 @@ export function GroupInquiry({
                 true,
                 {
                   min: style === "sharing" ? 8 : 1,
-                  max: space === semiPrivateRoom.en ? 10 : 1000,
+                  max: isBuyout ? 120 : space === semiPrivateRoom.en ? 10 : 1000,
                   "aria-invalid": shortGroup || overRoomCapacity || undefined,
                   "aria-describedby": shortGroup
                     ? "guest-count-hint group-size-hint"
@@ -673,42 +681,7 @@ export function GroupInquiry({
                 )}
               </p>
             )}
-            {space === fullBuyout.en && (
-              <div className={css.buyoutTerms}>
-                <p>
-                  {t(
-                    "Exclusive use of BOUS is available with the following minimum food and beverage commitments before tax and tip.",
-                    "Pour réserver BOUS en exclusivité, un minimum de consommation en nourriture et en boissons s’applique, avant taxes et pourboire.",
-                  )}
-                </p>
-                <ul>
-                  <li>
-                    <strong>
-                      {t("Sunday to Tuesday", "Du dimanche au mardi")}
-                    </strong>{" "}
-                    · {t("$10,000", "10 000 $")}
-                  </li>
-                  <li>
-                    <strong>
-                      {t("Wednesday and Thursday", "Le mercredi et le jeudi")}
-                    </strong>{" "}
-                    · {t("$12,500", "12 500 $")}
-                  </li>
-                  <li>
-                    <strong>
-                      {t("Friday and Saturday", "Le vendredi et le samedi")}
-                    </strong>{" "}
-                    · {t("$15,000", "15 000 $")}
-                  </li>
-                </ul>
-                <p>
-                  {t(
-                    "All food and beverage purchases are applied toward the minimum commitment. If the final food and beverage total is below the applicable minimum, the difference will be charged as a buyout fee.",
-                    "Tous les achats de nourriture et de boissons comptent dans ce minimum. Si le total est inférieur au minimum applicable, la différence sera facturée à titre de frais de privatisation.",
-                  )}
-                </p>
-              </div>
-            )}
+            {isBuyout && <BuyoutTerms />}
             <div className={css.grid}>
               {input(
                 "children",
@@ -721,6 +694,20 @@ export function GroupInquiry({
             </div>
           </details>
         </section>
+        {isBuyout ? (
+          <section className={css.panel} aria-labelledby="buyout-vision">
+            <h2 id="buyout-vision">{eventBriefLabel}</h2>
+            <p className={css.fine}>{t(
+              "Tell us what you have in mind. Our events team will use your notes to design the menu, drinks and service with you.",
+              "Décrivez-nous votre projet. Notre équipe s’appuiera sur vos idées pour élaborer avec vous le menu, les boissons et le service.",
+            )}</p>
+            {textarea(
+              "buyoutNotes",
+              t("Tell us about your event", "Parlez-nous de votre événement"),
+              t("For example, a seated dinner or standing cocktail, the atmosphere, menu ideas or anything your guests may need.", "Par exemple, un repas assis ou un cocktail debout, l’ambiance souhaitée, vos idées de menu ou les besoins de vos invités."),
+            )}
+          </section>
+        ) : (
         <section className={css.panel} aria-labelledby="event-table">
           <h2 id="event-table" tabIndex={-1}>
             {t("At the table", "À table")}
@@ -1065,6 +1052,8 @@ export function GroupInquiry({
             )}
           </div>
         </section>
+        )}
+        {!isBuyout && (
         <section className={css.panel} aria-labelledby="event-billing">
           <h2 id="event-billing" tabIndex={-1}>
             {t("Billing", "Facturation")}
@@ -1111,6 +1100,7 @@ export function GroupInquiry({
             )}
           </div>
         </section>
+        )}
         <section className={css.panel}>
           <h2 id="event-contact" tabIndex={-1}>
             {t("Your contact details", "Vos coordonnées")}
@@ -1145,6 +1135,7 @@ export function GroupInquiry({
           <h2 id="booking-terms">
             {t("Terms and conditions", "Conditions de réservation")}
           </h2>
+          {!isBuyout && <>
           <p>
             <strong>
               {t(
@@ -1175,6 +1166,7 @@ export function GroupInquiry({
               "Si vous devez annuler ou si le nombre de convives change, veuillez en informer BOUS dès que possible. Toute modification ou annulation à moins de 48 heures de l’événement entraîne des frais de 25 $ par personne.",
             )}
           </p>
+          </>}
           <p>
             <strong>{t("Food allergies.", "Allergies alimentaires.")}</strong>{" "}
             {t(
