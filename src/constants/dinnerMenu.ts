@@ -139,7 +139,7 @@ export const dinnerCourses: DinnerCourse[] = [
       },
       {
         name: text("Barg Kabab"),
-        price: 56,
+        price: 55,
         shortDescription: text("Beef tenderloin", "Filet mignon"),
         description: text(
           "Charcoal-grilled beef tenderloin, Grilled Vegetables",
@@ -165,12 +165,12 @@ export const dinnerCourses: DinnerCourse[] = [
         ),
       },
       {
-        name: text("Qafqazi Lamb", "Agneau Qafqazi"),
-        price: 62,
-        shortDescription: text("Lamb tenderloin", "Filet d’agneau"),
+        name: text("Qafqazi Wagyu", "Wagyu Qafqazi"),
+        price: 85,
+        shortDescription: text("Australian Wagyu ribeye", "Faux-filet de wagyu australien"),
         description: text(
-          "Quebec Lamb Tenderloin, Grilled Vegetables, Pomegranate and Walnut, Assorted Mushrooms, Fresh Herbs",
-          "Filet d’agneau du Québec, légumes grillés, grenade, noix, assortiment de champignons et herbes fraîches",
+          "Australian Sir Harry Wagyu ribeye, pomegranate, walnuts, grilled vegetables, assorted mushrooms and herbs",
+          "Faux-filet de wagyu australien Sir Harry, grenade, noix, légumes grillés, champignons variés et fines herbes",
         ),
         seasonal: true,
       },
