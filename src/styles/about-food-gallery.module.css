@@ -1,0 +1,41 @@
+.gallery {
+  width: min(calc(100% - 2 * clamp(1.25rem, 5.5vw, 5.75rem)), 74rem);
+  margin-inline: auto;
+  padding-block: clamp(3.5rem, 7vw, 7rem);
+  color: #3c0014;
+  scroll-margin-top: 6rem;
+}
+.gallery h2 { margin: 0 0 clamp(1.5rem, 3vw, 3rem); font-size: clamp(2.5rem, 5vw, 5.25rem); font-weight: 300; letter-spacing: -.045em; line-height: 1.05; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 3rem) clamp(.75rem, 2vw, 1.75rem); }
+.grid figure { display: flex; flex-direction: column; min-width: 0; margin: 0; }
+.gallery > .grid figure:first-child { grid-column: span 2; }
+.grid a { display: block; height: clamp(15rem, 35vw, 29rem); overflow: hidden; cursor: zoom-in; background: #f7f2eb; }
+.grid img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.grid img { object-position: 50% 60%; }
+.gallery .grid figcaption { margin-top: .7rem; color: #3c0014; font-size: 1.05rem; line-height: 1.3; }
+.gallery :is(a, button):focus-visible { outline: 2px solid #7a632e; outline-offset: 3px; }
+.viewer { border: 0; margin: auto; padding: 0; background: #fffdf9; color: #3c0014; width: min(94vw, 58rem); max-height: 95dvh; }
+.viewer::backdrop { background: rgb(25 11 12 / 88%); }
+.frame { padding: .35rem clamp(.85rem, 2vw, 1.5rem) .7rem; display: grid; }
+.close { justify-self: end; }
+.frame button { min-height: 44px; padding-inline: .55rem; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+.frame figure { margin: 0; text-align: center; }
+.frame img { display: block; width: 100%; height: min(65dvh, 43rem); object-fit: contain; }
+.gallery .frame figcaption { margin: .7rem 0 0; font-size: 1.05rem; color: #3c0014; }
+.controls { display: flex; justify-content: space-between; }
+@media (max-width: 680px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid a { height: auto; aspect-ratio: 4 / 5; }
+  .gallery > .grid figure:first-child a { aspect-ratio: 3 / 2; }
+  .gallery .grid figcaption { font-size: .97rem; }
+}
+
+.more { margin-top: clamp(1.5rem, 3vw, 3rem); }
+.more summary { width: fit-content; padding: .65rem 1.35rem; min-height: 44px; display: flex; align-items: center; gap: 1rem; border: 1px solid currentColor; border-radius: 2rem; cursor: pointer; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: "+"; }
+.more[open] summary::after { content: "−"; }
+.more summary:focus-visible { outline: 2px solid #7a632e; outline-offset: 3px; }
+.more .whenOpen, .more[open] .whenClosed { display: none; }
+.more[open] .whenOpen { display: inline; }
+.more .grid { margin-top: 1.5rem; }

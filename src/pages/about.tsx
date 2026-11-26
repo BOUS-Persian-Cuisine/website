@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import AboutFoodGallery from "@/components/AboutFoodGallery";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -29,7 +30,7 @@ function useInitialContentScroll() {
 }
 
 export default function About() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   useInitialContentScroll();
 
   return (
@@ -61,6 +62,7 @@ export default function About() {
             </div>
           </div>
         </section>
+        <AboutFoodGallery language={language} />
       </main>
     </SiteLayout>
   );
