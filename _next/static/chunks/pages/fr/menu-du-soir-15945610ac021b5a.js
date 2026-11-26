@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[696],{2706:(_,u,e)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/fr/menu-du-soir",function(){return e(4914)}])},4914:(_,u,e)=>{"use strict";e.r(u),e.d(u,{default:()=>n.default});var n=e(3095)}},_=>{_.O(0,[833,534,95,636,593,792],()=>_(_.s=2706)),_N_E=_.O()}]);

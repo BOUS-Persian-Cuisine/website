@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[20],{3566:(_,n,u)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/lunch-menu",function(){return u(6110)}])}},_=>{_.O(0,[833,534,110,636,593,792],()=>_(_.s=3566)),_N_E=_.O()}]);
