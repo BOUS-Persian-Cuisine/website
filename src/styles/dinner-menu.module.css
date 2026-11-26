@@ -27,6 +27,7 @@
 .accompaniments { composes: fullWidthSection; }
 .accompaniments h2 { font-weight: 500; }
 .accompaniments .row strong { font-weight: 400; }
+.accompaniments .items p { font-size: .875rem; }
 @media (min-width: 48rem) {
   .columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
