@@ -24,6 +24,9 @@
 .note { margin-top: 1.1rem; font-size: .875rem; }
 .fullWidthSection { margin-top: 2rem; scroll-margin-top: 6rem; }
 .fullWidthSection .columns { row-gap: 1rem; }
+.accompaniments { composes: fullWidthSection; }
+.accompaniments h2 { font-weight: 500; }
+.accompaniments .row strong { font-weight: 400; }
 @media (min-width: 48rem) {
   .columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

@@ -93,7 +93,7 @@ export default function Menu() {
         {[sides, dessertCourse].map(({ id, title, dishes }) => {
           const halfway = Math.ceil(dishes.length / 2);
           return (
-            <section key={id} id={id} className={styles.fullWidthSection}>
+            <section key={id} id={id} className={id === sides.id ? styles.accompaniments : styles.fullWidthSection}>
               <h2>{title[language]}</h2>
               <div className={styles.columns}>
                 <MenuItems items={dishes.slice(0, halfway)} />

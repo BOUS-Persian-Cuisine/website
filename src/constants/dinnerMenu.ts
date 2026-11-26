@@ -34,10 +34,10 @@ export const dinnerCourses: DinnerCourse[] = [
       {
         name: text("Maast-o-Khiar"),
         price: 18,
-        shortDescription: text("Cucumber yogurt", "Yogourt, concombre"),
+        shortDescription: text("Cucumber yogurt", "Yogourt, Concombre"),
         description: text(
           "House-Made Yogurt, Cucumber, Kashan Rose Petal, Walnut, Herbs",
-          "Yogourt maison, concombre, pétales de rose de Kashan, noix et herbes",
+          "Yogourt maison, Concombre, Pétales de rose de Kashan, Noix et herbes",
         ),
       },
       {
@@ -46,7 +46,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Marinated olives", "Olives marinées"),
         description: text(
           "Green Olive, Walnut, Pomegranate, Olive oil, Garlic, Tarragon, Herbs",
-          "Olives vertes, noix, grenade, huile d’olive, ail, estragon et herbes",
+          "Olives vertes, Noix, Grenade, Huile d’olive, Ail, Estragon et herbes",
         ),
       },
       {
@@ -58,7 +58,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Saffron wings", "Ailes safranées"),
         description: text(
           "Chicken wingette, Saffron, Aleppo pepper",
-          "Ailerons de poulet, safran et piment d’Alep",
+          "Ailerons de poulet, Safran et piment d’Alep",
         ),
       },
       {
@@ -67,7 +67,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Crispy rice", "Riz croustillant"),
         description: text(
           "Crispy saffron rice, Spring herbs, Barberries, Pistachio",
-          "Riz croustillant au safran, herbes printanières, épines-vinettes et pistaches",
+          "Riz croustillant au safran, Herbes printanières, Épines-vinettes et pistaches",
         ),
       },
       {
@@ -76,7 +76,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Smoked eggplant", "Aubergine fumée"),
         description: text(
           "Smoked eggplant, Kashk, Crispy onion, Mint, Fried garlic",
-          "Aubergine fumée, kashk, oignons croustillants, menthe et ail frit",
+          "Aubergine fumée, Kashk, Oignons croustillants, Menthe et ail frit",
         ),
       },
       {
@@ -84,8 +84,8 @@ export const dinnerCourses: DinnerCourse[] = [
         price: 32,
         shortDescription: text("King shrimp", "Crevettes géantes"),
         description: text(
-          "Argentinian King Shrimp, cooked herbs, Garlic, tamarine, hot chili",
-          "Grosses crevettes d’Argentine, herbes mijotées, ail, tamarin et piment fort",
+          "Argentinian King Shrimp, Cooked herbs, Garlic, Tamarine, Hot chili",
+          "Grosses crevettes d’Argentine, Herbes mijotées, Ail, Tamarin et piment fort",
         ),
         seasonal: true,
       },
@@ -100,8 +100,8 @@ export const dinnerCourses: DinnerCourse[] = [
         price: 48,
         shortDescription: text("Baerii caviar", "Caviar Baerii"),
         description: text(
-          "Persian Baerii Caviar, three bites of rice and bread tahdig, house-made yogurt",
-          "Caviar persan Baerii, trois bouchées de tahdig de riz et de pain, yogourt maison",
+          "Persian Baerii Caviar, Three bites of rice and bread tahdig, House-made yogurt",
+          "Caviar persan Baerii, Trois bouchées de tahdig de riz et de pain, Yogourt maison",
         ),
       },
       {
@@ -110,7 +110,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Ossetra caviar", "Caviar Ossetra"),
         description: text(
           "Persian Ossetra Caviar, Pistachio, Barberry",
-          "Caviar persan Ossetra, pistaches et épines-vinettes",
+          "Caviar persan Ossetra, Pistaches et épines-vinettes",
         ),
       },
     ],
@@ -125,7 +125,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Ground beef", "Bœuf haché"),
         description: text(
           "Charcoal-grilled ground beef, Grilled vegetables",
-          "Bœuf haché grillé au charbon, légumes grillés",
+          "Bœuf haché grillé au charbon, Légumes grillés",
         ),
       },
       {
@@ -134,7 +134,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Saffron chicken", "Poulet safrané"),
         description: text(
           "Charcoal-grilled saffron-marinated Quebec chicken breast, Grilled vegetables",
-          "Poitrine de poulet du Québec marinée au safran et grillée au charbon, légumes grillés",
+          "Poitrine de poulet du Québec marinée au safran et grillée au charbon, Légumes grillés",
         ),
       },
       {
@@ -143,7 +143,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Beef tenderloin", "Filet mignon"),
         description: text(
           "Charcoal-grilled beef tenderloin, Grilled Vegetables",
-          "Filet de bœuf grillé au charbon, légumes grillés",
+          "Filet de bœuf grillé au charbon, Légumes grillés",
         ),
       },
       {
@@ -152,7 +152,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Lamb chops", "Côtelettes d’agneau"),
         description: text(
           "Charcoal-grilled Kamouraska Lamb Chops, Grilled Vegetables",
-          "Côtelettes d’agneau de Kamouraska grillées au charbon, légumes grillés",
+          "Côtelettes d’agneau de Kamouraska grillées au charbon, Légumes grillés",
         ),
       },
       {
@@ -160,8 +160,8 @@ export const dinnerCourses: DinnerCourse[] = [
         price: 75,
         shortDescription: text("Whole seabass", "Bar entier"),
         description: text(
-          "Charcoal-grilled whole branzino, pistachios & barberries, served on traditional Northern Iranian rice, smoke-cured with dried rice stalks",
-          "Bar entier grillé au charbon, pistaches et épines-vinettes, servi sur un riz du nord de l’Iran fumé à la paille de riz séchée",
+          "Charcoal-grilled whole branzino, Pistachios & barberries, Served on traditional Northern Iranian rice, Smoke-cured with dried rice stalks",
+          "Bar entier grillé au charbon, Pistaches et épines-vinettes, Servi sur un riz du nord de l’Iran fumé à la paille de riz séchée",
         ),
       },
       {
@@ -169,8 +169,8 @@ export const dinnerCourses: DinnerCourse[] = [
         price: 85,
         shortDescription: text("Australian Wagyu ribeye", "Faux-filet de wagyu australien"),
         description: text(
-          "Australian Sir Harry Wagyu ribeye, pomegranate, walnuts, grilled vegetables, assorted mushrooms and herbs",
-          "Faux-filet de wagyu australien Sir Harry, grenade, noix, légumes grillés, champignons variés et fines herbes",
+          "Australian Sir Harry Wagyu ribeye, Pomegranate, Walnuts, Grilled vegetables, Assorted mushrooms and herbs",
+          "Faux-filet de wagyu australien Sir Harry, Grenade, Noix, Légumes grillés, Champignons variés et fines herbes",
         ),
         seasonal: true,
       },
@@ -187,7 +187,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Duck confit", "Canard confit"),
         description: text(
           "Duck leg confit, Slow-cooked walnuts with pomegranate molasses",
-          "Confit de cuisse de canard, noix mijotées à la mélasse de grenade",
+          "Confit de cuisse de canard, Noix mijotées à la mélasse de grenade",
         ),
         veganOption: true,
       },
@@ -199,8 +199,8 @@ export const dinnerCourses: DinnerCourse[] = [
         price: 55,
         shortDescription: text("Lamb shank", "Jarret d’agneau"),
         description: text(
-          "Braised lamb shank, five-herb sauce, Red beans, Dried lime",
-          "Jarret d’agneau braisé, sauce aux cinq herbes, haricots rouges et lime séchée",
+          "Braised lamb shank, Five-herb sauce, Red beans, Dried lime",
+          "Jarret d’agneau braisé, Sauce aux cinq herbes, Haricots rouges et lime séchée",
         ),
         veganOption: true,
       },
@@ -210,7 +210,7 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Lamb neck", "Cou d’agneau"),
         description: text(
           "Quebec lamb neck, Barberry, Pistachios, Almond, Saffron, Orange peel, Carrot, Northern Iranian rice",
-          "Cou d’agneau du Québec, épines-vinettes, pistaches, amandes, safran, zeste d’orange, carottes et riz du nord de l’Iran",
+          "Cou d’agneau du Québec, Épines-vinettes, Pistaches, Amandes, Safran, Zeste d’orange, Carottes et riz du nord de l’Iran",
         ),
         seasonal: true,
       },
@@ -235,13 +235,13 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Chopped salad", "Salade hachée"),
         description: text(
           "Cucumber, Tomato, Onion, Mint, Verjus",
-          "Concombre, tomate, oignon, menthe et verjus",
+          "Concombre, Tomate, Oignon, Menthe et verjus",
         ),
       },
       {
         name: text("Maast-o-Moosir"),
         price: 7,
-        shortDescription: text("Shallot yogurt", "Yogourt, échalotes"),
+        shortDescription: text("Shallot yogurt", "Yogourt, Échalotes"),
         description: text(
           "House-Made Yogurt, Persian shallots",
           "Yogourt maison et échalotes persanes",
@@ -253,16 +253,16 @@ export const dinnerCourses: DinnerCourse[] = [
         shortDescription: text("Smoked eggplant", "Aubergine fumée"),
         description: text(
           "Smoked eggplant, Tomato, Garlic",
-          "Aubergine fumée, tomate et ail",
+          "Aubergine fumée, Tomate et ail",
         ),
       },
       {
         name: text("Borani Esfenaj"),
         price: 7,
-        shortDescription: text("Spinach yogurt", "Yogourt, épinards"),
+        shortDescription: text("Spinach yogurt", "Yogourt, Épinards"),
         description: text(
           "House-Made Yogurt, Spinach, Spices",
-          "Yogourt maison, épinards et épices",
+          "Yogourt maison, Épinards et épices",
         ),
       },
       {
@@ -342,40 +342,40 @@ export const dessertCourse = {
       name: text("Faloodeh"),
       price: 14,
       description: text(
-        "Frozen rice vermicelli, lime and rosewater syrup, poached barberries, lime",
-        "Vermicelles de riz glacés, sirop à la lime et à l’eau de rose, épines-vinettes pochées, lime",
+        "Frozen rice vermicelli, Lime and rosewater syrup, Poached barberries, Lime",
+        "Vermicelles de riz glacés, Sirop à la lime et à l’eau de rose, Épines-vinettes pochées, Lime",
       ),
     },
     {
       name: text("Persian Love Cake"),
       price: 18,
       description: text(
-        "Cardamom financier, rosewater labneh cream, poached pear, pistachios",
-        "Financier à la cardamome, crème de labneh à l’eau de rose, poire pochée, pistaches",
+        "Cardamom financier, Rosewater labneh cream, Poached pear, Pistachios",
+        "Financier à la cardamome, Crème de labneh à l’eau de rose, Poire pochée, Pistaches",
       ),
     },
     {
       name: text("Chocolate Date Cake", "Gâteau au chocolat et aux dattes"),
       price: 21,
       description: text(
-        "Chocolate and date cake, chocolate date sauce, sesame halva ice cream, sesame brittle",
-        "Gâteau au chocolat et aux dattes, sauce chocolat-dattes, crème glacée au halva de sésame, croquant au sésame",
+        "Chocolate and date cake, Chocolate date sauce, Sesame halva ice cream, Sesame brittle",
+        "Gâteau au chocolat et aux dattes, Sauce chocolat-dattes, Crème glacée au halva de sésame, Croquant au sésame",
       ),
     },
     {
       name: text("Bastani Sonnati"),
       price: 21,
       description: text(
-        "Saffron, rose and pistachio ice cream, clotted cream, ghorabieh, freeze-dried raspberry",
-        "Crème glacée au safran, à la rose et à la pistache, crème caillée, ghorabieh, framboises lyophilisées",
+        "Saffron, Rose and pistachio ice cream, Clotted cream, Ghorabieh, Freeze-dried raspberry",
+        "Crème glacée au safran, À la rose et à la pistache, Crème caillée, Ghorabieh, Framboises lyophilisées",
       ),
     },
     {
       name: text("Beh"),
       price: 21,
       description: text(
-        "Poached quince, orange blossom custard, butter crumble, sea buckthorn sauce",
-        "Coing poché, crème à la fleur d’oranger, crumble au beurre, sauce à l’argousier",
+        "Poached quince, Orange blossom custard, Butter crumble, Sea buckthorn sauce",
+        "Coing poché, Crème à la fleur d’oranger, Crumble au beurre, Sauce à l’argousier",
       ),
     },
   ] satisfies DinnerMenuItem[],
